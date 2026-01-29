@@ -1,234 +1,137 @@
 import { SEO } from "@/components/common/SEO";
 import { SkipLink } from "@/components/common/SkipLink";
-import { Layout } from "@/components/layout/Layout";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Star, Clock, Users, Trophy, Sparkles, CheckCircle2, Quote, BookOpen, Target, Briefcase } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
+import { TrainingOffersModal } from "@/components/training/TrainingOffersModal";
+import { TrainingOffersSection } from "@/components/training/TrainingOffersSection";
+import { TrainingBentoGrid } from "@/components/training/TrainingBentoGrid";
 import { gsap } from "@/lib/gsap";
 
-const content = {
-    en: {
-        hero: {
-            title: "Professional Engineering Training Programs",
-            subtitle: "Industry-aligned, simulation-driven training programs designed to upskill engineers, students, and organizations across the GCC.",
-            primaryCTA: "Talk to Training Experts",
-            secondaryCTA: "View Training Programs"
-        },
-        whyKites: {
-            eyebrow: "What differentiates our training approach",
-            title: "Why Train with KITES",
-            points: [
-                "Simulation-based, hands-on learning",
-                "Industry-aligned curriculum",
-                "Expert-led instruction",
-                "Academic and industrial relevance",
-                "Practical, real-world problem solving"
-            ]
-        },
-        trainingPath: {
-            title: "Help me find the right training",
-            options: {
-                engineer: "I am an Engineer",
-                organization: "I represent an Organization",
-                student: "I am a Student / Academic"
-            }
-        },
-        programs: {
-            title: "Our Training Programs",
-            cta: "Explore Program",
-            idealFor: "Ideal for:",
-            categories: [
-                {
-                    id: "simulation",
-                    title: "Engineering Simulation Training",
-                    description: "Advanced simulation-driven training covering real-world engineering scenarios.",
-                    idealFor: ["Engineers", "Students", "Academics"]
-                },
-                {
-                    id: "software",
-                    title: "Software & CAE Training",
-                    description: "Specialized training on engineering software and CAE tools.",
-                    idealFor: ["Engineers", "Organizations"]
-                },
-                {
-                    id: "certification",
-                    title: "Professional Certification Programs",
-                    description: "Structured programs designed to enhance professional competency.",
-                    idealFor: ["Engineers", "Organizations"]
-                },
-                {
-                    id: "corporate",
-                    title: "Custom Corporate Training",
-                    description: "Tailored training solutions for organizations and teams.",
-                    idealFor: ["Organizations"]
-                },
-                {
-                    id: "academic",
-                    title: "Academic Training Programs",
-                    description: "Training programs designed for universities and academic institutions.",
-                    idealFor: ["Students", "Academics"]
-                }
-            ]
-        },
-        audience: {
-            title: "This training is designed for:",
-            groups: [
-                "Engineers",
-                "Engineering students",
-                "Government entities",
-                "Industrial organizations",
-                "Academic institutions"
-            ]
-        },
-        finalCTA: {
-            title: "Ready to upgrade skills and capabilities?",
-            button: "Contact Training Team",
-            confidence: "Our team will guide you to the most relevant program — no obligation."
-        }
+// Mock Data for Trending Courses
+const TRENDING_COURSES = [
+    {
+        id: 1,
+        title: "SolidWorks – Level 1",
+        category: "Simulation",
+        rating: 4.9,
+        reviews: 128,
+        duration: "6 Weeks",
+        level: "Advanced",
+        image: "https://images.unsplash.com/photo-1581093458891-2f3b97b0a3c7?q=80&w=2070&auto=format&fit=crop",
+        badge: "Best Seller",
+        price: "Contact for Pricing"
     },
-    ar: {
-        hero: {
-            title: "برامج التدريب الهندسي الاحترافي",
-            subtitle: "برامج تدريب قائمة على المحاكاة ومصممة لتمكين المهندسين والطلاب والمؤسسات في منطقة الخليج.",
-            primaryCTA: "تحدث مع خبراء التدريب",
-            secondaryCTA: "استعرض البرامج التدريبية"
-        },
-        whyKites: {
-            eyebrow: "ما الذي يميز نهجنا التدريبي",
-            title: "لماذا التدريب مع كايتس",
-            points: [
-                "تدريب قائم على المحاكاة والتطبيق العملي",
-                "مناهج متوافقة مع احتياجات الصناعة",
-                "تدريب بقيادة خبراء متخصصين",
-                "ربط المعرفة الأكاديمية بالتطبيق الصناعي",
-                "التركيز على حل التحديات الواقعية"
-            ]
-        },
-        trainingPath: {
-            title: "ساعدني في اختيار البرنامج المناسب",
-            options: {
-                engineer: "أنا مهندس",
-                organization: "أمثل مؤسسة",
-                student: "أنا طالب / أكاديمي"
-            }
-        },
-        programs: {
-            title: "برامجنا التدريبية",
-            cta: "استكشف البرنامج",
-            idealFor: "مناسب لـ:",
-            categories: [
-                {
-                    id: "simulation",
-                    title: "تدريب المحاكاة الهندسية",
-                    description: "برامج تدريب متقدمة قائمة على المحاكاة لمعالجة تحديات هندسية واقعية.",
-                    idealFor: ["المهندسين", "الطلاب", "الأكاديميين"]
-                },
-                {
-                    id: "software",
-                    title: "تدريب البرمجيات وأدوات CAE",
-                    description: "تدريب متخصص على البرمجيات الهندسية وأدوات التحليل.",
-                    idealFor: ["المهندسين", "المؤسسات"]
-                },
-                {
-                    id: "certification",
-                    title: "برامج الشهادات المهنية",
-                    description: "برامج منظمة تهدف إلى تطوير الكفاءات المهنية.",
-                    idealFor: ["المهندسين", "المؤسسات"]
-                },
-                {
-                    id: "corporate",
-                    title: "التدريب المؤسسي المخصص",
-                    description: "حلول تدريب مصممة خصيصًا لتلبية احتياجات المؤسسات.",
-                    idealFor: ["المؤسسات"]
-                },
-                {
-                    id: "academic",
-                    title: "البرامج التدريبية الأكاديمية",
-                    description: "برامج تدريب موجهة للجامعات والمؤسسات الأكاديمية.",
-                    idealFor: ["الطلاب", "الأكاديميين"]
-                }
-            ]
-        },
-        audience: {
-            title: "تم تصميم هذه البرامج التدريبية من أجل:",
-            groups: [
-                "المهندسين",
-                "طلاب الهندسة",
-                "الجهات الحكومية",
-                "المؤسسات الصناعية",
-                "المؤسسات الأكاديمية"
-            ]
-        },
-        finalCTA: {
-            title: "هل أنت مستعد لتطوير المهارات والقدرات؟",
-            button: "تواصل مع فريق التدريب",
-            confidence: "سيساعدك فريقنا في اختيار البرنامج الأنسب دون أي التزام."
-        }
+    {
+        id: 2,
+        title: "SolidWorks Professional Certification",
+        category: "CAD Design",
+        rating: 4.8,
+        reviews: 342,
+        duration: "4 Weeks",
+        level: "Intermediate",
+        image: "https://images.unsplash.com/photo-1537462713505-a1d77482301c?q=80&w=2070&auto=format&fit=crop",
+        badge: "Certification",
+        price: "Contact for Pricing"
+    },
+    {
+        id: 3,
+        title: "CFD Mastery: Fluid Dynamics",
+        category: "Fluid Dynamics",
+        rating: 4.9,
+        reviews: 89,
+        duration: "8 Weeks",
+        level: "Expert",
+        image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=2070&auto=format&fit=crop",
+        badge: "Trending",
+        price: "Contact for Pricing"
+    },
+    {
+        id: 4,
+        title: "Engineering Project Management",
+        category: "Management",
+        rating: 4.7,
+        reviews: 215,
+        duration: "3 Weeks",
+        level: "Beginner",
+        image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop",
+        badge: "New",
+        price: "Contact for Pricing"
     }
-};
+];
 
-// Mapping for training path selector
-const audienceMapping = {
-    engineer: ["simulation", "software"],
-    organization: ["corporate", "certification"],
-    student: ["academic", "simulation"]
-};
+// Mock Reviews
+const REVIEWS = [
+    {
+        id: 1,
+        name: "Abdullah K.",
+        role: "Mechanical Engineer",
+        company: "Kuwait Petroleum Corp",
+        text: "The FEA training was game-changing. I applied the simulation techniques immediately to my current project. Highly recommended.",
+        avatar: "AK"
+    },
+    {
+        id: 2,
+        name: "Sarah M.",
+        role: "Architecture Student",
+        company: "Kuwait University",
+        text: "KITES helped me master SolidWorks before graduation. The certification gave me a huge advantage in job interviews.",
+        avatar: "SM"
+    },
+    {
+        id: 3,
+        name: "Fahad Al-Azmi",
+        role: "Project Manager",
+        company: "Ministry of Public Works",
+        text: "Professional, structured, and practical. The instructors are clearly industry experts, not just academics.",
+        avatar: "FA"
+    }
+];
+
+import { FloatingOfferButton } from "@/components/training/FloatingOfferButton";
 
 const Training = () => {
     const { language, isRTL } = useLanguage();
-    const t = content[language];
 
-    // Refs
+    // Animation Refs
     const heroRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
-    const subtitleRef = useRef<HTMLParagraphElement>(null);
-    const primaryCTARef = useRef<HTMLAnchorElement>(null);
-    const secondaryCTARef = useRef<HTMLAnchorElement>(null);
-    const programsSectionRef = useRef<HTMLElement>(null);
 
-    // State for training path selector
-    const [selectedAudience, setSelectedAudience] = useState<string | null>(null);
+    const [showOffersModal, setShowOffersModal] = useState(false);
 
-    // Hero GSAP animations
+    // Auto-show offer logic
+    useEffect(() => {
+        const hasSeenOffer = sessionStorage.getItem("hasSeenTrainingOffer");
+        if (!hasSeenOffer) {
+            const timer = setTimeout(() => {
+                setShowOffersModal(true);
+                sessionStorage.setItem("hasSeenTrainingOffer", "true");
+            }, 800); // 800ms delay for snappier feel
+            return () => clearTimeout(timer);
+        }
+    }, []);
+
+    // Hero Animation
     useEffect(() => {
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                defaults: { ease: "cubic-bezier(0.4, 0, 0.2, 1)" }
+            gsap.from(titleRef.current, {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
             });
-
-            // Set initial states
-            gsap.set(titleRef.current, { autoAlpha: 0, y: 20 });
-            gsap.set(subtitleRef.current, { autoAlpha: 0, y: 12 });
-            gsap.set([primaryCTARef.current, secondaryCTARef.current], { autoAlpha: 0, y: 8 });
-
-            // Animate sequence
-            tl.to(titleRef.current, { autoAlpha: 1, y: 0, duration: 0.8 })
-                .to(subtitleRef.current, { autoAlpha: 1, y: 0, duration: 0.8 }, "-=0.6")
-                .to(primaryCTARef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.4")
-                .to(secondaryCTARef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, "-=0.5");
-
         }, heroRef);
-
         return () => ctx.revert();
     }, []);
 
-    // Smooth scroll handler for secondary CTA
-    const handleScrollToPrograms = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        programsSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-
-    // Check if card should be highlighted based on selected audience
-    const isCardRelevant = (categoryId: string) => {
-        if (!selectedAudience) return true;
-        return audienceMapping[selectedAudience as keyof typeof audienceMapping]?.includes(categoryId);
-    };
+    // WhatsApp URL
+    const whatsappUrl = "https://wa.me/96522092260";
 
     return (
-        <>
+        <div className="bg-[#0B0F14] min-h-screen">
             <SEO page="training" />
             <SkipLink />
             <Layout>
@@ -300,197 +203,201 @@ const Training = () => {
                     </div>
                 </section>
 
+            {/* POPUP MODAL */}
+            <TrainingOffersModal open={showOffersModal} onOpenChange={setShowOffersModal} />
 
+            {/* SECTION 2: REMOVED BANNER */}
 
-                {/* SECTION 2 — Why Training at KITES */}
-                <section className="py-16 sm:py-20 lg:py-28 bg-white">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <ScrollReveal className={cn("max-w-4xl mx-auto", isRTL && "text-right")}>
-                            {/* Eyebrow */}
-                            <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 text-center">
-                                {t.whyKites.eyebrow}
-                            </p>
-                            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-10 lg:mb-12 text-center">
-                                {t.whyKites.title}
-                            </h2>
-                            <StaggerContainer className="grid sm:grid-cols-2 gap-6 lg:gap-8" staggerDelay={100}>
-                                {t.whyKites.points.map((point, index) => (
-                                    <StaggerItem
-                                        key={index}
-                                        index={index}
-                                        className="group flex items-start gap-4 cursor-default"
-                                    >
-                                        <div className="shrink-0 mt-1">
-                                            <CheckCircle2 className="w-5 h-5 text-logo-codgray transition-opacity duration-200 group-hover:opacity-100 opacity-80" strokeWidth={2} />
-                                        </div>
-                                        <p className="font-body text-base lg:text-lg text-slate-700 relative">
-                                            {point}
-                                            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-logo-alto transition-all duration-200 group-hover:w-full" />
-                                        </p>
-                                    </StaggerItem>
-                                ))}
-                            </StaggerContainer>
-                        </ScrollReveal>
+            {/* SECTION 3: FEATURED / TRENDING COURSES */}
+            <section id="featured-courses" className="py-24 bg-[#0F131A]">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                        <div>
+                            <span className="text-blue-400 font-bold uppercase tracking-widest text-xs">Top Selling</span>
+                            <h2 className="text-3xl sm:text-4xl font-bold text-white mt-2">Trending Courses</h2>
+                        </div>
+                        <Link to="/services/training" className="text-slate-400 hover:text-white text-sm font-semibold flex items-center gap-2 transition-colors">
+                            View all programs <ArrowRight size={16} />
+                        </Link>
                     </div>
-                </section>
 
-                {/* SECTION 3 — Training Programs with Selector */}
-                <section
-                    ref={programsSectionRef}
-                    id="programs"
-                    className="py-20 sm:py-24 lg:py-32 bg-slate-50 border-t border-slate-200/50"
-                >
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <ScrollReveal className={cn("text-center mb-12", isRTL && "text-right")}>
-                            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-                                {t.programs.title}
-                            </h2>
-                            <div className="h-px w-16 bg-logo-alto mx-auto" />
-                        </ScrollReveal>
-
-                        {/* NEW: Training Path Selector */}
-                        <ScrollReveal className="max-w-3xl mx-auto mb-16">
-                            <h3 className={cn(
-                                "text-lg sm:text-xl font-semibold text-slate-800 mb-6 text-center",
-                                isRTL && "text-right"
-                            )}>
-                                {t.trainingPath.title}
-                            </h3>
-                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                                {Object.entries(t.trainingPath.options).map(([key, label]) => (
-                                    <button
-                                        key={key}
-                                        onClick={() => setSelectedAudience(selectedAudience === key ? null : key)}
-                                        className={cn(
-                                            "flex-1 px-6 py-4 rounded-lg border-2 font-medium text-sm sm:text-base transition-all duration-300",
-                                            "hover:border-logo-alto hover:shadow-md active:scale-[0.98]",
-                                            selectedAudience === key
-                                                ? "border-logo-alto bg-gray-50 text-logo-codgray shadow-md"
-                                                : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
-                                        )}
-                                    >
-                                        {label}
-                                    </button>
-                                ))}
-                            </div>
-                        </ScrollReveal>
-
-                        {/* Training Cards */}
-                        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto" staggerDelay={100}>
-                            {t.programs.categories.map((category, index) => {
-                                const isRelevant = isCardRelevant(category.id);
-
-                                return (
-                                    <StaggerItem key={index} index={index}>
-                                        <Link
-                                            to="/services/training"
-                                            className={cn(
-                                                "block h-full p-8 bg-white rounded-lg border border-slate-200 transition-all duration-300 group relative overflow-hidden",
-                                                isRTL && "text-right",
-                                                isRelevant
-                                                    ? "hover:border-gray-300 hover:shadow-lg hover:scale-[1.02] opacity-100"
-                                                    : "opacity-40"
-                                            )}
-                                        >
-                                            <h3 className="font-heading text-xl font-bold text-slate-900 mb-4 group-hover:font-extrabold transition-all">
-                                                {category.title}
-                                            </h3>
-                                            <p className="font-body text-slate-600 mb-6">
-                                                {category.description}
-                                            </p>
-
-                                            {/* Ideal For - Shows on hover */}
-                                            <div className={cn(
-                                                "mb-4 opacity-0 max-h-0 overflow-hidden transition-all duration-300 group-hover:opacity-100 group-hover:max-h-20",
-                                                isRelevant && "group-hover:opacity-100"
-                                            )}>
-                                                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                                                    {t.programs.idealFor}
-                                                </p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {category.idealFor.map((item, i) => (
-                                                        <span key={i} className="text-xs px-2 py-1 bg-gray-100 text-logo-codgray border border-logo-alto rounded">
-                                                            {item}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-center text-sm font-semibold text-logo-codgray transition-colors mt-auto">
-                                                <span>{t.programs.cta}</span>
-                                                <ArrowRight
-                                                    size={14}
-                                                    className={cn(
-                                                        "transition-transform duration-300",
-                                                        isRTL ? "mr-2 rotate-180 group-hover:-translate-x-1" : "ml-2 group-hover:translate-x-1"
-                                                    )}
-                                                />
-                                            </div>
-                                        </Link>
-                                    </StaggerItem>
-                                );
-                            })}
-                        </StaggerContainer>
-                    </div>
-                </section>
-
-                {/* SECTION 4 — Who This Training Is For */}
-                <section className="py-20 sm:py-24 lg:py-32 bg-white">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <ScrollReveal className={cn("max-w-3xl mx-auto", isRTL && "text-right")}>
-                            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-10 lg:mb-12 text-center">
-                                {t.audience.title}
-                            </h2>
-                            <StaggerContainer className="grid sm:grid-cols-2 gap-5 lg:gap-6" staggerDelay={80}>
-                                {t.audience.groups.map((group, index) => (
-                                    <StaggerItem
-                                        key={index}
-                                        index={index}
-                                        className="group flex items-center gap-4 p-5 bg-slate-50 rounded-lg border border-slate-100 hover:translate-y-[-4px] transition-all duration-250 cursor-default hover:shadow-md peer"
-                                    >
-                                        <div className="w-2 h-2 rounded-full bg-logo-codgray shrink-0 group-hover:scale-125 transition-transform duration-250" />
-                                        <p className="font-body text-base lg:text-lg text-slate-800 font-medium">
-                                            {group}
-                                        </p>
-                                    </StaggerItem>
-                                ))}
-                            </StaggerContainer>
-                        </ScrollReveal>
-                    </div>
-                </section>
-
-                {/* SECTION 5 — Final Call to Action */}
-                <section className="py-28 lg:py-40 bg-[#0B0F14] text-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F1725] to-transparent/50 opacity-80" />
-
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <ScrollReveal>
-                            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-10 lg:mb-12 tracking-tight leading-[1.1] max-w-3xl mx-auto">
-                                {t.finalCTA.title}
-                            </h2>
-                            <Link
-                                to="/contact?service=training"
-                                className="inline-flex items-center text-sm font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-all duration-300 group border border-white/10 hover:bg-white/5 hover:border-white/30 px-10 py-5 rounded-sm"
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {TRENDING_COURSES.map((course) => (
+                            <a
+                                key={course.id}
+                                href={whatsappUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group bg-[#1A1F29] rounded-xl overflow-hidden border border-white/5 hover:border-blue-500/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
                             >
-                                <span>{t.finalCTA.button}</span>
-                                <ArrowRight
-                                    size={18}
-                                    className={cn(
-                                        "transition-transform duration-300",
-                                        isRTL ? "mr-3 rotate-180 group-hover:-translate-x-1.5" : "ml-3 group-hover:translate-x-1.5"
-                                    )}
-                                />
-                            </Link>
+                                {/* Image */}
+                                <div className="h-48 relative overflow-hidden">
+                                    <img src={course.image} alt={course.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                    <div className="absolute top-3 left-3 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded">
+                                        {course.badge}
+                                    </div>
+                                </div>
 
-                            {/* Confidence Line */}
-                            <p className="mt-8 text-sm text-white/60 max-w-2xl mx-auto">
-                                {t.finalCTA.confidence}
-                            </p>
-                        </ScrollReveal>
+                                {/* Content */}
+                                <div className="p-5">
+                                    <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
+                                        <Clock size={12} /> {course.duration}
+                                        <span className="w-1 h-1 bg-slate-600 rounded-full" />
+                                        <span className="text-blue-400">{course.level}</span>
+                                    </div>
+                                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 min-h-[56px] group-hover:text-blue-400 transition-colors">
+                                        {course.title}
+                                    </h3>
+
+                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+                                        <div className="flex items-center gap-1">
+                                            <Star size={14} className="text-yellow-400 fill-yellow-400" />
+                                            <span className="text-sm font-bold text-slate-200">{course.rating}</span>
+                                            <span className="text-xs text-slate-500">({course.reviews})</span>
+                                        </div>
+                                        <span className="text-xs font-bold text-white bg-white/5 px-2 py-1 rounded group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                            Enroll
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        ))}
                     </div>
-                </section>
-            </Layout>
-        </>
+                </div>
+            </section>
+
+            {/* SECTION: OFFERS GRID */}
+            <TrainingOffersSection />
+
+            {/* SECTION: BENTO GRID FEATURES */}
+            <TrainingBentoGrid />
+
+            {/* SECTION: LEARNING PATH INFOGRAPHIC */}
+            <section className="py-24 bg-white relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
+
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <span className="text-emerald-600 font-bold uppercase tracking-widest text-xs">Career Roadmap</span>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mt-2 mb-4">Your Journey to Expertise</h2>
+                        <p className="text-slate-500 text-lg">We map out your growth from university to industry leadership.</p>
+                    </div>
+
+                    <div className="relative">
+                        {/* Connecting Line (Desktop) */}
+                        <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-1 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-purple-500 origin-left animate-[grow-width_3s_ease-out_forwards]" />
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8 relative">
+                            {/* Step 1 */}
+                            <div className="relative group">
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-blue-500 rounded-full items-center justify-center z-10 shadow-lg shadow-blue-500/20 group-hover:scale-125 transition-transform duration-300">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
+                                    <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 relative z-10">
+                                        <BookOpen size={30} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">1. Foundation</h3>
+                                    <p className="text-slate-500 text-sm leading-relaxed">
+                                        Master the basics of engineering simulation (ANSYS, SolidWorks) to ace your capstone projects.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Step 2 */}
+                            <div className="relative group mt-8 md:mt-0">
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-emerald-500 rounded-full items-center justify-center z-10 shadow-lg shadow-emerald-500/20 group-hover:scale-125 transition-transform duration-300 delay-100">
+                                    <div className="w-2 h-2 bg-emerald-500 rounded-full" />
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
+                                    <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 relative z-10">
+                                        <Target size={30} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">2. Certification</h3>
+                                    <p className="text-slate-500 text-sm leading-relaxed">
+                                        Earn professional credentials (CFD, FEA) to demonstrate competency to top employers.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Step 3 */}
+                            <div className="relative group mt-16 md:mt-0">
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-purple-500 rounded-full items-center justify-center z-10 shadow-lg shadow-purple-500/20 group-hover:scale-125 transition-transform duration-300 delay-200">
+                                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
+                                    <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-6 relative z-10">
+                                        <Trophy size={30} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors">3. Mastery</h3>
+                                    <p className="text-slate-500 text-sm leading-relaxed">
+                                        Lead teams and innovation. Advanced corporate training to upskill entire departments.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* SECTION 5: REVIEWS & SOCIAL PROOF */}
+            <section className="py-24 bg-slate-50 border-t border-slate-200">
+                <div className="container mx-auto px-4">
+                    <ScrollReveal className="text-center mb-16">
+                        <h2 className="text-3xl font-bold text-slate-900">What Our Graduates Say</h2>
+                    </ScrollReveal>
+
+                    <StaggerContainer className="grid md:grid-cols-3 gap-6">
+                        {REVIEWS.map((review, i) => (
+                            <StaggerItem key={review.id} index={i} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative">
+                                <Quote size={24} className="text-slate-200 absolute top-6 right-6" />
+                                <div className="flex gap-1 mb-4">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
+                                    ))}
+                                </div>
+                                <p className="text-slate-600 text-sm leading-relaxed mb-6">"{review.text}"</p>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-logo-codgray flex items-center justify-center text-white text-xs font-bold">
+                                        {review.avatar}
+                                    </div>
+                                    <div>
+                                        <div className="text-sm font-bold text-slate-900">{review.name}</div>
+                                        <div className="text-xs text-slate-500">{review.role}, {review.company}</div>
+                                    </div>
+                                </div>
+                            </StaggerItem>
+                        ))}
+                    </StaggerContainer>
+                </div>
+            </section>
+
+            {/* SECTION 6: FINAL CTA */}
+            <section className="py-24 bg-[#0B0F14] relative overflow-hidden">
+                <div className="absolute inset-0 bg-blue-600/5" />
+                <div className="container mx-auto px-4 text-center relative z-10">
+                    <h2 className="text-3xl sm:text-5xl font-bold text-white mb-6">Ready to Start Learning?</h2>
+                    <p className="text-slate-400 max-w-xl mx-auto mb-10 text-lg">
+                        Join 500+ engineers who have advanced their careers with KITES training.
+                    </p>
+                    <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-blue-500/25"
+                    >
+                        Enroll in a Course
+                        <ArrowRight size={18} className="ml-2" />
+                    </a>
+                </div>
+            </section>
+        </div>
     );
 };
 

@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { LucideIcon } from "lucide-react";
 
 interface ServiceContent {
@@ -52,7 +50,6 @@ export function ServiceDetailTemplate({ content }: ServiceDetailTemplateProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-28 bg-navy-deep relative overflow-hidden">
@@ -185,7 +182,6 @@ export function ServiceDetailTemplate({ content }: ServiceDetailTemplateProps) {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

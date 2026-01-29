@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SEO } from "@/components/common/SEO";
 import { SkipLink } from "@/components/common/SkipLink";
-import { Layout } from "@/components/layout/Layout";
+
 import { Hero } from "@/components/home/Hero";
 import { WhoWeAreSection } from "@/components/sections/WhoWeAreSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
@@ -10,12 +10,15 @@ import { ClientsSection } from "@/components/sections/ClientsSection";
 import { KeyPillarsSection } from "@/components/sections/KeyPillarsSection";
 import { CTASection } from "@/components/sections/CTASection";
 
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+
 const Index = () => {
   return (
     <>
       <SEO page="home" />
       <SkipLink />
-      <Layout>
+
+      <ErrorBoundary>
         {/* 1. Hero Section - Lead with value proposition */}
         <Hero />
 
@@ -36,7 +39,8 @@ const Index = () => {
 
         {/* 7. Final CTA */}
         <CTASection />
-      </Layout>
+      </ErrorBoundary>
+
     </>
   );
 };

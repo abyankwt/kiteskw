@@ -1,11 +1,13 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SEO } from "@/components/common/SEO";
 import { SkipLink } from "@/components/common/SkipLink";
-import { Layout } from "@/components/layout/Layout";
-import { Cpu, LineChart, Leaf, GraduationCap, ArrowRight, CheckCircle2 } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ExpertiseGrid } from "@/components/expertise/ExpertiseGrid";
+import { IndustrySpotlight } from "@/components/services/IndustrySpotlight";
 
+// Content Data
 const content = {
   en: {
     hero: {
@@ -95,7 +97,7 @@ const content = {
     ],
     industries: {
       title: "الصناعات التي ندعمها",
-      list: ["الطاقة والنط والغاز", "البنية التحتية والإنشاءات", "التصنيع", "الأوساط الأكاديمية والبحثية", "القطاع الحكومي والعام"]
+      list: ["الطاقة والنفط والغاز", "البنية التحتية والإنشاءات", "التصنيع", "الأوساط الأكاديمية والبحثية", "القطاع الحكومي والعام"]
     },
     methodology: {
       title: "نهجنا",
@@ -115,174 +117,111 @@ const content = {
   },
 };
 
-const iconMap = {
-  cpu: Cpu,
-  chart: LineChart,
-  leaf: Leaf,
-  graduation: GraduationCap,
-};
-
 export default function Expertise() {
   const { language, isRTL } = useLanguage();
   const t = content[language];
 
   return (
-    <>
+    <div className="bg-background">
       <SEO page="expertise" />
       <SkipLink />
-      <Layout>
 
-        {/* Page Hero - Unified Dark Enterprise Style */}
-        <section className="relative pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-[#0B0F14]" id="main-content">
-          {/* Deep Navy Gradient */}
-          <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0B0F14] to-[#101826]" />
-          {/* Subtle Noise */}
-          <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-0" />
+      {/* Page Hero - Dark Cinematic */}
+      <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#0B0F14] relative overflow-hidden text-center">
+        {/* Abstract Background Design */}
+        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-[#1a202c] to-transparent opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+        {/* Glow Orb */}
+        <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/10 blur-[150px] rounded-full pointer-events-none" />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <ScrollReveal>
-                <div className="inline-block mb-4 sm:mb-6 lg:mb-8">
-                  <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-slate-300 bg-white/5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 backdrop-blur-sm">
-                    {t.hero.eyebrow}
-                  </span>
-                </div>
-                <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-[1.05] tracking-tight">
-                  {t.hero.title}
-                </h1>
-                <p className="font-body text-base sm:text-lg lg:text-xl text-slate-400/90 max-w-2xl mx-auto font-light px-2 sm:px-0">
-                  {t.hero.intro}
-                </p>
-              </ScrollReveal>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <ScrollReveal className="max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold uppercase tracking-[0.2em] text-purple-400 mb-8 backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+              {t.hero.eyebrow}
+            </div>
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-[1.1]">
+              {t.hero.title}
+            </h1>
+            <p className="font-body text-lg sm:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed mb-10">
+              {t.hero.intro}
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Methodology Section - "Our Approach" (Moved Here to Match Services Flow) */}
+      <section className="py-24 bg-white border-b border-gray-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <ScrollReveal>
+              <div className="text-center mb-16">
+                <h2 className="font-heading text-2xl font-bold text-slate-900 mb-4">{t.methodology.title}</h2>
+                <div className="h-0.5 w-12 bg-logo-alto mx-auto opacity-20" />
+              </div>
+            </ScrollReveal>
+
+            <div className="grid md:grid-cols-3 gap-8 relative">
+              {/* Connector Line (Desktop) */}
+              <div className="hidden md:block absolute top-[28px] left-[16%] right-[16%] h-px bg-slate-200 z-0" />
+
+              {t.methodology.steps.map((step, idx) => (
+                <ScrollReveal key={idx} delay={idx * 150} className="relative z-10 flex flex-col items-center text-center group">
+                  <div className="w-14 h-14 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center text-sm font-bold text-slate-400 mb-6 shadow-sm transition-all duration-300 group-hover:border-primary/50 group-hover:text-primary group-hover:scale-110">
+                    0{idx + 1}
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-800 mb-3 uppercase tracking-wide group-hover:text-primary transition-colors">{step.title}</h3>
+                  <p className="text-slate-600 font-body text-sm max-w-[240px] leading-relaxed">{step.desc}</p>
+                </ScrollReveal>
+              ))}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Core Expertise Areas */}
-        <section className="py-12 sm:py-16 lg:py-20 bg-white relative">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Core Expertise Grid */}
+      <ExpertiseGrid areas={t.areas} />
 
-            {/* Section Header */}
-            <div className="max-w-xl mx-auto text-center mb-16">
-              <h2 className="font-heading text-2xl font-semibold text-slate-800 tracking-wide uppercase text-sm">
-                {t.areasTitle}
+      {/* Industries Spotlight */}
+      <IndustrySpotlight />
+
+      {/* Leadership & Impact */}
+      <section className="py-24 lg:py-32 bg-[#0B0F14] relative overflow-hidden border-t border-white/5">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0F1725] to-transparent pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <ScrollReveal>
+              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight">
+                {t.leadershipTitle}
               </h2>
-              <div className="h-px w-16 bg-logo-alto mx-auto mt-4 opacity-50" />
-            </div>
+              <p className="font-body text-lg lg:text-xl text-slate-400/90 font-light mb-16 max-w-3xl mx-auto">
+                {t.leadershipDescription}
+              </p>
 
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
-              {t.areas.map((area, index) => {
-                const IconComponent = iconMap[area.icon as keyof typeof iconMap];
-                return (
-                  <ScrollReveal key={index} delay={index * 100}>
-                    <div
-                      className="group relative p-8 lg:p-12 bg-white rounded-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 border border-slate-100 cursor-default"
-                    >
-                      {/* Left Accent Line */}
-                      <div className="absolute left-0 top-8 bottom-8 w-[3px] bg-logo-alto rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                      <div className="flex flex-col h-full">
-                        <div className="mb-8 flex items-start justify-between">
-                          <div className="w-14 h-14 rounded-2xl bg-slate-50/80 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 border border-slate-100">
-                            <IconComponent className="w-7 h-7 text-slate-600 transition-colors duration-300" strokeWidth={1.5} />
-                          </div>
-                        </div>
-
-                        <h3 className="font-heading text-xl lg:text-2xl font-bold text-slate-900 mb-4 group-hover:font-extrabold transition-all duration-300">
-                          {area.title}
-                        </h3>
-                        <p className="font-body text-slate-600 mb-8 flex-grow text-[16px]">
-                          {area.description}
-                        </p>
-
-                        {/* Outcome Statement */}
-                        <div className="pt-6 border-t border-slate-100 mt-auto">
-                          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-3">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-500" strokeWidth={2.5} />
-                            {area.outcome}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                );
-              })}
-            </div>
-
-            {/* Industries Section */}
-            <div className="max-w-5xl mx-auto mt-24 text-center">
-              <h3 className="font-heading text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">{t.industries.title}</h3>
-              <div className="flex flex-wrap justify-center gap-3">
-                {t.industries.list.map((industry, i) => (
-                  <span key={i} className="inline-block px-5 py-2.5 bg-slate-50 text-slate-600 text-sm font-medium rounded-full border border-slate-100/80 hover:border-slate-300 transition-colors cursor-default">
-                    {industry}
-                  </span>
+              {/* Metrics Row */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-16">
+                {t.metrics.map((metric, i) => (
+                  <div key={i} className="flex flex-col items-center group">
+                    <span className="text-4xl lg:text-5xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-300">{metric.value}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-white/60 transition-colors">{metric.label}</span>
+                  </div>
                 ))}
               </div>
-            </div>
 
-          </div>
-        </section>
-
-        {/* Methodology Section - "Our Approach" */}
-        <section className="py-24 bg-slate-50 border-t border-slate-200/50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-5xl mx-auto">
-              <ScrollReveal>
-                <div className="text-center mb-16">
-                  <h2 className="font-heading text-2xl font-bold text-slate-900 mb-4">{t.methodology.title}</h2>
-                  <div className="h-0.5 w-12 bg-logo-alto mx-auto opacity-20" />
-                </div>
-              </ScrollReveal>
-
-              <div className="grid md:grid-cols-3 gap-8 relative">
-                {/* Connector Line (Desktop) */}
-                <div className="hidden md:block absolute top-[28px] left-[16%] right-[16%] h-px bg-slate-200 z-0" />
-
-                {t.methodology.steps.map((step, idx) => (
-                  <ScrollReveal key={idx} delay={idx * 150} className="relative z-10 flex flex-col items-center text-center">
-                    <div className="w-14 h-14 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center text-sm font-bold text-slate-400 mb-6 shadow-sm transition-colors">
-                      0{idx + 1}
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-800 mb-3 uppercase tracking-wide">{step.title}</h3>
-                    <p className="text-slate-600 font-body text-sm max-w-[240px]">{step.desc}</p>
-                  </ScrollReveal>
-                ))}
+              <div className="mt-16">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center text-sm font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-all duration-300 group border border-white/10 hover:bg-white/5 hover:border-white/30 px-10 py-5 rounded-sm"
+                >
+                  <span>{language === 'ar' ? "ابدأ العمل معنا" : "Work With Us"}</span>
+                  <ArrowRight size={18} className={`ml-3 transition-transform duration-300 ${isRTL ? "rotate-180 group-hover:-translate-x-1.5" : "group-hover:translate-x-1.5"}`} />
+                </Link>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
-        </section>
-
-        {/* Leadership & Impact */}
-        <section className="py-24 lg:py-32 bg-[#0B1220] relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F1A2E] to-transparent pointer-events-none" />
-
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <ScrollReveal>
-                <div className="w-px h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent mx-auto mb-8" />
-                <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight">
-                  {t.leadershipTitle}
-                </h2>
-                <p className="font-body text-lg lg:text-xl text-slate-400/90 font-light mb-16">
-                  {t.leadershipDescription}
-                </p>
-
-                {/* Metrics Row */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/5 pt-12">
-                  {t.metrics.map((metric, i) => (
-                    <div key={i} className="flex flex-col items-center">
-                      <span className="text-3xl lg:text-4xl font-bold text-white mb-2">{metric.value}</span>
-                      <span className="text-xs font-bold uppercase tracking-widest text-slate-500">{metric.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </section>
-
-      </Layout>
-    </>
+        </div>
+      </section>
+    </div>
   );
 }

@@ -131,7 +131,7 @@ export function KeyPillarsSection() {
 
     return (
         // The trigger container (tall height for scrolling room)
-        <div ref={triggerRef} className="relative bg-background">
+        <div ref={triggerRef} className="relative bg-slate-50">
 
             {/* The Pinned Content (100vh) */}
             <div ref={containerRef} className="h-screen w-full flex flex-col justify-center overflow-hidden relative">
@@ -175,7 +175,7 @@ export function KeyPillarsSection() {
                             }} />
 
                             {/* Main Icon Transition */}
-                            <div className="relative z-10 transform transition-all duration-500 ease-out scale-100 p-8 bg-white rounded-3xl shadow-2xl border border-gray-100">
+                            <div className="relative z-10 transform transition-all duration-500 ease-out scale-100 p-8 bg-white rounded-3xl shadow-xl border border-white/50 ring-1 ring-slate-100">
                                 <activePillar.icon
                                     size={80}
                                     strokeWidth={1}

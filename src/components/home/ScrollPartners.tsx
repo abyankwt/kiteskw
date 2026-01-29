@@ -46,7 +46,7 @@ export function ScrollPartners() {
             const tl = gsap.timeline({
                 repeat: -1,
                 paused: false,
-                defaults: { ease: "power2.inOut" } // Smooth ease for movement
+                defaults: { ease: "linear" }
             });
 
             // LTR Logic (Standard)
@@ -58,6 +58,7 @@ export function ScrollPartners() {
                     tl.to(track, {
                         x: `-=${ITEM_WIDTH}`,
                         duration: MOVE_DURATION,
+                        ease: "power2.inOut"
                     })
                         // 2. Pause
                         .to(track, {}, `+=${PAUSE_DURATION}`);
@@ -77,6 +78,7 @@ export function ScrollPartners() {
                     tl.to(track, {
                         x: `+=${ITEM_WIDTH}`,
                         duration: MOVE_DURATION,
+                        ease: "power2.inOut"
                     })
                         // 2. Pause
                         .to(track, {}, `+=${PAUSE_DURATION}`);
@@ -110,12 +112,16 @@ export function ScrollPartners() {
     return (
         <div
             ref={containerRef}
-            className="w-full relative overflow-hidden py-16 bg-[#fafafa] select-none"
+            className="w-full overflow-hidden bg-slate-50 border-y border-slate-200 py-12 relative z-20"
             dir="ltr" // Structure is always LTR, we handle direction via transforms
         >
+            <div className="container mx-auto px-4 mb-8 text-center">
+                <p className="text-xs font-bold text-slate-700 uppercase tracking-widest">Trusted By Industry Leaders</p>
+            </div>
+
             {/* Soft Gradient Masks */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#fafafa] to-transparent z-20 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#fafafa] to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-20 pointer-events-none" />
 
             {/* Track */}
             <div
