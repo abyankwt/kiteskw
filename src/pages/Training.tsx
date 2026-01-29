@@ -6,19 +6,22 @@ import { Link } from "react-router-dom";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
+import { TrainingOffersModal } from "@/components/training/TrainingOffersModal";
+import { TrainingOffersSection } from "@/components/training/TrainingOffersSection";
+import { TrainingBentoGrid } from "@/components/training/TrainingBentoGrid";
 import { gsap } from "@/lib/gsap";
 
 // Mock Data for Trending Courses
 const TRENDING_COURSES = [
     {
         id: 1,
-        title: "Advanced FEA with Abaqus",
+        title: "SolidWorks – Level 1",
         category: "Simulation",
         rating: 4.9,
         reviews: 128,
         duration: "6 Weeks",
         level: "Advanced",
-        image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1581093458891-2f3b97b0a3c7?q=80&w=2070&auto=format&fit=crop",
         badge: "Best Seller",
         price: "Contact for Pricing"
     },
@@ -30,7 +33,7 @@ const TRENDING_COURSES = [
         reviews: 342,
         duration: "4 Weeks",
         level: "Intermediate",
-        image: "https://images.unsplash.com/photo-1581094794329-cd2d2dec5d5a?q=80&w=2070&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1537462713505-a1d77482301c?q=80&w=2070&auto=format&fit=crop",
         badge: "Certification",
         price: "Contact for Pricing"
     },
@@ -88,12 +91,28 @@ const REVIEWS = [
     }
 ];
 
+import { FloatingOfferButton } from "@/components/training/FloatingOfferButton";
+
 const Training = () => {
     const { language, isRTL } = useLanguage();
 
     // Animation Refs
     const heroRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
+
+    const [showOffersModal, setShowOffersModal] = useState(false);
+
+    // Auto-show offer logic
+    useEffect(() => {
+        const hasSeenOffer = sessionStorage.getItem("hasSeenTrainingOffer");
+        if (!hasSeenOffer) {
+            const timer = setTimeout(() => {
+                setShowOffersModal(true);
+                sessionStorage.setItem("hasSeenTrainingOffer", "true");
+            }, 800); // 800ms delay for snappier feel
+            return () => clearTimeout(timer);
+        }
+    }, []);
 
     // Hero Animation
     useEffect(() => {
@@ -108,10 +127,19 @@ const Training = () => {
         return () => ctx.revert();
     }, []);
 
+    // WhatsApp URL
+    const whatsappUrl = "https://wa.me/96522092260";
+
     return (
         <div className="bg-[#0B0F14] min-h-screen">
             <SEO page="training" />
             <SkipLink />
+
+            {/* Persistent Offer Button - Hidden when modal is open */}
+            <FloatingOfferButton
+                onClick={() => setShowOffersModal(true)}
+                visible={!showOffersModal}
+            />
 
             {/* SECTION 1: CINEMATIC HERO */}
             <section ref={heroRef} className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
@@ -124,6 +152,8 @@ const Training = () => {
                         className="w-full h-full object-cover opacity-40 mix-blend-overlay"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F14] via-transparent to-transparent z-20" />
+                    {/* Animated Grid Overlay */}
+                    <div className="absolute inset-0 z-[15] opacity-20 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] pointer-events-none" />
                 </div>
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-30 text-center">
@@ -144,12 +174,14 @@ const Training = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link
-                            to="/contact?service=training"
+                        <a
+                            href={whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="w-full sm:w-auto px-8 py-4 bg-white text-[#0B0F14] font-bold text-sm uppercase tracking-wider rounded hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                         >
                             Enroll Now
-                        </Link>
+                        </a>
                         <a
                             href="#featured-courses"
                             className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/20 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-white/5 transition-all"
@@ -176,24 +208,10 @@ const Training = () => {
                 </div>
             </section>
 
-            {/* SECTION 2: SPECIAL OFFERS BANNER */}
-            <section className="bg-gradient-to-r from-blue-900 to-indigo-900 border-y border-white/10 py-4 relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 bg-[url('/noise.png')] pointer-events-none" />
-                <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
-                    <div className="flex items-center gap-3">
-                        <div className="bg-white/20 p-2 rounded-full">
-                            <Sparkles size={18} className="text-yellow-400" />
-                        </div>
-                        <div className="text-left">
-                            <h3 className="text-white font-bold text-sm sm:text-base">Corporate Training Bundle</h3>
-                            <p className="text-blue-200 text-xs sm:text-sm">Get 20% off when enrolling 5+ engineers.</p>
-                        </div>
-                    </div>
-                    <Link to="/contact" className="text-xs sm:text-sm font-bold text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded transition-colors whitespace-nowrap">
-                        Claim Offer &rarr;
-                    </Link>
-                </div>
-            </section>
+            {/* POPUP MODAL */}
+            <TrainingOffersModal open={showOffersModal} onOpenChange={setShowOffersModal} />
+
+            {/* SECTION 2: REMOVED BANNER */}
 
             {/* SECTION 3: FEATURED / TRENDING COURSES */}
             <section id="featured-courses" className="py-24 bg-[#0F131A]">
@@ -203,14 +221,20 @@ const Training = () => {
                             <span className="text-blue-400 font-bold uppercase tracking-widest text-xs">Top Selling</span>
                             <h2 className="text-3xl sm:text-4xl font-bold text-white mt-2">Trending Courses</h2>
                         </div>
-                        <Link to="/courses" className="text-slate-400 hover:text-white text-sm font-semibold flex items-center gap-2 transition-colors">
+                        <Link to="/services/training" className="text-slate-400 hover:text-white text-sm font-semibold flex items-center gap-2 transition-colors">
                             View all programs <ArrowRight size={16} />
                         </Link>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {TRENDING_COURSES.map((course) => (
-                            <Link key={course.id} to="/contact?service=training" className="group bg-[#1A1F29] rounded-xl overflow-hidden border border-white/5 hover:border-blue-500/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                            <a
+                                key={course.id}
+                                href={whatsappUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group bg-[#1A1F29] rounded-xl overflow-hidden border border-white/5 hover:border-blue-500/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+                            >
                                 {/* Image */}
                                 <div className="h-48 relative overflow-hidden">
                                     <img src={course.image} alt={course.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -241,55 +265,87 @@ const Training = () => {
                                         </span>
                                     </div>
                                 </div>
-                            </Link>
+                            </a>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* SECTION 4: INFOGRAPHIC LEARNING PATH */}
-            <section className="py-24 bg-white relative">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* SECTION: OFFERS GRID */}
+            <TrainingOffersSection />
+
+            {/* SECTION: BENTO GRID FEATURES */}
+            <TrainingBentoGrid />
+
+            {/* SECTION: LEARNING PATH INFOGRAPHIC */}
+            <section className="py-24 bg-white relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
+
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Your Path to Expertise</h2>
-                        <p className="text-slate-500 text-lg">We support your journey from academic foundation to industry leadership.</p>
+                        <span className="text-emerald-600 font-bold uppercase tracking-widest text-xs">Career Roadmap</span>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mt-2 mb-4">Your Journey to Expertise</h2>
+                        <p className="text-slate-500 text-lg">We map out your growth from university to industry leadership.</p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 relative">
+                    <div className="relative">
                         {/* Connecting Line (Desktop) */}
-                        <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-1 bg-slate-100 -z-10" />
-
-                        {/* Step 1 */}
-                        <div className="relative bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-transform duration-300">
-                            <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 mx-auto md:mx-0">
-                                <BookOpen size={32} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-3 text-center md:text-left">1. Student</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed text-center md:text-left">
-                                Master the basics of engineering simulation (ANSYS, SolidWorks) to ace your capstone projects and become job-ready.
-                            </p>
+                        <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-1 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-purple-500 origin-left animate-[grow-width_3s_ease-out_forwards]" />
                         </div>
 
-                        {/* Step 2 */}
-                        <div className="relative bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-transform duration-300 delay-100 relative z-10">
-                            <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 mx-auto md:mx-0">
-                                <Target size={32} />
+                        <div className="grid md:grid-cols-3 gap-8 relative">
+                            {/* Step 1 */}
+                            <div className="relative group">
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-blue-500 rounded-full items-center justify-center z-10 shadow-lg shadow-blue-500/20 group-hover:scale-125 transition-transform duration-300">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
+                                    <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 relative z-10">
+                                        <BookOpen size={30} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">1. Foundation</h3>
+                                    <p className="text-slate-500 text-sm leading-relaxed">
+                                        Master the basics of engineering simulation (ANSYS, SolidWorks) to ace your capstone projects.
+                                    </p>
+                                </div>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-3 text-center md:text-left">2. Professional</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed text-center md:text-left">
-                                Earn professional certifications and specialized skills (CFD, FEA) to handle complex industrial challenges and get promoted.
-                            </p>
-                        </div>
 
-                        {/* Step 3 */}
-                        <div className="relative bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 hover:-translate-y-2 transition-transform duration-300 delay-200">
-                            <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-6 mx-auto md:mx-0">
-                                <Trophy size={32} />
+                            {/* Step 2 */}
+                            <div className="relative group mt-8 md:mt-0">
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-emerald-500 rounded-full items-center justify-center z-10 shadow-lg shadow-emerald-500/20 group-hover:scale-125 transition-transform duration-300 delay-100">
+                                    <div className="w-2 h-2 bg-emerald-500 rounded-full" />
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
+                                    <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 relative z-10">
+                                        <Target size={30} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">2. Certification</h3>
+                                    <p className="text-slate-500 text-sm leading-relaxed">
+                                        Earn professional credentials (CFD, FEA) to demonstrate competency to top employers.
+                                    </p>
+                                </div>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-3 text-center md:text-left">3. Expert</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed text-center md:text-left">
-                                Lead teams and innovation. Custom corporate training to upskill your entire department and drive ROI.
-                            </p>
+
+                            {/* Step 3 */}
+                            <div className="relative group mt-16 md:mt-0">
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-purple-500 rounded-full items-center justify-center z-10 shadow-lg shadow-purple-500/20 group-hover:scale-125 transition-transform duration-300 delay-200">
+                                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
+                                    <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-6 relative z-10">
+                                        <Trophy size={30} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors">3. Mastery</h3>
+                                    <p className="text-slate-500 text-sm leading-relaxed">
+                                        Lead teams and innovation. Advanced corporate training to upskill entire departments.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -335,13 +391,15 @@ const Training = () => {
                     <p className="text-slate-400 max-w-xl mx-auto mb-10 text-lg">
                         Join 500+ engineers who have advanced their careers with KITES training.
                     </p>
-                    <Link
-                        to="/contact?service=training"
+                    <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-blue-500/25"
                     >
                         Enroll in a Course
                         <ArrowRight size={18} className="ml-2" />
-                    </Link>
+                    </a>
                 </div>
             </section>
         </div>
