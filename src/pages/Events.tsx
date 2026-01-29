@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SEO } from "@/components/common/SEO";
-import { Layout } from "@/components/layout/Layout";
+
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useContent } from "@/hooks/useContent";
 import { Calendar, MapPin, ArrowRight, Filter } from "lucide-react";
@@ -106,104 +106,104 @@ export default function Events() {
   return (
     <>
       <SEO page="events" />
-      <Layout>
 
-        {/* Hero Section */}
-        <section className="pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-48 lg:pb-32 bg-primary relative overflow-hidden">
-          {/* Noise Texture */}
-          <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <ScrollReveal className="max-w-3xl mx-auto text-center">
-              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4 sm:mb-6 tracking-tight leading-tight">
-                {t.pageTitle}
-              </h1>
-              <p className="font-body text-base sm:text-lg lg:text-xl text-primary-foreground/80 font-light px-2 sm:px-0">
-                {t.intro}
-              </p>
-            </ScrollReveal>
+      {/* Hero Section */}
+      <section className="pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-48 lg:pb-32 bg-primary relative overflow-hidden">
+        {/* Noise Texture */}
+        <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <ScrollReveal className="max-w-3xl mx-auto text-center">
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4 sm:mb-6 tracking-tight leading-tight">
+              {t.pageTitle}
+            </h1>
+            <p className="font-body text-base sm:text-lg lg:text-xl text-primary-foreground/80 font-light px-2 sm:px-0">
+              {t.intro}
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Filters */}
+      <section className="py-4 sm:py-6 lg:py-8 bg-background border-b border-border/50 sticky top-[116px] z-30 backdrop-blur-md bg-background/90 supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 min-w-max">
+            <Filter size={14} className="text-muted-foreground mr-1 sm:mr-2 shrink-0" />
+            {['all', 'workshop', 'webinar', 'training', 'conference'].map((type) => (
+              <button
+                key={type}
+                onClick={() => setActiveFilter(type as EventType | 'all')}
+                className={cn(
+                  "px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border whitespace-nowrap",
+                  activeFilter === type
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                    : "bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary hover:text-foreground"
+                )}
+              >
+                {type === 'all' ? (language === 'en' ? 'All' : 'الكل') : t.eventTypes[type as EventType]}
+              </button>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Filters */}
-        <section className="py-4 sm:py-6 lg:py-8 bg-background border-b border-border/50 sticky top-[116px] z-30 backdrop-blur-md bg-background/90 supports-[backdrop-filter]:bg-background/60">
-          <div className="container mx-auto px-4 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-2 min-w-max">
-              <Filter size={14} className="text-muted-foreground mr-1 sm:mr-2 shrink-0" />
-              {['all', 'workshop', 'webinar', 'training', 'conference'].map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setActiveFilter(type as EventType | 'all')}
-                  className={cn(
-                    "px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border whitespace-nowrap",
-                    activeFilter === type
-                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                      : "bg-secondary/50 text-muted-foreground border-transparent hover:bg-secondary hover:text-foreground"
-                  )}
-                >
-                  {type === 'all' ? (language === 'en' ? 'All' : 'الكل') : t.eventTypes[type as EventType]}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Upcoming Events */}
-        <section className="py-12 sm:py-16 lg:py-28 bg-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <ScrollReveal className="mb-8 sm:mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/40 pb-4 sm:pb-6">
-              <div>
-                <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground tracking-tight mb-2">
-                  {t.upcomingHeading}
-                </h2>
-                <p className="text-sm sm:text-base text-muted-foreground">Join our latest sessions to stay ahead.</p>
-              </div>
-            </ScrollReveal>
-
-            {filteredUpcoming.length > 0 ? (
-              <StaggerContainer className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredUpcoming.map((event, index) => (
-                  <StaggerItem key={event.id} index={index}>
-                    <EventCard event={event} />
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            ) : (
-              <div className="py-20 text-center text-muted-foreground bg-secondary/20 rounded-xl border border-dashed border-border">
-                <p>{language === 'en' ? "No upcoming events matching your filter." : "لا توجد فعاليات قادمة تطابق اختيارك."}</p>
-                <Button variant="link" onClick={() => setActiveFilter('all')} className="mt-2">View All</Button>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Past Events */}
-        <section className="py-12 sm:py-16 lg:py-28 bg-secondary/10 border-t border-border/50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <ScrollReveal className="mb-8 sm:mb-12 border-b border-border/40 pb-4 sm:pb-6">
+      {/* Upcoming Events */}
+      <section className="py-12 sm:py-16 lg:py-28 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal className="mb-8 sm:mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border/40 pb-4 sm:pb-6">
+            <div>
               <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground tracking-tight mb-2">
-                {t.pastHeading}
+                {t.upcomingHeading}
               </h2>
-              <p className="text-sm sm:text-base text-muted-foreground">Highlights from our previous workshops and success stories.</p>
-            </ScrollReveal>
+              <p className="text-sm sm:text-base text-muted-foreground">Join our latest sessions to stay ahead.</p>
+            </div>
+          </ScrollReveal>
 
-            {filteredPast.length > 0 ? (
-              <StaggerContainer className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredPast.map((event, index) => (
-                  <StaggerItem key={event.id} index={index}>
-                    <EventCard event={event} />
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            ) : (
-              <div className="py-12 text-center text-muted-foreground">
-                <p>{language === 'en' ? "No past events found." : "لا توجد فعاليات سابقة."}</p>
-              </div>
-            )}
-          </div>
-        </section>
+          {filteredUpcoming.length > 0 ? (
+            <StaggerContainer className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredUpcoming.map((event, index) => (
+                <StaggerItem key={event.id} index={index}>
+                  <EventCard event={event} />
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          ) : (
+            <div className="py-20 text-center text-muted-foreground bg-secondary/20 rounded-xl border border-dashed border-border">
+              <p>{language === 'en' ? "No upcoming events matching your filter." : "لا توجد فعاليات قادمة تطابق اختيارك."}</p>
+              <Button variant="link" onClick={() => setActiveFilter('all')} className="mt-2">View All</Button>
+            </div>
+          )}
+        </div>
+      </section>
 
-      </Layout>
+      {/* Past Events */}
+      <section className="py-12 sm:py-16 lg:py-28 bg-secondary/10 border-t border-border/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal className="mb-8 sm:mb-12 border-b border-border/40 pb-4 sm:pb-6">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground tracking-tight mb-2">
+              {t.pastHeading}
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground">Highlights from our previous workshops and success stories.</p>
+          </ScrollReveal>
+
+          {filteredPast.length > 0 ? (
+            <StaggerContainer className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredPast.map((event, index) => (
+                <StaggerItem key={event.id} index={index}>
+                  <EventCard event={event} />
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          ) : (
+            <div className="py-12 text-center text-muted-foreground">
+              <p>{language === 'en' ? "No past events found." : "لا توجد فعاليات سابقة."}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+
     </>
   );
 }

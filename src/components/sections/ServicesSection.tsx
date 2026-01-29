@@ -150,7 +150,7 @@ const SpotlightCard = ({ children, to, className }: { children: React.ReactNode,
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "relative block h-full overflow-hidden rounded-xl border border-gray-200 bg-white transition-all duration-300",
+          "relative block h-full overflow-hidden rounded-sm border border-gray-200 bg-white hover:border-slate-900/20 hover:shadow-xl transition-all duration-300 group",
           className
         )}
         style={{
@@ -250,20 +250,21 @@ export function ServicesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="services" className="py-24 lg:py-36 bg-white relative overflow-hidden">
+    <section ref={sectionRef} id="services" className="py-24 lg:py-36 bg-[#2A2C2B] relative overflow-hidden">
       {/* Background Accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-gray-50/50 to-transparent -z-10 pointer-events-none" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-blue-900/5 to-transparent -z-10 pointer-events-none" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="services-header text-center mb-16 opacity-0">
-          <div className="accent-line mx-auto mb-8 bg-logo-alto" style={{ width: '3rem', height: '1px' }} />
-          <span className="block text-xs font-semibold text-logo-gunsmoke uppercase tracking-[0.25em] mb-4">
+          <div className="accent-line mx-auto mb-8 bg-white/30" style={{ width: '3rem', height: '1px' }} />
+          <span className="block text-xs font-semibold text-slate-400 uppercase tracking-[0.25em] mb-4">
             {t.eyebrow}
           </span>
-          <h2 className="font-heading text-3xl lg:text-4xl font-semibold text-foreground tracking-tight mb-6">
+          <h2 className="font-heading text-3xl lg:text-4xl font-semibold text-white tracking-tight mb-6">
             {t.label}
           </h2>
-          <p className="font-body text-lg text-logo-jumbo max-w-2xl mx-auto leading-relaxed">
+          <p className="font-body text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
             {t.subtitle}
           </p>
         </div>
@@ -271,7 +272,10 @@ export function ServicesSection() {
         {/* Services Grid - 4 Cards */}
         <div className="services-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {t.services.map((service, index) => (
-            <div key={service.id} className="service-card opacity-0 h-full">
+            <div
+              key={service.id}
+              className="service-card opacity-0 h-full"
+            >
               <SpotlightCard to={`/services/${service.id}`}>
                 <div className="flex flex-col h-full items-start text-left transition-all duration-300 ease-executive">
                   {/* Icon / Micro-Visual */}
@@ -296,17 +300,14 @@ export function ServicesSection() {
                   <p className="font-body text-sm text-logo-jumbo leading-relaxed mb-6 line-clamp-3 max-w-[95%]">
                     {service.description}
                   </p>
-
-                  {/* Service-Specific CTA */}
-                  <div className="mt-auto flex items-center text-sm font-medium text-gray-500 transition-all duration-200 ease-executive">
-                    <span className="relative inline-block">
+                  {/* Service-Specific CTA - Corporate Action Box */}
+                  <div className="mt-auto w-full pt-6 border-t border-gray-100 flex items-center justify-between group-hover/card transition-colors">
+                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider group-hover:text-slate-900 transition-colors">
                       {service.cta}
-                      <span className="absolute bottom-0 left-0 w-full h-[1px] bg-logo-alto scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-200 ease-executive" />
                     </span>
-                    <ArrowRight
-                      className="ml-2 w-4 h-4 transition-transform duration-200 ease-executive group-hover:translate-x-1 rtl:rotate-180 rtl:mr-2 rtl:ml-0 rtl:group-hover:-translate-x-1"
-                      strokeWidth={2}
-                    />
+                    <div className="w-8 h-8 rounded bg-gray-100 text-gray-500 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
+                      <ArrowRight className="w-4 h-4 rtl:rotate-180" strokeWidth={2} />
+                    </div>
                   </div>
                 </div>
               </SpotlightCard>
@@ -315,13 +316,13 @@ export function ServicesSection() {
         </div>
 
         {/* Section-Level CTA */}
-        <div className="services-cta text-center mt-24 pt-12 border-t border-gray-100 opacity-0">
-          <p className="font-body text-base text-gray-500 mb-4">
+        <div className="services-cta text-center mt-24 pt-12 border-t border-white/5 opacity-0">
+          <p className="font-body text-base text-slate-400 mb-4">
             {t.sectionCta.prompt}
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center justify-center px-8 py-3 rounded-md text-sm font-semibold transition-all duration-300 ease-executive group border border-black/20 bg-white text-slate-900 hover:bg-black hover:text-white hover:border-black"
+            className="inline-flex items-center justify-center px-8 py-3 rounded-sm text-sm font-bold transition-all duration-300 ease-executive group border border-transparent bg-white text-slate-950 hover:bg-slate-200"
           >
             <span>{t.sectionCta.button}</span>
             <ArrowRight

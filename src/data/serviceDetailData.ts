@@ -1,6 +1,20 @@
 import { Boxes, MessageSquare, GraduationCap, Package, Cpu, LineChart, Leaf, Factory, Building2, Car, Zap, HardHat, Beaker, Globe, ShieldCheck } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
+// Partner Logos
+import dassaultLogo from '@/assets/partners/dassault.svg';
+import solidworksLogo from '@/assets/partners/solidworks.svg';
+import simuliaLogo from '@/assets/partners/simulia.svg';
+import mscLogo from '@/assets/partners/msc.svg';
+import cypeLogo from '@/assets/partners/cype.svg';
+import simlabLogo from '@/assets/partners/simlab.svg';
+import driveworksLogo from '@/assets/partners/driveworks.svg';
+import chaosLogo from '@/assets/partners/chaos.svg';
+import simaproLogo from '@/assets/partners/simapro.svg';
+import maxqdaLogo from '@/assets/partners/maxqda.svg';
+import crealityLogo from '@/assets/partners/creality.svg';
+import herowearLogo from '@/assets/partners/herowear.svg';
+
 export interface ServiceDetailContent {
     head: {
         title: string;
@@ -37,6 +51,28 @@ export interface ServiceDetailContent {
             icon: LucideIcon;
         }[];
     };
+
+    // "Partners" (Software Logos)
+    partners?: {
+        title: string;
+        items: {
+            name: string;
+            desc: string;
+            logo: string;
+            color: string;
+        }[];
+    };
+
+    // "Features" (Why Choose Us)
+    features?: {
+        title: string;
+        items: {
+            title: string;
+            desc: string;
+        }[];
+    };
+
+    // "How KITES Supports You" (Process Steps)
 
     // "How KITES Supports You" (Process Steps)
     process?: {
@@ -904,14 +940,40 @@ export const servicesDetailData: Record<string, ServiceData> = {
                 content: "Acquiring and maintaining engineering software can be complex. We simplify the process by handling licensing, deployment, and technical infrastructure support for the world's leading simulation platforms.",
                 quote: "Access and integrate the world's leading simulation platforms seamlessly.",
             },
+            partners: {
+                title: "Our Technology Partners",
+                items: [
+                    { name: "Dassault Systèmes", desc: "World leader in 3D design & engineering software.", logo: dassaultLogo, color: "#005686" },
+                    { name: "SOLIDWORKS", desc: "Premier 3D CAD design and engineering capabilities.", logo: solidworksLogo, color: "#E92A2E" },
+                    { name: "SIMULIA", desc: "Realistic simulation applications (Abaqus, fe-safe).", logo: simuliaLogo, color: "#005686" },
+                    { name: "MSC Software", desc: "Leading multi-physics and CAE simulation solutions.", logo: mscLogo, color: "#FFD100" },
+                    { name: "CYPE", desc: "Software for architecture, engineering and construction.", logo: cypeLogo, color: "#00AEEF" },
+                    { name: "SimLab Soft", desc: "3D visualization and VR collaboration tools.", logo: simlabLogo, color: "#F37021" },
+                    { name: "DriveWorks", desc: "Design automation and CPQ for SOLIDWORKS.", logo: driveworksLogo, color: "#8CC63F" },
+                    { name: "CHAOS", desc: "High-quality rendering and visualization technology.", logo: chaosLogo, color: "#ffffff" },
+                    { name: "SimaPro", desc: "Leading LCA software for sustainability analysis.", logo: simaproLogo, color: "#78BE20" },
+                    { name: "MAXQDA", desc: "Advanced qualitative and mixed methods data analysis.", logo: maxqdaLogo, color: "#009EE3" },
+                    { name: "CREALITY", desc: "Professional 3D printing and additive manufacturing.", logo: crealityLogo, color: "#00CC00" },
+                    { name: "HEROWEAR", desc: "Exosuits for workforce safety and fatigue reduction.", logo: herowearLogo, color: "#F15A29" }
+                ]
+            },
+            features: {
+                title: "Why Choose KITES?",
+                items: [
+                    { title: "Official Distributor", desc: "Direct partnership ensuring authentic licenses and best pricing." },
+                    { title: "Local Support", desc: "Same-time-zone technical support from certified engineers." },
+                    { title: "Turnkey Setup", desc: "We handle installation, server configuration, and license server management." },
+                    { title: "Training Included", desc: "Complementary orientation sessions for your team." }
+                ]
+            },
             delivery: {
-                title: "How We Deliver",
+                title: "Deployment Process",
                 steps: [
-                    "Licensing strategy & support",
-                    "Technical installation",
-                    "Infrastructure integration",
-                    "Version management",
-                    "Technical troubleshooting"
+                    "Needs Assessment & Sizing",
+                    "License Procurement",
+                    "Server & Client Installation",
+                    "Configuration & Testing",
+                    "User Onboarding"
                 ],
             },
             impact: {
@@ -933,14 +995,40 @@ export const servicesDetailData: Record<string, ServiceData> = {
                 content: "يمكن أن يكون الحصول على البرمجيات الهندسية وصيانتها أمرًا معقدًا. نحن نبسط العملية من خلال التعامل مع الترخيص والنشر ودعم البنية التحتية الفنية لمنصات المحاكاة الرائدة في العالم.",
                 quote: "الوصول إلى منصات المحاكاة الرائدة عالمياً ودمجها بسلاسة.",
             },
+            partners: {
+                title: "شركاؤنا التكنولوجيون",
+                items: [
+                    { name: "Dassault Systèmes", desc: "الرائدة عالمياً في برامج التصميم والهندسة ثلاثية الأبعاد.", logo: dassaultLogo, color: "#005686" },
+                    { name: "SOLIDWORKS", desc: "قدرات تصميم وهندسة CAD ثلاثية الأبعاد رائدة.", logo: solidworksLogo, color: "#E92A2E" },
+                    { name: "SIMULIA", desc: "تطبيقات المحاكاة الواقعية (Abaqus, fe-safe).", logo: simuliaLogo, color: "#005686" },
+                    { name: "MSC Software", desc: "حلول محاكاة الفيزياء المتعددة وCAE الرائدة.", logo: mscLogo, color: "#FFD100" },
+                    { name: "CYPE", desc: "برمجيات للهندسة المعمارية والهندسة والبناء.", logo: cypeLogo, color: "#00AEEF" },
+                    { name: "SimLab Soft", desc: "أدوات التصور ثلاثي الأبعاد والتعاون عبر الواقع الافتراضي.", logo: simlabLogo, color: "#F37021" },
+                    { name: "DriveWorks", desc: "أتمتة التصميم وCPQ لبرنامج SOLIDWORKS.", logo: driveworksLogo, color: "#8CC63F" },
+                    { name: "CHAOS", desc: "تكنولوجيا التصيير والتصور عالية الجودة.", logo: chaosLogo, color: "#ffffff" },
+                    { name: "SimaPro", desc: "برنامج LCA الرائد لتحليل الاستدامة.", logo: simaproLogo, color: "#78BE20" },
+                    { name: "MAXQDA", desc: "تحليل بيانات الطرق النوعية والمختلطة المتقدمة.", logo: maxqdaLogo, color: "#009EE3" },
+                    { name: "CREALITY", desc: "الطباعة ثلاثية الأبعاد الاحترافية والتصنيع الإضافي.", logo: crealityLogo, color: "#00CC00" },
+                    { name: "HEROWEAR", desc: "بدلات خارجية لسلامة القوى العاملة وتقليل التعب.", logo: herowearLogo, color: "#F15A29" }
+                ]
+            },
+            features: {
+                title: "لماذا تختار KITES؟",
+                items: [
+                    { title: "موزع رسمي", desc: "شراكة مباشرة تضمن تراخيص أصلية وأفضل الأسعار." },
+                    { title: "دعم محلي", desc: "دعم فني في نفس المنطقة الزمنية من مهندسين معتمدين." },
+                    { title: "إعداد متكامل", desc: "نتولى التثبيت وتكوين الخادم وإدارة خادم الترخيص." },
+                    { title: "تدريب شامل", desc: "جلسات توجيهية تكميلية لفريقك." }
+                ]
+            },
             delivery: {
-                title: "كيف نقدم الخدمة",
+                title: "عملية النشر",
                 steps: [
-                    "استراتيجية الترخيص والدعم",
-                    "التثبيت الفني",
-                    "تكامل البنية التحتية",
-                    "إدارة الإصدارات",
-                    "استكشاف الأخطاء وإصلاحها"
+                    "تقييم الاحتياجات وتحديد الحجم",
+                    "شراء التراخيص",
+                    "تثبيت الخادم والعميل",
+                    "التكوين والاختبار",
+                    "تأهيل المستخدمين"
                 ],
             },
             impact: {

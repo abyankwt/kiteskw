@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronRight, MessageSquare, Package, Boxes, GraduationCap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { servicesDetailData } from '@/data/serviceDetailData';
 import { cn } from '@/lib/utils';
@@ -19,111 +19,67 @@ const SERVICE_ORDER = [
 ];
 
 export function ServicesMegaMenu({ isOpen, onClose }: ServicesMegaMenuProps) {
-    const { language } = useLanguage();
-    const [activeServiceId, setActiveServiceId] = useState<string>('consultation');
+    const { language, isRTL } = useLanguage();
 
     if (!isOpen) return null;
 
-    // Get current content based on language
-    const getContent = (id: string) => {
-        const service = servicesDetailData[id];
-        // Fallback for software-distribution if not in detail data yet, define basic info or skip
-        // Assuming detail data exists for all, if not we handle gracefully
-        // strictly structured access
-        return service ? service[language] : null;
-    };
-
-    const activeContent = getContent(activeServiceId);
-
     return (
         <div
-            className="absolute top-full inset-x-0 bg-white shadow-xl border-t border-gray-100 py-8 z-50 animate-in fade-in slide-in-from-top-2 duration-100 ease-out"
+            className="absolute top-full left-0 w-full bg-white shadow-[0_20px_50px_-10px_rgba(0,0,0,0.15)] border-t border-slate-100 z-50 animate-in fade-in slide-in-from-top-1 duration-200"
             onMouseLeave={onClose}
         >
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-12 gap-8 lg:gap-12">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div className="md:grid flex flex-col md:grid-cols-4 gap-6 lg:gap-10">
+                    {SERVICE_ORDER.map((id, index) => {
+                        const service = servicesDetailData[id];
+                        if (!service) return null;
 
-                    {/* Left Column: Navigation List */}
-                    <div className="col-span-4 flex flex-col space-y-1">
-                        {SERVICE_ORDER.map((id) => {
-                            const service = servicesDetailData[id];
-                            // If service data is missing in the large file, we might skip or show placeholder. 
-                            // We'll rely on the keys being present.
-                            if (!service) return null;
+                        const content = service[language];
+                        const Icon = service.icon;
 
-                            const content = service[language];
-                            const isActive = activeServiceId === id;
+                        return (
+                            <Link
+                                key={id}
+                                to={`/services/${id}`}
+                                onClick={onClose}
+                                className="group flex flex-col items-start gap-4 p-5 -m-5 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-200"
+                                style={{ animationDelay: `${index * 50}ms` }}
+                            >
+                                {/* Icon Container */}
+                                <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300 shadow-sm">
+                                    <Icon size={20} strokeWidth={1.5} />
+                                </div>
 
-                            return (
-                                <Link
-                                    key={id}
-                                    to={`/services/${id}`}
-                                    className={cn(
-                                        "group flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all duration-200",
-                                        isActive
-                                            ? "bg-logo-codgray text-white shadow-sm"
-                                            : "text-logo-gunsmoke hover:bg-gray-50 hover:text-logo-codgray"
-                                    )}
-                                    onMouseEnter={() => setActiveServiceId(id)}
-                                    onClick={onClose}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <service.icon
-                                            size={18}
-                                            className={cn(
-                                                isActive ? "text-white" : "text-logo-gunsmoke group-hover:text-logo-codgray"
-                                            )}
-                                            strokeWidth={1.5}
-                                        />
-                                        <span className="tracking-wide">
-                                            {/* Use title from data or mapped short titles if needed */}
-                                            {id === 'consultation' ? (language === 'ar' ? "الاستشارات الهندسية" : "Engineering & Sustainability") : content.head.title}
-                                        </span>
-                                    </div>
-                                    {isActive && (
-                                        <ChevronRight size={16} className="text-white" />
-                                    )}
-                                </Link>
-                            );
-                        })}
-                    </div>
-
-                    {/* Right Column: Context Panel */}
-                    <div className="col-span-8 bg-gray-50/50 rounded-sm p-8 border border-gray-100">
-                        {activeContent ? (
-                            <div className="h-full flex flex-col items-start justify-center animate-in fade-in duration-200 key={activeServiceId}">
-                                <h3 className="font-heading text-xl font-bold text-slate-900 mb-3 tracking-tight">
-                                    {activeContent.head.title}
-                                </h3>
-                                <p className="font-body text-base text-slate-500 leading-relaxed max-w-2xl mb-6">
-                                    {activeContent.head.subtitle}
-                                </p>
-
-                                {/* Optional: Deliverables/Capabilities List if available to add density */}
-                                {activeContent.overview && (
-                                    <p className="text-sm text-slate-400 max-w-xl mb-8 line-clamp-2">
-                                        {activeContent.overview.content}
+                                {/* Content */}
+                                <div className="flex flex-col gap-1.5">
+                                    <h3 className="font-heading text-sm font-bold text-slate-900 group-hover:text-primary transition-colors">
+                                        {content.head.title}
+                                    </h3>
+                                    <p className="font-body text-xs text-slate-500 leading-relaxed line-clamp-2">
+                                        {content.head.subtitle}
                                     </p>
-                                )}
+                                </div>
 
-                                <Link
-                                    to={`/services/${activeServiceId}`}
-                                    onClick={onClose}
-                                    className="mt-auto inline-flex items-center text-sm font-medium text-logo-codgray border-b border-logo-alto pb-0.5 transition-colors"
-                                >
-                                    <span>
-                                        {language === 'ar' ? "استكشف تفاصيل الخدمة" : "Explore service details"}
-                                    </span>
-                                    <ArrowRight size={16} className={cn("ml-2 transition-transform duration-200", language === 'ar' ? "rotate-180 mr-2 ml-0" : "")} />
-                                </Link>
-                            </div>
-                        ) : (
-                            <div className="h-full flex items-center justify-center text-slate-300">
-                                Select a service
-                            </div>
-                        )}
-                    </div>
+                                {/* Link Action */}
+                                <div className="mt-auto pt-3 flex items-center text-[11px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-primary transition-colors">
+                                    <span>{language === 'ar' ? "التفاصيل" : "Learn more"}</span>
+                                    <ArrowRight size={14} className={cn("ml-1.5 transition-transform group-hover:translate-x-0.5", isRTL ? "rotate-180 mr-1.5 ml-0 group-hover:-translate-x-0.5" : "")} />
+                                </div>
+                            </Link>
+                        );
+                    })}
+                </div>
 
+                {/* Footer/Prompt - Centered & Styled */}
+                <div className="mt-12 pt-6 border-t border-slate-100 flex justify-center">
+                    <Link
+                        to="/services"
+                        onClick={onClose}
+                        className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors py-2 px-4 rounded-full hover:bg-slate-50"
+                    >
+                        <span>{language === 'ar' ? "عرض جميع الخدمات" : "View Services Overview"}</span>
+                        <ArrowRight size={14} className={isRTL ? "rotate-180" : ""} />
+                    </Link>
                 </div>
             </div>
         </div>

@@ -1,11 +1,11 @@
 import { SEO } from "@/components/common/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useContent } from "@/hooks/useContent";
-import { Layout } from "@/components/layout/Layout";
+
 import { Link } from "react-router-dom";
 import { partners as allPartners, type Partner } from "@/data/partners";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 interface PartnersContent {
   pageTitle: string;
@@ -21,7 +21,7 @@ interface PartnersContent {
 // Define category order
 const categoryOrder: Array<Partner['category']> = ['engineering', 'sustainability', 'research', 'manufacturing'];
 
-// Default content fallback (simulating content hook response behavior for new keys)
+// Default content fallback
 const defaultContent = {
   categories: {
     engineering: "Engineering & Simulation Software",
@@ -31,115 +31,154 @@ const defaultContent = {
   }
 };
 
+// Brand Colors Map for Glow Effects
+const brandColors: Record<string, string> = {
+  dassault: "#005596",
+  solidworks: "#E02D3B",
+  simulia: "#005F9E",
+  msc: "#D02C2F",
+  cype: "#008FD3",
+  simlab: "#FCA311",
+  driveworks: "#543C93",
+  chaos: "#F0562D",
+  simapro: "#78BE20",
+  maxqda: "#1B75BC",
+  creality: "#24A328",
+  herowear: "#F58220",
+};
+
 export default function Partners() {
   const { language } = useLanguage();
   const t = useContent<PartnersContent>('partners');
 
-  // Fallback for new category label if content file isn't updated yet
+  // Fallback for new category label
   const getCategoryTitle = (id: string) => {
-    // @ts-ignore - straightforward fallback
+    // @ts-ignore
     return t?.categories?.[id] || defaultContent.categories[id as keyof typeof defaultContent.categories];
   };
 
   return (
-    <>
+    <div className="bg-white min-h-screen">
       <SEO page="partners" />
-      <Layout>
-        {/* Dark Hero Section - Matches Services & Expertise */}
-        <section className="pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-48 lg:pb-32 bg-primary relative overflow-hidden">
-          {/* Noise Texture */}
-          <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <ScrollReveal className="max-w-4xl mx-auto text-center">
-              {/* Breadcrumb - Consistent with Services */}
+      {/* Dark Premium Hero - Matches other pages */}
+      <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#0B0F14] relative overflow-hidden text-center">
+        {/* Abstract Background Design */}
+        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-[#1a202c] to-transparent opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+        {/* Glow Orb */}
+        <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <ScrollReveal className="max-w-4xl mx-auto">
+            {/* Back Link */}
+            <div className="flex justify-center mb-10">
               <Link
                 to="/"
-                className="inline-flex items-center gap-2 text-primary-foreground/60 hover:text-primary-foreground font-heading text-[10px] sm:text-xs uppercase tracking-widest mb-4 sm:mb-6 lg:mb-10 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-300"
               >
                 <ArrowLeft size={12} className="rtl:rotate-180" />
-                {language === "en" ? "Back to Home" : "العودة للرئيسية"}
+                {language === "en" ? "Home" : "الرئيسية"}
               </Link>
+            </div>
 
-              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4 sm:mb-6 tracking-tight leading-tight">
-                {t.pageTitle}
-              </h1>
-              <p className="font-body text-base sm:text-lg lg:text-xl text-primary-foreground/80 font-light max-w-2xl mx-auto px-2 sm:px-0">
-                {t.intro}
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-[1.1]">
+              {t.pageTitle}
+            </h1>
+            <p className="font-body text-lg sm:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
+              {t.intro}
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
 
-        {/* Partner Categories */}
-        <section className="py-12 sm:py-16 lg:py-28 bg-background">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-12 sm:space-y-16 lg:space-y-32">
-              {categoryOrder.map((categoryId) => {
-                const categoryPartners = allPartners.filter(p => p.category === categoryId);
+      {/* Partner Ecosystem Grid - White Background */}
+      <section className="py-24 bg-white relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-24">
+            {categoryOrder.map((categoryId) => {
+              const categoryPartners = allPartners.filter(p => p.category === categoryId);
 
-                return (
-                  <div key={categoryId}>
-                    {/* Category Header */}
-                    <ScrollReveal className="mb-8 sm:mb-12 border-b border-border/40 pb-4 sm:pb-6">
-                      <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="h-6 sm:h-8 w-1 bg-logo-alto rounded-full" />
-                        <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
-                          {t.categories[categoryId]}
-                        </h2>
-                      </div>
-                    </ScrollReveal>
+              // Skip empty categories
+              if (categoryPartners.length === 0) return null;
 
-                    {/* Partner Card Grid */}
-                    <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-                      {categoryPartners.map((partner, index) => (
+              return (
+                <div key={categoryId} className="relative">
+                  {/* Category Header */}
+                  <ScrollReveal className="mb-10 text-center md:text-left border-b border-gray-100 pb-6">
+                    <div className="flex items-center gap-3 justify-center md:justify-start">
+                      <h2 className="font-heading text-xl sm:text-2xl font-bold text-slate-900 tracking-wide uppercase">
+                        {getCategoryTitle(categoryId)}
+                      </h2>
+                    </div>
+                  </ScrollReveal>
+
+                  {/* Cards Grid */}
+                  <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {categoryPartners.map((partner, index) => {
+                      const brandColor = brandColors[partner.id] || "#0f172a";
+
+                      return (
                         <StaggerItem key={partner.id} index={index}>
-                          <Link
+                          <Link // Make the whole card a link if there is a detail view, otherwise div
                             to={`/partners/${partner.id}`}
-                            className="group block h-full bg-card hover:bg-card/80 border border-border/60 hover:border-gray-300 rounded-xl p-6 lg:p-8 hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300 relative overflow-hidden"
+                            className="group relative block h-full bg-white border border-slate-200 rounded-xl p-8 hover:border-slate-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                            style={{
+                              // @ts-ignore
+                              "--brand-color": brandColor
+                            }}
                           >
-                            <div className="flex flex-col h-full">
-                              {/* Logo Container */}
-                              <div className="h-16 mb-6 flex items-center justify-start">
+                            {/* Hover Brand Accent - Top Line */}
+                            <div
+                              className="absolute top-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-center"
+                              style={{ backgroundColor: brandColor }}
+                            />
+
+                            <div className="relative z-10 flex flex-col h-full">
+                              {/* Logo Area */}
+                              <div className="h-14 mb-8 flex items-center justify-start">
                                 {partner.logo ? (
                                   <img
                                     src={partner.logo}
                                     alt={`${partner.name} logo`}
-                                    className="h-full w-auto object-contain max-w-[140px] transition-all duration-300"
+                                    className="h-full w-auto object-contain max-w-[160px] transition-all duration-500 group-hover:scale-105"
                                   />
                                 ) : (
-                                  <div className="w-16 h-16 rounded-lg bg-secondary/50 border border-border/50 flex items-center justify-center text-xl font-heading font-bold text-muted-foreground group-hover:bg-logo-codgray group-hover:text-white transition-colors duration-300">
-                                    {partner.abbr}
+                                  <div className="text-2xl font-bold text-slate-400 group-hover:text-slate-900 transition-colors">
+                                    {partner.name}
                                   </div>
                                 )}
                               </div>
 
                               {/* Content */}
                               <div className="mt-auto">
-                                <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:font-extrabold transition-all">
+                                <h3 className="font-heading text-xl font-bold text-slate-900 mb-3 group-hover:text-[var(--brand-color)] transition-colors">
                                   {partner.name}
                                 </h3>
                                 {partner.desc && (
-                                  <p className="font-body text-sm text-muted-foreground line-clamp-2">
+                                  <p className="font-body text-sm text-slate-500 mb-6 leading-relaxed bg-white transition-colors line-clamp-3">
                                     {partner.desc}
                                   </p>
                                 )}
-                              </div>
 
-                              {/* Hover Reveal - Bottom Edge */}
-                              <div className="absolute bottom-0 left-0 w-full h-1 bg-logo-alto opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 group-hover:text-[var(--brand-color)] transition-colors">
+                                  <span>{language === 'ar' ? 'عرض التفاصيل' : 'View Profile'}</span>
+                                  <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                </div>
+                              </div>
                             </div>
                           </Link>
                         </StaggerItem>
-                      ))}
-                    </StaggerContainer>
-                  </div>
-                );
-              })}
-            </div>
+                      )
+                    })}
+                  </StaggerContainer>
+                </div>
+              );
+            })}
           </div>
-        </section>
-      </Layout>
-    </>
+        </div>
+      </section>
+
+    </div>
   );
 }
