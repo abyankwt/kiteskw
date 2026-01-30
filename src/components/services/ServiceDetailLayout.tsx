@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/accordion";
 
 // Interactive Components
-import { TrainingTimeline } from "./TrainingTimeline";
+import { TrainingTimelineEnhanced } from "./TrainingTimeline";
 import { SkillBentoGrid } from "./SkillBentoGrid";
 import { ConsultingProcess } from "./ConsultingProcess";
 import { DomainDeck } from "./DomainDeck";
@@ -193,11 +193,13 @@ export const ServiceDetailLayout = ({ data }: ServiceDetailLayoutProps) => {
             {content.courses && (
                 data.id === 'training' ? (
                     <div id="curriculum" className="scroll-mt-20">
-                        <TrainingTimeline courses={content.courses.items.map((c, i) => ({
+                        <TrainingTimelineEnhanced courses={content.courses.items.map((c, i) => ({
                             title: c.title,
                             duration: c.duration,
                             description: c.desc,
-                            outline: c.outline
+                            outline: c.outline,
+                            who_should_attend: c.who_should_attend,
+                            standards: c.standards
                         }))} />
                     </div>
                 ) : (

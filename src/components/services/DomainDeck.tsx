@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useLayoutEffect } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
@@ -14,7 +14,7 @@ export const DomainDeck = ({ items }: { items: DomainItem[] }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             const sections = gsap.utils.toArray(".domain-card");
             const totalWidth = 400 * sections.length; // Approx width

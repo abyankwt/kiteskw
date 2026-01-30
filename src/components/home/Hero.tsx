@@ -187,6 +187,7 @@ export function Hero() {
                                         }}
                                         className="relative w-full sm:w-auto sm:min-w-[180px] h-[56px] sm:h-12 px-8 bg-white text-slate-950 hover:bg-slate-100 transition-colors duration-[240ms] ease-[cubic-bezier(0.4,0,0.2,1)] flex items-center justify-center rounded-sm text-sm font-bold tracking-wide shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white"
                                     >
+
                                         <span>{content.ctaPrimary}</span>
                                         <ArrowRight
                                             ref={primaryArrowRef}

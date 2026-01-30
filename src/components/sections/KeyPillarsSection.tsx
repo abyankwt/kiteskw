@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import { Cpu, Cog, GraduationCap, Leaf, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -98,7 +98,7 @@ export function KeyPillarsSection() {
     const triggerRef = useRef<HTMLDivElement>(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             // ScrollTrigger for pinning and scrubbing
             ScrollTrigger.create({

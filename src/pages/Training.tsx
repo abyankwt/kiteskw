@@ -1,6 +1,6 @@
 import { SEO } from "@/components/common/SEO";
 import { SkipLink } from "@/components/common/SkipLink";
-import { ArrowRight, Star, Clock, Users, Trophy, Sparkles, CheckCircle2, Quote, BookOpen, Target, Briefcase } from "lucide-react";
+import { ArrowRight, Star, Clock, Users, Trophy, Sparkles, CheckCircle2, Quote, BookOpen, Target, Briefcase, MessageCircle, Flame } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
@@ -9,6 +9,16 @@ import { useEffect, useRef, useState } from "react";
 import { TrainingOffersModal } from "@/components/training/TrainingOffersModal";
 import { TrainingOffersSection } from "@/components/training/TrainingOffersSection";
 import { TrainingBentoGrid } from "@/components/training/TrainingBentoGrid";
+import { AnimatedCounter } from "@/components/training/AnimatedCounter";
+import { CourseAvailabilityBadge } from "@/components/training/CourseAvailabilityBadge";
+import { EnhancedCourseCard } from "@/components/training/EnhancedCourseCard";
+import { LiveEnrollmentNotifications } from "@/components/training/LiveEnrollmentNotifications";
+import { StickyCTABar } from "@/components/training/StickyCTABar";
+import { EnhancedStatsSection } from "@/components/training/EnhancedStatsSection";
+import { LimitedTimeOfferBanner } from "@/components/training/LimitedTimeOfferBanner";
+import { TrustBadges } from "@/components/training/TrustBadges";
+import { ComparisonMatrix } from "@/components/training/ComparisonMatrix";
+import { BundleOfferCard, EarlyBirdOfferCard } from "@/components/training/SpecialOfferCard";
 import { gsap } from "@/lib/gsap";
 
 // Mock Data for Trending Courses
@@ -21,7 +31,7 @@ const TRENDING_COURSES = [
         reviews: 128,
         duration: "6 Weeks",
         level: "Advanced",
-        image: "https://images.unsplash.com/photo-1581093458891-2f3b97b0a3c7?q=80&w=2070&auto=format&fit=crop",
+        image: "/assets/training/solidworks-level-1.png",
         badge: "Best Seller",
         price: "Contact for Pricing"
     },
@@ -33,7 +43,7 @@ const TRENDING_COURSES = [
         reviews: 342,
         duration: "4 Weeks",
         level: "Intermediate",
-        image: "https://images.unsplash.com/photo-1537462713505-a1d77482301c?q=80&w=2070&auto=format&fit=crop",
+        image: "/assets/training/solidworks-certification.png",
         badge: "Certification",
         price: "Contact for Pricing"
     },
@@ -45,19 +55,19 @@ const TRENDING_COURSES = [
         reviews: 89,
         duration: "8 Weeks",
         level: "Expert",
-        image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=2070&auto=format&fit=crop",
+        image: "/assets/training/cfd-fluid-dynamics.png",
         badge: "Trending",
         price: "Contact for Pricing"
     },
     {
         id: 4,
-        title: "Engineering Project Management",
-        category: "Management",
+        title: "MATLAB Fundamental",
+        category: "Programming",
         rating: 4.7,
         reviews: 215,
-        duration: "3 Weeks",
+        duration: "5 Days",
         level: "Beginner",
-        image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop",
+        image: "/assets/training/matlab-fundamental.png",
         badge: "New",
         price: "Contact for Pricing"
     }
@@ -93,12 +103,43 @@ const REVIEWS = [
 
 import { FloatingOfferButton } from "@/components/training/FloatingOfferButton";
 
+const content = {
+    en: {
+        hero: {
+            title: "Professional Engineering Training",
+            subtitle: "Elevate your skills with industry-leading courses in simulation and design.",
+            primaryCTA: "Contact Us",
+            secondaryCTA: "View Programs"
+        }
+    },
+    ar: {
+        hero: {
+            title: "تدريب هندسي احترافي",
+            subtitle: "ارتق بمهاراتك مع دورات رائدة في المحاكاة والتصميم.",
+            primaryCTA: "اتصل بنا",
+            secondaryCTA: "عرض البرامج"
+        }
+    }
+};
+
 const Training = () => {
     const { language, isRTL } = useLanguage();
+    const t = content[language];
 
     // Animation Refs
     const heroRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
+    const subtitleRef = useRef<HTMLParagraphElement>(null);
+    const primaryCTARef = useRef<HTMLDivElement>(null);
+    const secondaryCTARef = useRef<HTMLAnchorElement>(null);
+
+    const handleScrollToPrograms = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        const element = document.getElementById('featured-courses');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     const [showOffersModal, setShowOffersModal] = useState(false);
 
@@ -123,6 +164,21 @@ const Training = () => {
                 duration: 1,
                 ease: "power3.out"
             });
+            gsap.from(subtitleRef.current, {
+                y: 20,
+                opacity: 0,
+                duration: 1,
+                delay: 0.2,
+                ease: "power3.out"
+            });
+            gsap.from([primaryCTARef.current, secondaryCTARef.current], {
+                y: 20,
+                opacity: 0,
+                duration: 0.8,
+                delay: 0.4,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
         }, heroRef);
         return () => ctx.revert();
     }, []);
@@ -134,47 +190,58 @@ const Training = () => {
         <div className="bg-[#0B0F14] min-h-screen">
             <SEO page="training" />
             <SkipLink />
-            <Layout>
-                {/* SECTION 1 — Hero Section */}
-                <section
-                    ref={heroRef}
-                    className="relative pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-[#0B0F14]"
-                    id="main-content"
-                >
-                    {/* Deep Navy Gradient */}
-                    <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0B0F14] to-[#101826]" />
-                    {/* Subtle Noise */}
-                    <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-0" />
 
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className={cn("max-w-4xl mx-auto text-center", isRTL && "text-right")}>
-                            <h1
-                                ref={titleRef}
-                                className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-[1.05] tracking-tight"
-                            >
-                                {t.hero.title}
-                            </h1>
-                            <p
-                                ref={subtitleRef}
-                                className="font-body text-base sm:text-lg lg:text-xl text-slate-400/90 max-w-3xl mx-auto font-light px-2 sm:px-0 mb-10 lg:mb-12"
-                            >
-                                {t.hero.subtitle}
-                            </p>
+            {/* Limited Time Offer Banner */}
+            <LimitedTimeOfferBanner
+                discount="20%"
+                expiryDate="2026-02-15T23:59:59"
+                remainingSeats={12}
+                message="Early Bird Discount - Limited Seats Available!"
+            />
 
-                            {/* CTAs */}
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-                                <Link
-                                    ref={primaryCTARef}
-                                    to="/contact?service=training"
+            {/* SECTION 1 — Hero Section */}
+            <section
+                ref={heroRef}
+                className="relative pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-[#0B0F14]"
+                id="main-content"
+            >
+                {/* Deep Navy Gradient */}
+                <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0B0F14] to-[#101826]" />
+                {/* Subtle Noise */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-0" />
+
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className={cn("max-w-4xl mx-auto text-center", isRTL && "text-right")}>
+                        <h1
+                            ref={titleRef}
+                            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-[1.05] tracking-tight"
+                        >
+                            {t.hero.title}
+                        </h1>
+                        <p
+                            ref={subtitleRef}
+                            className="font-body text-base sm:text-lg lg:text-xl text-slate-400/90 max-w-3xl mx-auto font-light px-2 sm:px-0 mb-10 lg:mb-12"
+                        >
+                            {t.hero.subtitle}
+                        </p>
+
+                        {/* CTAs */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12">
+                            <div ref={primaryCTARef} className="w-full sm:w-auto">
+                                <a
+                                    href={whatsappUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     onMouseEnter={(e) => {
-                                        gsap.to(e.currentTarget, { y: -2, duration: 0.3, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
+                                        gsap.to(e.currentTarget, { scale: 1.05, duration: 0.3, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
                                     }}
                                     onMouseLeave={(e) => {
-                                        gsap.to(e.currentTarget, { y: 0, duration: 0.3, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
+                                        gsap.to(e.currentTarget, { scale: 1, duration: 0.3, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
                                     }}
-                                    className="inline-flex items-center px-8 py-4 bg-white text-[#0B0F14] font-semibold text-sm uppercase tracking-wider rounded-sm hover:bg-white/90 transition-all duration-300 group shadow-lg hover:shadow-xl w-full sm:w-auto justify-center"
+                                    className="inline-flex items-center px-8 py-4 bg-[#25D366] text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-[#20BD5A] transition-all duration-300 group shadow-lg hover:shadow-[0_0_25px_rgba(37,211,102,0.4)] w-full justify-center relative animate-pulse-subtle"
                                 >
-                                    <span>{t.hero.primaryCTA}</span>
+                                    <MessageCircle size={18} className="mr-2" />
+                                    <span>Start Free Consultation</span>
                                     <ArrowRight
                                         size={16}
                                         className={cn(
@@ -182,26 +249,51 @@ const Training = () => {
                                             isRTL ? "mr-3 rotate-180 group-hover:-translate-x-1" : "ml-3 group-hover:translate-x-1"
                                         )}
                                     />
-                                </Link>
-                                <a
-                                    ref={secondaryCTARef}
-                                    href="#programs"
-                                    onClick={handleScrollToPrograms}
-                                    className="inline-flex items-center text-sm font-semibold text-white/90 hover:text-white transition-colors duration-300 group underline underline-offset-4 decoration-white/30 hover:decoration-white/60"
-                                >
-                                    <span>{t.hero.secondaryCTA}</span>
-                                    <ArrowRight
-                                        size={14}
-                                        className={cn(
-                                            "transition-transform duration-300",
-                                            isRTL ? "mr-2 rotate-180 group-hover:-translate-x-1" : "ml-2 group-hover:translate-x-1"
-                                        )}
-                                    />
                                 </a>
+                            </div>
+                            <a
+                                ref={secondaryCTARef}
+                                href="#programs"
+                                onClick={handleScrollToPrograms}
+                                className="inline-flex items-center text-sm font-semibold text-white/90 hover:text-white transition-colors duration-300 group underline underline-offset-4 decoration-white/30 hover:decoration-white/60"
+                            >
+                                <span>{t.hero.secondaryCTA}</span>
+                                <ArrowRight
+                                    size={14}
+                                    className={cn(
+                                        "transition-transform duration-300",
+                                        isRTL ? "mr-2 rotate-180 group-hover:-translate-x-1" : "ml-2 group-hover:translate-x-1"
+                                    )}
+                                />
+                            </a>
+                        </div>
+
+                        {/* Animated Stats */}
+                        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm">
+                            <div className="flex items-center gap-2 text-slate-400">
+                                <CheckCircle2 size={16} className="text-emerald-500" />
+                                <span>
+                                    <AnimatedCounter end={500} suffix="+" className="font-bold text-white" /> Engineers Enrolled
+                                </span>
+                            </div>
+                            <div className="hidden sm:block w-px h-4 bg-slate-700" />
+                            <div className="flex items-center gap-2 text-slate-400">
+                                <Star size={16} className="text-yellow-500 fill-yellow-500" />
+                                <span>
+                                    <AnimatedCounter end={4.9} suffix="/5" className="font-bold text-white" /> Average Rating
+                                </span>
+                            </div>
+                            <div className="hidden sm:block w-px h-4 bg-slate-700" />
+                            <div className="flex items-center gap-2 text-slate-400">
+                                <Trophy size={16} className="text-blue-500" />
+                                <span>
+                                    <AnimatedCounter end={98} suffix="%" className="font-bold text-white" /> Career Growth
+                                </span>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
             {/* POPUP MODAL */}
             <TrainingOffersModal open={showOffersModal} onOpenChange={setShowOffersModal} />
@@ -222,49 +314,20 @@ const Training = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {TRENDING_COURSES.map((course) => (
-                            <a
+                        {TRENDING_COURSES.map((course, index) => (
+                            <EnhancedCourseCard
                                 key={course.id}
-                                href={whatsappUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group bg-[#1A1F29] rounded-xl overflow-hidden border border-white/5 hover:border-blue-500/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-                            >
-                                {/* Image */}
-                                <div className="h-48 relative overflow-hidden">
-                                    <img src={course.image} alt={course.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                    <div className="absolute top-3 left-3 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded">
-                                        {course.badge}
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="p-5">
-                                    <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-                                        <Clock size={12} /> {course.duration}
-                                        <span className="w-1 h-1 bg-slate-600 rounded-full" />
-                                        <span className="text-blue-400">{course.level}</span>
-                                    </div>
-                                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 min-h-[56px] group-hover:text-blue-400 transition-colors">
-                                        {course.title}
-                                    </h3>
-
-                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-                                        <div className="flex items-center gap-1">
-                                            <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                                            <span className="text-sm font-bold text-slate-200">{course.rating}</span>
-                                            <span className="text-xs text-slate-500">({course.reviews})</span>
-                                        </div>
-                                        <span className="text-xs font-bold text-white bg-white/5 px-2 py-1 rounded group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                            Enroll
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
+                                course={course}
+                                whatsappUrl={whatsappUrl}
+                                index={index}
+                            />
                         ))}
                     </div>
                 </div>
             </section>
+
+            {/* Trust Badges Section */}
+            <TrustBadges />
 
             {/* SECTION: OFFERS GRID */}
             <TrainingOffersSection />
@@ -272,73 +335,201 @@ const Training = () => {
             {/* SECTION: BENTO GRID FEATURES */}
             <TrainingBentoGrid />
 
-            {/* SECTION: LEARNING PATH INFOGRAPHIC */}
-            <section className="py-24 bg-white relative overflow-hidden">
+            {/* Comparison Matrix Section */}
+            <ComparisonMatrix />
+
+            {/* Special Offer Card - Bundle Offer */}
+            <section className="py-12 bg-gradient-to-br from-slate-50 to-blue-50">
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                        <BundleOfferCard />
+                        <EarlyBirdOfferCard />
+                    </div>
+                </div>
+            </section>
+
+            {/* SECTION: LEARNING PATH INFOGRAPHIC (Enhanced) */}
+            <section className="py-24 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
+
+                {/* Decorative Gradients */}
+                <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl" />
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <span className="text-emerald-600 font-bold uppercase tracking-widest text-xs">Career Roadmap</span>
                         <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mt-2 mb-4">Your Journey to Expertise</h2>
-                        <p className="text-slate-500 text-lg">We map out your growth from university to industry leadership.</p>
+                        <p className="text-slate-600 text-lg">Choose your path and join <AnimatedCounter end={500} suffix="+" className="font-bold text-emerald-600" /> engineers advancing their careers.</p>
                     </div>
 
                     <div className="relative">
-                        {/* Connecting Line (Desktop) */}
-                        <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-1 bg-slate-100 rounded-full overflow-hidden">
+                        {/* Connecting Line (Desktop) - Enhanced */}
+                        <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-1 bg-slate-200 rounded-full overflow-hidden">
                             <div className="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-purple-500 origin-left animate-[grow-width_3s_ease-out_forwards]" />
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8 relative">
-                            {/* Step 1 */}
+                            {/* Step 1 - Foundation */}
                             <div className="relative group">
-                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-blue-500 rounded-full items-center justify-center z-10 shadow-lg shadow-blue-500/20 group-hover:scale-125 transition-transform duration-300">
-                                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                                {/* Connection Dot */}
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-4 border-blue-500 rounded-full items-center justify-center z-10 shadow-lg shadow-blue-500/30 group-hover:scale-125 transition-all duration-300">
+                                    <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
                                 </div>
-                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
-                                    <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 relative z-10">
-                                        <BookOpen size={30} />
+
+                                {/* Card */}
+                                <div
+                                    className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group/card cursor-pointer min-h-[400px] flex flex-col"
+                                    style={{ transform: "perspective(1000px)" }}
+                                >
+                                    {/* Gradient Overlay */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+
+                                    {/* Icon with Rotation */}
+                                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mb-6 relative z-10 shadow-lg shadow-blue-500/30 group-hover/card:rotate-12 transition-transform duration-500">
+                                        <BookOpen size={30} className="group-hover/card:scale-110 transition-transform" />
                                     </div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">1. Foundation</h3>
-                                    <p className="text-slate-500 text-sm leading-relaxed">
-                                        Master the basics of engineering simulation (ANSYS, SolidWorks) to ace your capstone projects.
+
+                                    {/* Duration Badge */}
+                                    <div className="absolute top-4 right-4 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                        <Clock size={12} />
+                                        4-6 weeks
+                                    </div>
+
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-blue-600 transition-colors">1. Foundation</h3>
+
+                                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                                        Master the basics of engineering simulation and CAD design to ace your capstone projects.
                                     </p>
+
+                                    {/* Stats */}
+                                    <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
+                                        <Users size={14} className="text-blue-500" />
+                                        <AnimatedCounter end={340} suffix=" completed" className="font-semibold" />
+                                    </div>
+
+                                    {/* CTA */}
+                                    <a
+                                        href="https://wa.me/96522092260?text=I'm interested in the Foundation program"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <MessageCircle size={16} className="mr-2" />
+                                        Start Foundation Path
+                                    </a>
                                 </div>
                             </div>
 
-                            {/* Step 2 */}
+                            {/* Step 2 - Certification */}
                             <div className="relative group mt-8 md:mt-0">
-                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-emerald-500 rounded-full items-center justify-center z-10 shadow-lg shadow-emerald-500/20 group-hover:scale-125 transition-transform duration-300 delay-100">
-                                    <div className="w-2 h-2 bg-emerald-500 rounded-full" />
+                                {/* Connection Dot */}
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-4 border-emerald-500 rounded-full items-center justify-center z-10 shadow-lg shadow-emerald-500/30 group-hover:scale-125 transition-all duration-300 delay-100">
+                                    <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
                                 </div>
-                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
-                                    <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 relative z-10">
-                                        <Target size={30} />
+
+                                {/* Card */}
+                                <div
+                                    style={{ transform: "perspective(1000px)" }}
+                                    className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group/card cursor-pointer min-h-[400px] flex flex-col"
+                                >
+                                    {/* Gradient Overlay */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+
+                                    {/* Icon with Rotation */}
+                                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white mb-6 relative z-10 shadow-lg shadow-emerald-500/30 group-hover/card:rotate-12 transition-transform duration-500">
+                                        <Target size={30} className="group-hover/card:scale-110 transition-transform" />
                                     </div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">2. Certification</h3>
-                                    <p className="text-slate-500 text-sm leading-relaxed">
+
+                                    {/* Duration Badge */}
+                                    <div className="absolute top-4 right-4 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                        <Clock size={12} />
+                                        8-12 weeks
+                                    </div>
+
+                                    {/* Popular Badge */}
+                                    <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <Flame size={10} />
+                                        Most Popular
+                                    </div>
+
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-emerald-600 transition-colors">2. Certification</h3>
+
+                                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
                                         Earn professional credentials (CFD, FEA) to demonstrate competency to top employers.
                                     </p>
+
+                                    {/* Stats */}
+                                    <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
+                                        <Users size={14} className="text-emerald-500" />
+                                        <AnimatedCounter end={215} suffix=" completed" className="font-semibold" />
+                                    </div>
+
+                                    {/* CTA */}
+                                    <a
+                                        href="https://wa.me/96522092260?text=I'm interested in the Certification program"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <MessageCircle size={16} className="mr-2" />
+                                        Get Certified Now
+                                    </a>
                                 </div>
                             </div>
 
-                            {/* Step 3 */}
+                            {/* Step 3 - Mastery */}
                             <div className="relative group mt-16 md:mt-0">
-                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-4 border-purple-500 rounded-full items-center justify-center z-10 shadow-lg shadow-purple-500/20 group-hover:scale-125 transition-transform duration-300 delay-200">
-                                    <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                                {/* Connection Dot */}
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-4 border-purple-500 rounded-full items-center justify-center z-10 shadow-lg shadow-purple-500/30 group-hover:scale-125 transition-all duration-300 delay-200">
+                                    <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse" />
                                 </div>
-                                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 group-hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150" />
-                                    <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-6 relative z-10">
-                                        <Trophy size={30} />
+
+                                {/* Card */}
+                                <div
+                                    className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group/card cursor-pointer min-h-[400px] flex flex-col"
+                                    style={{ transform: "perspective(1000px)" }}
+                                >
+                                    {/* Gradient Overlay */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+
+                                    {/* Icon with Rotation */}
+                                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-6 relative z-10 shadow-lg shadow-purple-500/30 group-hover/card:rotate-12 transition-transform duration-500">
+                                        <Trophy size={30} className="group-hover/card:scale-110 transition-transform" />
                                     </div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors">3. Mastery</h3>
-                                    <p className="text-slate-500 text-sm leading-relaxed">
+
+                                    {/* Duration Badge */}
+                                    <div className="absolute top-4 right-4 bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                        <Clock size={12} />
+                                        12+ weeks
+                                    </div>
+
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-purple-600 transition-colors">3. Mastery</h3>
+
+                                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
                                         Lead teams and innovation. Advanced corporate training to upskill entire departments.
                                     </p>
+
+                                    {/* Stats */}
+                                    <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
+                                        <Users size={14} className="text-purple-500" />
+                                        <AnimatedCounter end={87} suffix=" completed" className="font-semibold" />
+                                    </div>
+
+                                    {/* CTA */}
+                                    <a
+                                        href="https://wa.me/96522092260?text=I'm interested in the Mastery program"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <MessageCircle size={16} className="mr-2" />
+                                        Achieve Mastery
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -382,22 +573,57 @@ const Training = () => {
             <section className="py-24 bg-[#0B0F14] relative overflow-hidden">
                 <div className="absolute inset-0 bg-blue-600/5" />
                 <div className="container mx-auto px-4 text-center relative z-10">
+                    {/* Urgency Badge */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider mb-6">
+                        <Clock size={14} className="animate-pulse" />
+                        Limited Spots for February 2026 Intake
+                    </div>
+
                     <h2 className="text-3xl sm:text-5xl font-bold text-white mb-6">Ready to Start Learning?</h2>
                     <p className="text-slate-400 max-w-xl mx-auto mb-10 text-lg">
-                        Join 500+ engineers who have advanced their careers with KITES training.
+                        Join <AnimatedCounter end={500} suffix="+" className="font-bold text-white" /> engineers who have advanced their careers with KITES training.
                     </p>
-                    <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-blue-500/25"
-                    >
-                        Enroll in a Course
-                        <ArrowRight size={18} className="ml-2" />
-                    </a>
+
+                    {/* Dual CTAs */}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a
+                            href={whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-8 py-4 bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold rounded-full transition-all shadow-lg hover:shadow-[0_0_25px_rgba(37,211,102,0.4)]"
+                        >
+                            <MessageCircle size={18} className="mr-2" />
+                            Chat on WhatsApp
+                            <ArrowRight size={18} className="ml-2" />
+                        </a>
+                        <Link
+                            to="/contact?service=training"
+                            className="inline-flex items-center px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-full transition-all border border-white/10"
+                        >
+                            Schedule a Call
+                            <ArrowRight size={18} className="ml-2" />
+                        </Link>
+                    </div>
+
+                    {/* Trust Signals */}
+                    <div className="flex flex-wrap items-center justify-center gap-6 mt-10 text-xs text-slate-500">
+                        <div className="flex items-center gap-1.5">
+                            <CheckCircle2 size={14} className="text-emerald-500" />
+                            <span>Money-back guarantee</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <CheckCircle2 size={14} className="text-emerald-500" />
+                            <span>Free trial lesson</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <CheckCircle2 size={14} className="text-emerald-500" />
+                            <span>Industry-certified trainers</span>
+                        </div>
+                    </div>
                 </div>
             </section>
-        </div>
+
+        </div >
     );
 };
 
