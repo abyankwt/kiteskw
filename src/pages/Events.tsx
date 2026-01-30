@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SEO } from "@/components/common/SEO";
 
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -22,6 +22,22 @@ export default function Events() {
   const { language } = useLanguage();
   const t = useContent<EventsContent>('events');
   const [activeFilter, setActiveFilter] = useState<EventType | 'all'>('all');
+  const [isFilterSticky, setIsFilterSticky] = useState(false);
+
+  // Sticky filter behavior on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = 400; // Approximate hero section height
+      const headerHeight = 80; // Header height
+      const scrollPosition = window.scrollY;
+
+      // Make filter sticky when scrolled past hero section
+      setIsFilterSticky(scrollPosition > heroHeight - headerHeight);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const upcomingEvents = events.filter((e) => e.upcoming);
   const pastEvents = events.filter((e) => !e.upcoming);
@@ -179,11 +195,6 @@ export default function Events() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden">
-        {/* Decorative Gradient Orbs */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl"></div>
-
         {/* Noise Texture */}
         <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
 
@@ -227,7 +238,12 @@ export default function Events() {
       </section>
 
       {/* Enhanced Filters */}
-      <section className="py-6 lg:py-8 bg-white border-b border-gray-200 fixed top-[80px] left-0 right-0 z-30 shadow-md backdrop-blur-sm">
+      <section className={cn(
+        "py-6 lg:py-8 bg-white border-b border-gray-200 shadow-md transition-all duration-200",
+        isFilterSticky
+          ? "fixed top-20 left-0 right-0 z-40"
+          : "relative"
+      )}>
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">

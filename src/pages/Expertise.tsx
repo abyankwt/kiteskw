@@ -127,12 +127,9 @@ export default function Expertise() {
       <SkipLink />
 
       {/* Page Hero - Dark Cinematic */}
-      <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#0B0F14] relative overflow-hidden text-center">
-        {/* Abstract Background Design */}
-        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-[#1a202c] to-transparent opacity-20 pointer-events-none" />
+      <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden text-center">
+        {/* Noise Texture */}
         <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
-        {/* Glow Orb */}
-        <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/10 blur-[150px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-4xl mx-auto">

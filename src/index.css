@@ -588,6 +588,60 @@
   .animate-pulse-subtle {
     animation: pulse-subtle 3s ease-in-out infinite;
   }
+
+  /* Hero Enhancement Animations */
+  @keyframes glow-pulse {
+
+    0%,
+    100% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes button-glow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    }
+
+    50% {
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  @keyframes stats-completion-glow {
+    0% {
+      opacity: 0;
+      filter: blur(20px);
+    }
+
+    50% {
+      opacity: 0.6;
+      filter: blur(10px);
+    }
+
+    100% {
+      opacity: 0;
+      filter: blur(20px);
+    }
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 8s ease-in-out infinite;
+  }
+
+  .animate-button-glow {
+    animation: button-glow 3s ease-in-out infinite;
+  }
+
+  .animate-stats-glow {
+    animation: stats-completion-glow 1.5s ease-out forwards;
+  }
 }
 
 /* Reduced Motion Support */

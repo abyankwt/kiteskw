@@ -156,18 +156,42 @@ export default function Contact() {
 
 
       {/* Hero Section */}
-      <section className="pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-48 lg:pb-32 bg-primary relative overflow-hidden">
+      <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden">
         {/* Noise Texture */}
         <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-3xl mx-auto text-center">
-            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4 sm:mb-6 tracking-tight leading-tight">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
+              <Mail className="w-4 h-4 text-white" />
+              <span className="text-sm font-bold text-white uppercase tracking-wide">Get In Touch</span>
+            </div>
+
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight leading-tight bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
               {t.pageTitle}
             </h1>
-            <p className="font-body text-base sm:text-lg lg:text-xl text-primary-foreground/80 font-light max-w-2xl mx-auto px-2 sm:px-0">
+            <p className="font-body text-base sm:text-lg lg:text-xl text-white/80 font-light max-w-2xl mx-auto px-2 sm:px-0 mb-8">
               {t.intro}
             </p>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 mt-8">
+              <div className="flex items-center gap-2 text-white/90">
+                <Clock className="w-5 h-5 text-blue-400" />
+                <span className="text-sm font-semibold">24h Response</span>
+              </div>
+              <div className="hidden sm:block w-px h-6 bg-white/20"></div>
+              <div className="flex items-center gap-2 text-white/90">
+                <Building2 className="w-5 h-5 text-purple-400" />
+                <span className="text-sm font-semibold">500+ Consultations</span>
+              </div>
+              <div className="hidden sm:block w-px h-6 bg-white/20"></div>
+              <div className="flex items-center gap-2 text-white/90">
+                <CheckCircle className="w-5 h-5 text-green-400" />
+                <span className="text-sm font-semibold">4.9★ Rating</span>
+              </div>
+            </div>
           </ScrollReveal>
         </div>
       </section>
@@ -209,7 +233,7 @@ export default function Contact() {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className={`h-12 bg-background focus:ring-2 focus:ring-logo-alto/20 transition-all ${errors.name ? "border-destructive focus:ring-destructive/20" : "border-input"}`}
+                            className={`h-12 bg-background transition-all ${errors.name ? "border-destructive focus:ring-2 focus:ring-destructive/20 focus:border-destructive" : "border-input focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"}`}
                             maxLength={100}
                             autoComplete="name"
                           />
@@ -230,7 +254,7 @@ export default function Contact() {
                             type="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className={`h-12 bg-background focus:ring-2 focus:ring-logo-alto/20 transition-all ${errors.email ? "border-destructive focus:ring-destructive/20" : "border-input"}`}
+                            className={`h-12 bg-background transition-all ${errors.email ? "border-destructive focus:ring-2 focus:ring-destructive/20 focus:border-destructive" : "border-input focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"}`}
                             maxLength={255}
                             autoComplete="email"
                           />
@@ -251,7 +275,7 @@ export default function Contact() {
                             type="tel"
                             value={formData.phone}
                             onChange={handleChange}
-                            className={`h-12 bg-background focus:ring-2 focus:ring-logo-alto/20 transition-all ${errors.phone ? "border-destructive focus:ring-destructive/20" : "border-input"}`}
+                            className={`h-12 bg-background transition-all ${errors.phone ? "border-destructive focus:ring-2 focus:ring-destructive/20 focus:border-destructive" : "border-input focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"}`}
                             maxLength={20}
                             autoComplete="tel"
                           />
@@ -302,13 +326,18 @@ export default function Contact() {
 
                       {/* Message */}
                       <div className="space-y-2">
-                        <Label htmlFor="message" className="text-sm font-medium text-foreground/80">{t.form.labels.message} <span className="text-logo-gunsmoke">*</span></Label>
+                        <div className="flex items-center justify-between">
+                          <Label htmlFor="message" className="text-sm font-medium text-foreground/80">{t.form.labels.message} <span className="text-logo-gunsmoke">*</span></Label>
+                          <span className="text-xs text-muted-foreground">
+                            {formData.message.length}/1000
+                          </span>
+                        </div>
                         <Textarea
                           id="message"
                           name="message"
                           value={formData.message}
                           onChange={handleChange}
-                          className={`min-h-[160px] resize-y bg-background focus:ring-2 focus:ring-logo-alto/20 transition-all ${errors.message ? "border-destructive focus:ring-destructive/20" : "border-input"}`}
+                          className={`min-h-[160px] resize-y bg-background transition-all ${errors.message ? "border-destructive focus:ring-2 focus:ring-destructive/20 focus:border-destructive" : "border-input focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"}`}
                           maxLength={1000}
                         />
                         {errors.message && (
@@ -354,63 +383,90 @@ export default function Contact() {
             {/* Contact Details */}
             <div className="lg:col-span-1">
               <ScrollReveal delay={200}>
-                <div className="bg-card border border-border/50 rounded-2xl p-8 sticky top-36 md:top-40 lg:top-44 shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <h3 className="font-heading text-xl font-bold text-foreground mb-8 pb-4 border-b border-border/40">
-                    {t.contactDetails.heading}
-                  </h3>
+                <div className="space-y-6">
+                  {/* Contact Info Card */}
+                  <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <h3 className="font-heading text-xl font-bold text-foreground mb-6 pb-4 border-b border-gray-200 flex items-center gap-2">
+                      <Mail className="w-5 h-5 text-blue-600" />
+                      {t.contactDetails.heading}
+                    </h3>
 
-                  <div className="space-y-8">
-                    {/* Email */}
-                    <a
-                      href={`mailto:${t.contactDetails.emailValue}`}
-                      className="group flex items-start gap-4 p-2 -mx-2 rounded-lg hover:bg-secondary/50 transition-colors"
-                    >
-                      <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-logo-codgray group-hover:text-white text-logo-codgray transition-colors duration-300">
-                        <Mail className="w-5 h-5" strokeWidth={2} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground mb-1">
-                          {t.contactDetails.email}
-                        </p>
-                        <span className="text-foreground font-semibold transition-colors">
-                          {t.contactDetails.emailValue}
-                        </span>
-                      </div>
-                    </a>
+                    <div className="space-y-6">
+                      {/* Email */}
+                      <a
+                        href={`mailto:${t.contactDetails.emailValue}`}
+                        className="group flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 border border-transparent hover:border-blue-200"
+                      >
+                        <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                          <Mail className="w-6 h-6 text-white" strokeWidth={2} />
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wide">
+                            {t.contactDetails.email}
+                          </p>
+                          <span className="text-foreground font-bold text-sm group-hover:text-blue-600 transition-colors">
+                            {t.contactDetails.emailValue}
+                          </span>
+                        </div>
+                      </a>
 
-                    {/* Phone */}
-                    <a
-                      href={`tel:${t.contactDetails.phoneValue.replace(/\s/g, "")}`}
-                      className="group flex items-start gap-4 p-2 -mx-2 rounded-lg hover:bg-secondary/50 transition-colors"
-                    >
-                      <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-500 group-hover:text-white text-emerald-600 transition-colors duration-300">
-                        <Phone className="w-5 h-5" strokeWidth={2} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground mb-1">
-                          {t.contactDetails.phone}
-                        </p>
-                        <span className="text-foreground font-semibold group-hover:text-emerald-600 transition-colors" dir="ltr">
-                          {t.contactDetails.phoneValue}
-                        </span>
-                      </div>
-                    </a>
+                      {/* Phone */}
+                      <a
+                        href={`tel:${t.contactDetails.phoneValue.replace(/\s/g, "")}`}
+                        className="group flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 transition-all duration-300 border border-transparent hover:border-green-200"
+                      >
+                        <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                          <Phone className="w-6 h-6 text-white" strokeWidth={2} />
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wide">
+                            {t.contactDetails.phone}
+                          </p>
+                          <span className="text-foreground font-bold text-sm group-hover:text-green-600 transition-colors" dir="ltr">
+                            {t.contactDetails.phoneValue}
+                          </span>
+                        </div>
+                      </a>
 
-                    {/* Location */}
-                    <div className="flex items-start gap-4 p-2 -mx-2">
-                      <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center flex-shrink-0 text-purple-600">
-                        <MapPin className="w-5 h-5" strokeWidth={2} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground mb-1">
-                          {t.contactDetails.location}
-                        </p>
-                        <p className="text-foreground font-semibold">
-                          {t.contactDetails.locationValue}
-                        </p>
+                      {/* Location */}
+                      <div className="flex items-start gap-4 p-4 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100">
+                        <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                          <MapPin className="w-6 h-6 text-white" strokeWidth={2} />
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wide">
+                            {t.contactDetails.location}
+                          </p>
+                          <p className="text-foreground font-bold text-sm">
+                            {t.contactDetails.locationValue}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
+
+                  {/* WhatsApp Quick Action */}
+                  <a
+                    href="https://wa.me/96522092260"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
+                        <Phone className="w-7 h-7 text-white" strokeWidth={2.5} />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-white/90 text-xs font-bold uppercase tracking-wide mb-1">
+                          {language === 'en' ? 'Quick Contact' : 'تواصل سريع'}
+                        </p>
+                        <p className="text-white font-bold text-lg">
+                          {language === 'en' ? 'Chat on WhatsApp' : 'الدردشة عبر واتساب'}
+                        </p>
+                      </div>
+                      <ArrowRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform rtl:rotate-180 rtl:group-hover:-translate-x-1" />
+                    </div>
+                  </a>
                 </div>
               </ScrollReveal>
             </div>

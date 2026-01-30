@@ -23,7 +23,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // Electrical & Wiring
     "Electric Wiring and Lighting for Residentials and Commercial Buildings": {
-        image: "/assets/training/electric-wiring.jpg",
+        image: "/assets/training/electric-machines.png",
         category: "Electrical",
         level: "Intermediate",
         rating: 4.7,
@@ -34,7 +34,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // Environmental Law
     "Environmental Law": {
-        image: "/assets/training/environmental-law.jpg",
+        image: "/assets/training/environmental-law.png",
         category: "Sustainability",
         level: "Professional",
         rating: 4.6,
@@ -45,7 +45,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // FEA Structural
     "Finite Element Analysis Applications in Structural Engineering": {
-        image: "/assets/training/fea-structural.jpg",
+        image: "/assets/training/fea-structural.png",
         category: "Simulation",
         level: "Advanced",
         rating: 4.8,
@@ -56,7 +56,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // SimSolid
     "Introduction to SimSolid | ALTAIR": {
-        image: "/assets/training/simsolid.jpg",
+        image: "/assets/training/simsolid.png",
         category: "CAD Design",
         level: "Intermediate",
         rating: 4.7,
@@ -67,7 +67,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // EIA
     "How to Perform an Environmental Impact Assessment (EIA)": {
-        image: "/assets/training/eia.jpg",
+        image: "/assets/training/eia.png",
         category: "Sustainability",
         level: "Professional",
         rating: 4.8,
@@ -78,7 +78,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // HVAC Basics
     "Introduction to Basic HVAC Systems Fundamentals": {
-        image: "/assets/training/hvac-basics.jpg",
+        image: "/assets/training/hvac-basics.png",
         category: "MEP Systems",
         level: "Beginner",
         rating: 4.5,
@@ -89,7 +89,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // CFD Modeling
     "Computational Fluid Dynamics Modeling": {
-        image: "/assets/training/cfd-modeling.jpg",
+        image: "/assets/training/cfd-modeling.png",
         category: "Fluid Dynamics",
         level: "Advanced",
         rating: 4.9,
@@ -100,7 +100,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // HVAC Detailed
     "Introduction to Detailed Modeling in HVAC": {
-        image: "/assets/training/hvac-detailed.jpg",
+        image: "/assets/training/hvac-basics.png",
         category: "MEP Systems",
         level: "Advanced",
         rating: 4.7,
@@ -111,7 +111,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // LCA
     "Life Cycle Assessment for Environmental Systems and Devices": {
-        image: "/assets/training/lca.jpg",
+        image: "/assets/training/eia.png",
         category: "Sustainability",
         level: "Professional",
         rating: 4.8,
@@ -122,7 +122,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
 
     // Additional courses - using placeholder images for now
     "Green Building Rating Systems": {
-        image: "/assets/training/green-building.jpg",
+        image: "/assets/training/environmental-management.png",
         category: "Sustainability",
         level: "Professional",
         rating: 4.7,
@@ -132,7 +132,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
     },
 
     "MATLAB Programming": {
-        image: "/assets/training/matlab.jpg",
+        image: "/assets/training/matlab.png",
         category: "Programming",
         level: "Intermediate",
         rating: 4.6,
@@ -142,7 +142,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
     },
 
     "Minitab Statistical Analysis": {
-        image: "/assets/training/minitab.jpg",
+        image: "/assets/training/minitab.png",
         category: "Programming",
         level: "Beginner",
         rating: 4.5,
@@ -152,7 +152,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
     },
 
     "Programming with VBA and Macros": {
-        image: "/assets/training/vba.jpg",
+        image: "/assets/training/vba.png",
         category: "Programming",
         level: "Intermediate",
         rating: 4.4,
@@ -162,7 +162,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
     },
 
     "Electric Machine Winding Design": {
-        image: "/assets/training/electric-machines.jpg",
+        image: "/assets/training/electric-machines.png",
         category: "Electrical",
         level: "Advanced",
         rating: 4.6,
@@ -172,7 +172,7 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
     },
 
     "Geotechnical Investigation Methods": {
-        image: "/assets/training/geotechnical.jpg",
+        image: "/assets/training/geotechnical.png",
         category: "Civil Engineering",
         level: "Professional",
         rating: 4.7,
@@ -182,13 +182,90 @@ export const courseMetadataMap: Record<string, CourseMetadata> = {
     },
 
     "Lighting Design Fundamentals": {
-        image: "/assets/training/lighting.jpg",
+        image: "/assets/training/electric-machines.png",
         category: "Electrical",
         level: "Beginner",
         rating: 4.5,
         enrollmentCount: 710,
         certified: false,
         color: "#fbbf24"
+    },
+
+    // MATLAB Fundamental (exact title match)
+    "MATLAB Fundamental": {
+        image: "/assets/training/matlab-fundamental.png",
+        category: "Programming",
+        level: "Beginner",
+        rating: 4.5,
+        enrollmentCount: 500,
+        certified: false,
+        color: "#ef4444"
+    },
+
+    // Geotechnical System Simulation & Modeling (exact title match)
+    "Geotechnical System Simulation & Modeling": {
+        image: "/assets/training/geotechnical.png",
+        category: "Simulation",
+        level: "Intermediate",
+        rating: 4.5,
+        enrollmentCount: 500,
+        certified: false,
+        color: "#8b5cf6"
+    },
+
+    // Minitab Fundamental (exact title match)
+    "Minitab Fundamental": {
+        image: "/assets/training/minitab-statistics.png",
+        category: "Programming",
+        level: "Beginner",
+        rating: 4.5,
+        enrollmentCount: 500,
+        certified: false,
+        color: "#10b981"
+    },
+
+    // Operation Protection and Maintenance of Electric Machines
+    "Operation Protection and Maintenance of Electric Machines": {
+        image: "/assets/training/electric-machines.png",
+        category: "Electrical",
+        level: "Intermediate",
+        rating: 4.5,
+        enrollmentCount: 500,
+        certified: false,
+        color: "#f59e0b"
+    },
+
+    // Selection and Installation of Electric Cables
+    "Selection and Installation of Electric Cables": {
+        image: "/assets/training/electric-machines.png",
+        category: "Electrical",
+        level: "Intermediate",
+        rating: 4.5,
+        enrollmentCount: 500,
+        certified: false,
+        color: "#f59e0b"
+    },
+
+    // SolidWorks – Level 1
+    "SolidWorks – Level 1": {
+        image: "/assets/training/solidworks-level-1.png",
+        category: "CAD Design",
+        level: "Beginner",
+        rating: 4.5,
+        enrollmentCount: 500,
+        certified: false,
+        color: "#3b82f6"
+    },
+
+    // Variable Frequency Drives and DC Motors
+    "Variable Frequency Drives and DC Motors": {
+        image: "/assets/training/electric-machines.png",
+        category: "Electrical",
+        level: "Intermediate",
+        rating: 4.5,
+        enrollmentCount: 500,
+        certified: false,
+        color: "#f59e0b"
     }
 };
 

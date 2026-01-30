@@ -164,9 +164,9 @@ export function EcosystemNav() {
                     iconSize: 22
                 });
             } else {
-                // Desktop
+                // Desktop - Increased spacing for better breathing room
                 setDimensions({
-                    radius: mode === 'capabilities' ? 195 : 225,
+                    radius: mode === 'capabilities' ? 215 : 250,
                     centerSize: 120,
                     nodeSize: 120,
                     iconSize: 24
@@ -443,7 +443,7 @@ export function EcosystemNav() {
                                 }}
                             >
                                 <item.icon className="text-white/80 mb-1 lg:mb-2 pointer-events-none" strokeWidth={1.5} style={{ width: iconSize, height: iconSize }} />
-                                <span className="text-[9px] md:text-[10px] leading-relaxed text-white/70 font-medium uppercase tracking-wide pointer-events-none max-w-[90px]">
+                                <span className="text-[10px] md:text-[11px] leading-relaxed text-white/80 font-medium uppercase tracking-wide pointer-events-none max-w-[95px]">
                                     {item.label}
                                 </span>
                                 <span className="absolute -bottom-5 text-[8px] md:text-[9px] text-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 tracking-widest uppercase pointer-events-none whitespace-nowrap">

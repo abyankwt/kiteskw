@@ -102,6 +102,25 @@ export function HeroKPI({ startDelay = 0 }: HeroKPIProps) {
                             if (valueElement) {
                                 valueElement.textContent = Math.floor(counter.val).toString();
                             }
+                        },
+                        onComplete: () => {
+                            // Enhancement #4: Glow effect on completion
+                            const glowElement = item.querySelector('.kpi-glow');
+                            if (glowElement) {
+                                gsap.set(glowElement, { opacity: 0 });
+                                gsap.to(glowElement, {
+                                    opacity: 0.6,
+                                    duration: 0.4,
+                                    ease: "power2.out",
+                                    onComplete: () => {
+                                        gsap.to(glowElement, {
+                                            opacity: 0,
+                                            duration: 0.8,
+                                            ease: "power2.in"
+                                        });
+                                    }
+                                });
+                            }
                         }
                     }, 0);
 
@@ -124,19 +143,21 @@ export function HeroKPI({ startDelay = 0 }: HeroKPIProps) {
             ref={containerRef}
             className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 lg:mt-24 pointer-events-auto"
         >
-            <div className="w-full p-5 lg:p-8 border border-[rgba(255,255,255,0.22)] rounded-[10px] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 relative z-20">
+            <div className="w-full p-6 lg:p-10 border border-[rgba(255,255,255,0.22)] rounded-[10px] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-16 relative z-20">
                     {kpiData.map((item, index) => (
                         <div
                             key={item.id}
                             ref={(el) => (itemsRef.current[index] = el)}
                             className="flex flex-col items-center sm:items-start text-center sm:text-left"
                         >
-                            <span className="font-heading font-bold text-3xl sm:text-4xl text-white mb-1 tabular-nums relative block">
+                            <span className="font-heading font-bold text-4xl lg:text-5xl text-white mb-2 tabular-nums relative block">
                                 <span className="kpi-value">0</span>{item.suffix}
                                 <span className="kpi-accent absolute -bottom-1 left-0 w-full h-[2px] bg-white/30 origin-left scale-x-0 opacity-0" />
+                                {/* Glow effect - Enhancement #4 */}
+                                <span className="kpi-glow absolute inset-0 bg-blue-400/20 blur-xl opacity-0 pointer-events-none" />
                             </span>
-                            <span className="kpi-label font-body font-medium text-[10px] sm:text-xs tracking-widest text-white/50 uppercase">
+                            <span className="kpi-label font-body font-medium text-sm tracking-widest text-white/60 uppercase">
                                 {language === "ar" ? item.label.ar : item.label.en}
                             </span>
                         </div>

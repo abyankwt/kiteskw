@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { HeroKPI } from "@/components/home/HeroKPI";
 import { FlowFieldCanvas } from "@/components/home/FlowFieldCanvas";
 import { EcosystemNav } from "@/components/home/EcosystemNav";
+import { TrustBadges } from "@/components/home/TrustBadges";
+import { ScrollIndicator } from "@/components/home/ScrollIndicator";
 import { gsap } from "@/lib/gsap";
 
 export function Hero() {
@@ -48,10 +50,10 @@ export function Hero() {
                 );
             }
 
-            // Flow field fade in separately
+            // Flow field fade in separately (reduced opacity for less noise)
             gsap.fromTo(".flow-field-bg",
                 { opacity: 0 },
-                { opacity: 0.2, duration: 1.5, ease: "power2.out", delay: 0.2 }
+                { opacity: 0.08, duration: 1.5, ease: "power2.out", delay: 0.2 }
             );
 
         }, heroRef);
@@ -100,13 +102,13 @@ export function Hero() {
                 loop
                 playsInline
                 preload="metadata"
-                className="absolute inset-0 w-full h-full object-cover z-0"
+                className="absolute inset-0 w-full h-full object-cover z-0 opacity-40"
             >
                 <source src="/videos/website_final_video.webm" type="video/webm" />
             </video>
 
             {/* 0.5 LAYER: Mobile Video Overlay - Z-1 (Readability) */}
-            <div className="absolute inset-0 z-1 bg-black/40 md:bg-transparent pointer-events-none" />
+            <div className="absolute inset-0 z-1 bg-black/50 md:bg-black/20 pointer-events-none" />
 
             {/* 1. LAYER: Background Noise - Z-2 */}
             <div className="absolute inset-0 pointer-events-none z-2 opacity-[0.03]"
@@ -146,23 +148,30 @@ export function Hero() {
 
                         {/* Headline Block */}
                         <div className="mb-6 lg:mb-8">
-                            {/* Primary Headline */}
-                            <h1 className="hero-element font-heading font-extrabold text-[2.75rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.0] sm:leading-[0.9] tracking-tighter text-white mb-4 lg:mb-6 uppercase"
-                                style={{
-                                    textRendering: 'geometricPrecision',
-                                    WebkitFontSmoothing: 'antialiased',
-                                }}>
-                                {content.headline}
-                            </h1>
+                            {/* Primary Headline with Gradient Glow Background */}
+                            <div className="relative">
+                                {/* Gradient Glow - Enhancement #6 */}
+                                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 blur-3xl opacity-0 animate-glow-pulse" />
+                                <h1 className="hero-element font-heading font-extrabold text-[2.75rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.0] sm:leading-[0.9] tracking-tighter text-white mb-4 lg:mb-6 uppercase relative z-10"
+                                    style={{
+                                        textRendering: 'geometricPrecision',
+                                        WebkitFontSmoothing: 'antialiased',
+                                    }}>
+                                    {content.headline}
+                                </h1>
+                            </div>
 
                             {/* Description */}
-                            <p className="hero-element font-body text-base sm:text-lg lg:text-xl text-gray-400 font-light leading-relaxed max-w-2xl mb-10">
+                            <p className="hero-element font-body text-base sm:text-lg lg:text-xl text-gray-300 font-light leading-relaxed max-w-2xl mb-6">
                                 {content.description}
                             </p>
 
+                            {/* Trust Badges - Enhancement #1 */}
+                            <TrustBadges />
+
                             {/* CTAs */}
-                            <div className="hero-element flex flex-col sm:flex-row items-center gap-7 sm:gap-6 w-full sm:w-auto">
-                                {/* Primary CTA */}
+                            <div className="hero-element flex flex-col sm:flex-row items-center gap-7 sm:gap-6 w-full sm:w-auto mt-10">
+                                {/* Primary CTA with Glow - Enhancement #3 */}
                                 <Link to="/contact" className="w-full sm:w-auto">
                                     <button
                                         ref={primaryBtnRef}
@@ -185,7 +194,7 @@ export function Hero() {
                                             gsap.to(primaryBtnRef.current, { scale: 1, duration: 0.16, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
                                             gsap.to(primaryArrowRef.current, { x: 0, duration: 0.18, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
                                         }}
-                                        className="relative w-full sm:w-auto sm:min-w-[180px] h-[56px] sm:h-12 px-8 bg-white text-slate-950 hover:bg-slate-100 transition-colors duration-[240ms] ease-[cubic-bezier(0.4,0,0.2,1)] flex items-center justify-center rounded-sm text-sm font-bold tracking-wide shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white"
+                                        className="relative w-full sm:w-auto sm:min-w-[180px] h-[56px] sm:h-12 px-8 bg-white text-slate-950 hover:bg-slate-100 transition-colors duration-[240ms] ease-[cubic-bezier(0.4,0,0.2,1)] flex items-center justify-center rounded-sm text-sm font-bold tracking-wide shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] border border-white animate-button-glow"
                                     >
 
                                         <span>{content.ctaPrimary}</span>
@@ -250,12 +259,14 @@ export function Hero() {
 
                 {/* KPI Strip */}
                 {/* Constraint: Stats container independent from hero text animations (removed hero-element class) */}
-                <div className="relative z-20 mt-8 lg:mt-12 pt-4 lg:pt-8 w-full">
+                <div className="relative z-20 mt-0 lg:mt-4 pt-0 w-full">
                     <HeroKPI startDelay={100} />
                 </div>
 
             </div>
 
+            {/* Scroll Indicator - Enhancement #2 */}
+            <ScrollIndicator />
 
         </section >
     );
