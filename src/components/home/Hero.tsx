@@ -92,7 +92,7 @@ export function Hero() {
     return (
         <section
             ref={heroRef}
-            className="relative min-h-[100dvh] pt-[calc(var(--header-height)+40px)] bg-gradient-to-b from-[#0B0F14] via-[#0E141B] to-[#0B0F14] overflow-hidden flex flex-col justify-center z-10"
+            className="relative min-h-[100dvh] pt-[calc(var(--header-height)+40px)] bg-[#0B0F14] bg-gradient-to-b from-[#0B0F14] via-[#0E141B] to-[#0B0F14] overflow-hidden flex flex-col justify-center z-10"
         >
 
             {/* 0. LAYER: Background Video - Z-0 (Responsive) */}
@@ -250,7 +250,7 @@ export function Hero() {
                 </div>
 
                 {/* Mobile Ecosystem Navigation - Separate section below hero */}
-                <div className="lg:hidden relative z-20 mt-20 pt-12 w-full">
+                <div className="lg:hidden relative z-20 mt-8 pt-6 w-full">
                     {/* Subtle fade separator */}
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 

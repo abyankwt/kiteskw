@@ -354,7 +354,7 @@ export function EcosystemNav() {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center select-none eco-entrance"
+            className="relative w-full h-[320px] md:h-[500px] lg:h-[600px] flex items-center justify-center select-none eco-entrance"
         >
 
             {/* Background Rings - Parallax Layer + Slow Rotation */}
