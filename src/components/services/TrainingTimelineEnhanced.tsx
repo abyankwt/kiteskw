@@ -195,6 +195,7 @@ export const TrainingTimelineEnhanced = ({ courses }: { courses: any[] }) => {
     const { language } = useLanguage();
     const containerRef = useRef<HTMLDivElement>(null);
     const lineRef = useRef<HTMLDivElement>(null);
+    const sectionRef = useRef<HTMLElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const [searchQuery, setSearchQuery] = useState("");
@@ -231,9 +232,15 @@ export const TrainingTimelineEnhanced = ({ courses }: { courses: any[] }) => {
     // Scroll listener for sticky search
     useEffect(() => {
         const handleScroll = () => {
-            const scrolled = window.scrollY > 500;
-            setIsSticky(scrolled);
-            if (scrolled) {
+            if (!sectionRef.current) return;
+
+            const rect = sectionRef.current.getBoundingClientRect();
+            // 132px is the top offset used in the style prop (calc(5rem + 3.25rem))
+            // We want to stick when the section top reaches this point
+            const shouldStick = rect.top <= 140; // slightly more than 132 to catch it smoothly
+
+            setIsSticky(shouldStick);
+            if (shouldStick) {
                 setShowCategoryDropdown(false); // Close dropdown when scrolling
             }
         };
@@ -300,7 +307,7 @@ export const TrainingTimelineEnhanced = ({ courses }: { courses: any[] }) => {
     }, [filteredCourses, viewMode]);
 
     return (
-        <section className="py-24 bg-gradient-to-b from-white via-slate-50 to-white" id="curriculum">
+        <section ref={sectionRef} className="py-24 bg-gradient-to-b from-white via-slate-50 to-white" id="curriculum">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="max-w-3xl mx-auto mb-12 text-center">
                     <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900 mb-4">
