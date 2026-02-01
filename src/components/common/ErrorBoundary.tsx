@@ -33,6 +33,13 @@ export class ErrorBoundary extends Component<Props, State> {
                     <p className="text-gray-600 mb-4 max-w-md">
                         We encountered an unexpected error ensuring the visual integrity of the page.
                     </p>
+                    {process.env.NODE_ENV === 'development' && this.state.error && (
+                        <div className="mb-4 p-4 bg-red-50 text-red-700 rounded text-left w-full overflow-auto max-h-40">
+                            <p className="font-mono text-sm whitespace-pre-wrap">
+                                {this.state.error.toString()}
+                            </p>
+                        </div>
+                    )}
                     <button
                         onClick={() => {
                             this.setState({ hasError: false });

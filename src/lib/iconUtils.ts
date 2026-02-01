@@ -7,11 +7,16 @@ import type { LucideIcon } from "lucide-react";
  * @returns The icon component or a default icon if not found
  */
 export function getIconByName(iconName: string): LucideIcon {
+    if (!LucideIcons) {
+        console.error("LucideIcons module not loaded");
+        return (() => null) as unknown as LucideIcon;
+    }
+
     const IconComponent = (LucideIcons as any)[iconName];
 
     if (!IconComponent) {
         console.warn(`Icon "${iconName}" not found, using default`);
-        return LucideIcons.HelpCircle as LucideIcon;
+        return LucideIcons.HelpCircle || LucideIcons.AlertCircle || (() => null) as unknown as LucideIcon;
     }
 
     return IconComponent as LucideIcon;

@@ -122,9 +122,15 @@ const content = {
     }
 };
 
+import { servicesDetailData } from "@/data/serviceDetailData";
+import { TrainingTimelineEnhanced } from "@/components/services/TrainingTimelineEnhanced";
+
 const Training = () => {
     const { language, isRTL } = useLanguage();
     const t = content[language];
+
+    // Get training data from servicesDetailData
+    const trainingData = servicesDetailData["training"]?.[language];
 
     // Animation Refs
     const heroRef = useRef<HTMLElement>(null);
@@ -308,9 +314,16 @@ const Training = () => {
                             <span className="text-blue-400 font-bold uppercase tracking-widest text-xs">Top Selling</span>
                             <h2 className="text-3xl sm:text-4xl font-bold text-white mt-2">Trending Courses</h2>
                         </div>
-                        <Link to="/services/training" className="text-slate-400 hover:text-white text-sm font-semibold flex items-center gap-2 transition-colors">
+                        <a
+                            href="#curriculum"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                document.getElementById('curriculum')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className="text-slate-400 hover:text-white text-sm font-semibold flex items-center gap-2 transition-colors cursor-pointer"
+                        >
                             View all programs <ArrowRight size={16} />
-                        </Link>
+                        </a>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -537,8 +550,59 @@ const Training = () => {
                 </div>
             </section>
 
+            {/* MERGED: Full Course Catalogue via Timeline */}
+            {trainingData && trainingData.courses && (
+                <div className="bg-white border-t border-slate-100">
+                    <TrainingTimelineEnhanced
+                        courses={trainingData.courses.items.map((c: any) => ({
+                            title: c.title,
+                            duration: c.duration,
+                            description: c.desc,
+                            outline: c.outline,
+                            who_should_attend: c.who_should_attend,
+                            standards: c.standards
+                        }))}
+                    />
+                </div>
+            )}
+
+            {/* MERGED: Business Impact for Employers */}
+            {trainingData && trainingData.impact && (
+                <section className="py-24 bg-slate-50 border-t border-slate-200">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-5xl mx-auto">
+                            <div className="grid lg:grid-cols-2 gap-16 items-center">
+                                <ScrollReveal>
+                                    <h2 className="font-heading text-3xl font-bold text-slate-900 mb-6">
+                                        {trainingData.impact.title}
+                                    </h2>
+                                    <p className="font-body text-lg text-slate-500 mb-8">
+                                        {language === 'en'
+                                            ? "Our approach ensures measurable results that align with your strategic goals, delivering value beyond just technical execution."
+                                            : "نهجنا يضمن نتائج قابلة للقياس تتوافق مع أهدافك الاستراتيجية، مما يقدم قيمة تتجاوز مجرد التنفيذ الفني."}
+                                    </p>
+                                </ScrollReveal>
+
+                                <StaggerContainer className="grid sm:grid-cols-2 gap-4" staggerDelay={100}>
+                                    {trainingData.impact.outcomes.map((outcome: string, index: number) => (
+                                        <StaggerItem key={index} index={index}>
+                                            <div className="flex items-center gap-3 p-4 rounded-lg bg-white border border-slate-200 shadow-sm">
+                                                <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
+                                                <span className="font-heading text-sm font-bold text-slate-800 uppercase tracking-wide">
+                                                    {outcome}
+                                                </span>
+                                            </div>
+                                        </StaggerItem>
+                                    ))}
+                                </StaggerContainer>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {/* SECTION 5: REVIEWS & SOCIAL PROOF */}
-            <section className="py-24 bg-slate-50 border-t border-slate-200">
+            <section className="py-24 bg-white border-t border-slate-200">
                 <div className="container mx-auto px-4">
                     <ScrollReveal className="text-center mb-16">
                         <h2 className="text-3xl font-bold text-slate-900">What Our Graduates Say</h2>
@@ -546,7 +610,7 @@ const Training = () => {
 
                     <StaggerContainer className="grid md:grid-cols-3 gap-6">
                         {REVIEWS.map((review, i) => (
-                            <StaggerItem key={review.id} index={i} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative">
+                            <StaggerItem key={review.id} index={i} className="bg-slate-50 p-8 rounded-2xl shadow-sm border border-slate-100 relative">
                                 <Quote size={24} className="text-slate-200 absolute top-6 right-6" />
                                 <div className="flex gap-1 mb-4">
                                     {[...Array(5)].map((_, i) => (
@@ -555,7 +619,7 @@ const Training = () => {
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed mb-6">"{review.text}"</p>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-logo-codgray flex items-center justify-center text-white text-xs font-bold">
+                                    <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-bold">
                                         {review.avatar}
                                     </div>
                                     <div>
@@ -626,5 +690,6 @@ const Training = () => {
         </div >
     );
 };
+
 
 export default Training;

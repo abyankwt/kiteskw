@@ -58,7 +58,7 @@ export const ServicesBentoGrid = ({ services }: ServicesBentoGridProps) => {
                                     {/* Header */}
                                     <div className="flex justify-between items-start mb-6">
                                         <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                                            <Icon size={28} strokeWidth={1.5} />
+                                            {Icon ? <Icon size={28} strokeWidth={1.5} /> : <div className="w-7 h-7 bg-gray-500/20 rounded-full" />}
                                         </div>
                                         <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 border border-white/10 px-3 py-1 rounded-full bg-white/5">
                                             {service.category}

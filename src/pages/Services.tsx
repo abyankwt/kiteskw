@@ -261,7 +261,7 @@ const Services = () => {
                       <div className="text-slate-400 group-hover:text-primary transition-colors">
                         {(() => {
                           const StepIcon = getIconByName(step.icon);
-                          return <StepIcon size={28} strokeWidth={1.2} />;
+                          return StepIcon ? <StepIcon size={28} strokeWidth={1.2} /> : null;
                         })()}
                       </div>
                     </div>

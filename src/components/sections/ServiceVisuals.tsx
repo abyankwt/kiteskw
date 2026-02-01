@@ -74,9 +74,9 @@ export const ConsultingVisual = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="w-14 h-14 flex items-end justify-center gap-[3px] overflow-hidden">
+        <div ref={containerRef} className="w-16 h-16 flex items-end justify-center gap-[3px] overflow-hidden">
             {[...Array(6)].map((_, i) => (
-                <div key={i} className="bar w-1.5 bg-gradient-to-t from-slate-800 to-slate-500 rounded-t-[2px] h-4" />
+                <div key={i} className="bar w-2 bg-gradient-to-t from-blue-600 to-blue-400 rounded-t-[2px] h-4" />
             ))}
         </div>
     );
@@ -103,11 +103,11 @@ export const SoftwareVisual = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="w-14 h-14 relative flex items-center justify-center perspective-[100px]">
+        <div ref={containerRef} className="w-16 h-16 relative flex items-center justify-center perspective-[100px]">
             {[...Array(3)].map((_, i) => (
                 <div
                     key={i}
-                    className="layer absolute w-10 h-10 border-2 border-slate-400/30 bg-slate-200/50 rounded-lg transform rotate-45"
+                    className="layer absolute w-11 h-11 border-2 border-purple-400/40 bg-purple-100/60 rounded-lg transform rotate-45"
                     style={{
                         top: 20 - (i * 8), // Stack vertically
                         zIndex: i,
@@ -116,7 +116,7 @@ export const SoftwareVisual = () => {
                 />
             ))}
             {/* Core */}
-            <div className="absolute w-3 h-3 bg-slate-900 rounded-full z-10 shadow-lg shadow-slate-500/20" style={{ top: '40%' }} />
+            <div className="absolute w-3 h-3 bg-purple-600 rounded-full z-10 shadow-lg shadow-purple-500/30" style={{ top: '40%' }} />
         </div>
     );
 };
@@ -138,8 +138,8 @@ export const PrototypingVisual = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="w-14 h-14 flex items-center justify-center">
-            <svg viewBox="0 0 24 24" className="w-10 h-10 stroke-slate-900 stroke-[1.5] fill-none cube-spinner">
+        <div ref={containerRef} className="w-16 h-16 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" className="w-12 h-12 stroke-emerald-600 stroke-[1.5] fill-none cube-spinner">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                 <path d="M3.27 6.96 12 12.01l8.73-5.05" />
                 <path d="M12 22.08V12" />
@@ -173,26 +173,26 @@ export const TrainingVisual = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="w-14 h-14 flex items-center justify-center">
+        <div ref={containerRef} className="w-16 h-16 flex items-center justify-center">
             <svg viewBox="0 0 40 40" className="w-full h-full overflow-visible">
                 {/* Axes */}
-                <path d="M5 35 H35" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round" />
-                <path d="M5 5 V35" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round" />
+                <path d="M5 35 H35" stroke="#fed7aa" strokeWidth="2" strokeLinecap="round" />
+                <path d="M5 5 V35" stroke="#fed7aa" strokeWidth="2" strokeLinecap="round" />
 
                 {/* Growth Line */}
                 <path
                     d="M5 35 C15 35, 15 15, 35 5"
                     fill="none"
-                    stroke="#0f172a"
+                    stroke="#ea580c"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     className="chart-line"
                 />
 
                 {/* Nodes */}
-                <circle cx="5" cy="35" r="3" fill="white" stroke="#0f172a" strokeWidth="2" className="chart-node" />
-                <circle cx="20" cy="25" r="3" fill="white" stroke="#0f172a" strokeWidth="2" className="chart-node" />
-                <circle cx="35" cy="5" r="3" fill="white" stroke="#0f172a" strokeWidth="2" className="chart-node" />
+                <circle cx="5" cy="35" r="3" fill="white" stroke="#ea580c" strokeWidth="2" className="chart-node" />
+                <circle cx="20" cy="25" r="3" fill="white" stroke="#ea580c" strokeWidth="2" className="chart-node" />
+                <circle cx="35" cy="5" r="3" fill="white" stroke="#ea580c" strokeWidth="2" className="chart-node" />
             </svg>
         </div>
     );

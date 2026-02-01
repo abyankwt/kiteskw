@@ -29,104 +29,61 @@ const content = {
   },
 };
 
-interface ClientGridProps {
+interface ClientMarqueeProps {
   clients: Client[];
   isRTL?: boolean;
 }
 
-function ClientGrid({ clients, isRTL }: ClientGridProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Kill any existing animations to prevent conflicts when switching tabs
-    gsap.killTweensOf(".client-item-anim");
-
-    // Reset opacity before animating
-    gsap.set(".client-item-anim", { opacity: 0, y: 15, scale: 0.98 });
-
-    // Staggered entrance
-    gsap.to(".client-item-anim", {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.6,
-      stagger: {
-        amount: 0.8,
-        grid: "auto",
-        from: "start"
-      },
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 85%",
-        toggleActions: "play none none reverse"
-      }
-    });
-
-    // Refresh ScrollTrigger after DOM updates (tab switch)
-    ScrollTrigger.refresh();
-
-  }, [clients]); // Re-run when clients list changes (tab switch)
-
+function ClientMarquee({ clients, isRTL }: ClientMarqueeProps) {
   return (
     <div
-      ref={containerRef}
-      className="group/grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+      className="relative flex overflow-hidden group select-none"
+      style={{
+        "--marquee-duration": "40s",
+        direction: "ltr" // Always LTR for the scrolling mechanic, we handle RTL order if needed or just let it scroll naturally
+      } as React.CSSProperties}
     >
-      {clients.map((client) => (
-        <div
-          key={client.id}
-          className={cn(
-            "client-item-anim group relative flex flex-col items-center justify-center p-6 text-center opacity-0",
-            "bg-white border border-slate-100 rounded-lg",
+      {/* Gradient Masks */}
+      <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-32 bg-gradient-to-r from-[#fafafa] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-32 bg-gradient-to-l from-[#fafafa] to-transparent z-10 pointer-events-none" />
 
-            // Depth & Focus Interaction (Desktop)
-            // Grid Hovered: Subtle dim on others
-            "group-hover/grid:opacity-85 group-hover/grid:scale-[0.98]",
-
-            // Active Item Hover: Lift & Depth
-            "hover:!opacity-100 hover:!scale-[1.04] hover:!-translate-y-1",
-            "hover:!shadow-[0_10px_30px_rgba(59,130,246,0.15)]",
-            "hover:!border-primary/20",
-
-            // Mobile Reset
-            "sm:hover:!translate-y-0 sm:hover:!shadow-none sm:hover:!scale-100",
-            "backface-visibility-hidden",
-
-            // Active/Focus (Accessibility)
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:opacity-100 focus-visible:scale-100",
-
-            isRTL
-              ? "hover:border-r-primary/20"
-              : "hover:border-l-primary/20"
-          )}
-          tabIndex={0}
-        >
-          {/* Logo Container */}
-          <div className="flex items-center justify-center w-full h-20">
+      {/* Marquee Track 1 */}
+      <div className="flex animate-marquee min-w-full shrink-0 items-center justify-around gap-12 sm:gap-16 py-8">
+        {clients.map((client) => (
+          <div
+            key={`marquee-1-${client.id}`}
+            className="flex items-center justify-center shrink-0 w-[140px] sm:w-[180px]"
+          >
             <img
               src={client.logo}
               alt={client.name}
-              width={140}
-              height={80}
+              width={160}
+              height={90}
               loading="lazy"
-              decoding="async"
-              className={cn(
-                "max-h-16 w-auto max-w-full object-contain transition-all duration-[300ms] ease-out",
-                // Permanent Full Color
-                "opacity-100 grayscale-0",
-                // Simple Hover Scale
-                "group-hover:scale-[1.02]"
-              )}
+              className="max-h-20 sm:max-h-32 w-auto object-contain transition-all duration-300"
             />
           </div>
+        ))}
+      </div>
 
-          {/* Client Name */}
-          <span className="mt-3 text-xs font-medium text-logo-gunsmoke group-hover:text-gray-900 transition-colors line-clamp-2 text-center leading-tight">
-            {client.name}
-          </span>
-        </div>
-      ))}
+      {/* Marquee Track 2 (Duplicate for infinite loop) */}
+      <div aria-hidden="true" className="flex animate-marquee min-w-full shrink-0 items-center justify-around gap-12 sm:gap-16 py-8">
+        {clients.map((client) => (
+          <div
+            key={`marquee-2-${client.id}`}
+            className="flex items-center justify-center shrink-0 w-[140px] sm:w-[180px]"
+          >
+            <img
+              src={client.logo}
+              alt={client.name}
+              width={160}
+              height={90}
+              loading="lazy"
+              className="max-h-12 sm:max-h-16 w-auto object-contain transition-all duration-300"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -261,11 +218,11 @@ export function ClientsSection() {
           </div>
 
           <TabsContent value="academic" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-            <ClientGrid clients={academicClients} isRTL={isRTL} />
+            <ClientMarquee clients={academicClients} isRTL={isRTL} />
           </TabsContent>
 
           <TabsContent value="commercial" className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-            <ClientGrid clients={commercialClients} isRTL={isRTL} />
+            <ClientMarquee clients={commercialClients} isRTL={isRTL} />
           </TabsContent>
         </Tabs>
 

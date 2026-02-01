@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { SEO } from "@/components/common/SEO";
 
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,10 @@ const ServiceDetail = () => {
   const { language } = useLanguage();
 
   const service = serviceId ? servicesDetailData[serviceId] : null;
+
+  if (serviceId === 'training') {
+    return <Navigate to="/training" replace />;
+  }
 
   if (!service) {
     return (
