@@ -265,9 +265,9 @@ export const TrainingTimelineEnhanced = ({ courses }: { courses: any[] }) => {
 
     useEffect(() => {
         // Only run GSAP animations in timeline view
-        if (viewMode !== 'timeline') return;
+        if (viewMode !== 'timeline' || !containerRef.current) return;
 
-        const ctx = gsap.context(() => {
+        const ctx = gsap.context((self) => {
             if (lineRef.current && filteredCourses.length > 0) {
                 gsap.fromTo(lineRef.current,
                     { height: "0%" },
@@ -284,27 +284,32 @@ export const TrainingTimelineEnhanced = ({ courses }: { courses: any[] }) => {
                 );
             }
 
-            const items = gsap.utils.toArray(".timeline-item");
-            items.forEach((item: any) => {
-                gsap.fromTo(item,
-                    { opacity: 0, y: 50 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.8,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 80%",
-                            toggleActions: "play none none reverse"
+            // Safe scoped selection
+            if (self.selector) {
+                const items = self.selector(".timeline-item");
+                items.forEach((item: any) => {
+                    gsap.fromTo(item,
+                        { opacity: 0, y: 50 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: item,
+                                start: "top 80%",
+                                toggleActions: "play none none reverse"
+                            }
                         }
-                    }
-                );
-            });
+                    );
+                });
+            }
         }, containerRef);
 
         return () => ctx.revert();
     }, [filteredCourses, viewMode]);
+
+
 
     return (
         <section ref={sectionRef} className="py-24 bg-gradient-to-b from-white via-slate-50 to-white" id="curriculum">
