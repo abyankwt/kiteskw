@@ -15,7 +15,7 @@ const SERVICE_ORDER = [
     'consultation',
     'software-distribution',
     'prototype-development',
-    'training'
+    'environmental-consulting'
 ];
 
 // Category labels for each service
@@ -32,9 +32,9 @@ const CATEGORY_LABELS = {
         en: 'DEVELOPMENT',
         ar: 'تطوير'
     },
-    'training': {
-        en: 'TRAINING',
-        ar: 'تدريب'
+    'environmental-consulting': {
+        en: 'ENVIRONMENT',
+        ar: 'بيئة'
     }
 } as const;
 

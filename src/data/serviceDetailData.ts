@@ -1040,5 +1040,67 @@ export const servicesDetailData: Record<string, ServiceData> = {
                 button: "اطلب عرض سعر",
             }
         }
+    },
+    "environmental-consulting": {
+        id: "environmental-consulting",
+        icon: Leaf,
+        en: {
+            head: {
+                title: "Environmental Consulting",
+                subtitle: "Comprehensive environmental solutions ensuring sustainability and regulatory compliance for complex industrial projects.",
+            },
+            overview: {
+                title: "Sustainable Development Partners",
+                content: "We provide specialized environmental consulting services designed to balance industrial growth with ecological preservation. From rigorous Environmental Impact Assessments (EIA) to Carbon Footprint analysis, our expert team utilizes advanced simulation and regulatory knowledge to guide your projects toward full compliance and environmental stewardship.",
+                quote: "Balancing industrial growth with ecological preservation through data-driven environmental strategies.",
+            },
+            delivery: {
+                title: "Our Services",
+                steps: [
+                    "Environmental Impact Assessment (EIA)",
+                    "Environmental Social Impact Assessment (ESIA)",
+                    "Strategic Environmental Assessment (SEA)",
+                    "Environmental Management Systems (EMS - ISO 14001)",
+                    "Pollution Modeling & Control"
+                ],
+            },
+            impact: {
+                title: "Business Impact",
+                outcomes: ["Regulatory Approval", "Operational Sustainability", "Risk Mitigation", "Community Trust"]
+            },
+            cta: {
+                text: "Ready to ensure your project's sustainability?",
+                button: "Request Environmental Consult",
+            }
+        },
+        ar: {
+            head: {
+                title: "الاستشارات البيئية",
+                subtitle: "حلول بيئية شاملة تضمن الاستدامة والامتثال التنظيمي للمشاريع الصناعية المعقدة.",
+            },
+            overview: {
+                title: "شركاء التنمية المستدامة",
+                content: "نقدم خدمات استشارية بيئية متخصصة مصممة للموازنة بين النمو الصناعي والحفاظ على البيئة. من تقييمات الأثر البيئي الصارمة (EIA) إلى تحليل البصمة الكربونية، يستخدم فريق خبرائنا المحاكاة المتقدمة والمعرفة التنظيمية لتوجيه مشاريعك نحو الامتثال الكامل والريادة البيئية.",
+                quote: "الموازنة بين النمو الصناعي والحفاظ على البيئة من خلال استراتيجيات بيئية تعتمد على البيانات.",
+            },
+            delivery: {
+                title: "خدماتنا",
+                steps: [
+                    "تقييم الأثر البيئي (EIA)",
+                    "تقييم الأثر البيئي والاجتماعي (ESIA)",
+                    "التقييم البيئي الاستراتيجي (SEA)",
+                    "نظم الإدارة البيئية (EMS - ISO 14001)",
+                    "نمذجة ومكافحة التلوث"
+                ],
+            },
+            impact: {
+                title: "تأثير الأعمال",
+                outcomes: ["الموافقة التنظيمية", "الاستدامة التشغيلية", "تخفيف المخاطر", "ثقة المجتمع"]
+            },
+            cta: {
+                text: "هل أنت مستعد لضمان استدامة مشروعك؟",
+                button: "اطلب استشارة بيئية",
+            }
+        }
     }
 };
