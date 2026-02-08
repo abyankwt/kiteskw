@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LottiePlayer } from "@/components/ui/LottiePlayer";
 
 export function ScrollIndicator() {
     const [isVisible, setIsVisible] = useState(true);
@@ -25,6 +25,9 @@ export function ScrollIndicator() {
         });
     };
 
+    // Animated scroll down indicator
+    const scrollAnimationUrl = "https://lottie.host/0eb5b0a7-dbfc-4b95-bfb3-3c8cf4c50bf5/aXy0iJdGAf.json";
+
     return (
         <button
             onClick={handleClick}
@@ -36,10 +39,16 @@ export function ScrollIndicator() {
             <span className="text-xs lg:text-sm uppercase tracking-widest text-white/70 group-hover:text-white/90 transition-colors font-semibold">
                 {language === 'ar' ? 'مرر للاستكشاف' : 'Scroll to Explore'}
             </span>
-            <ChevronDown
-                className="w-6 h-6 text-white/70 group-hover:text-white/90 transition-all animate-bounce"
-                strokeWidth={2.5}
-            />
+            <div className="w-8 h-8">
+                <LottiePlayer
+                    animationData={scrollAnimationUrl}
+                    loop={true}
+                    autoplay={true}
+                    speed={0.8}
+                    ariaLabel="Scroll down indicator"
+                    className="w-full h-full opacity-70 group-hover:opacity-90 transition-opacity"
+                />
+            </div>
         </button>
     );
 }

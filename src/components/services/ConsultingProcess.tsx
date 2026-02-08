@@ -12,52 +12,65 @@ export const ConsultingProcess = ({ steps }: { steps: ProcessStep[] }) => {
     const progressBarRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            // Pin the left content while scrolling through steps
-            ScrollTrigger.create({
-                trigger: containerRef.current,
-                start: "top top",
-                end: "bottom bottom",
-                pin: ".process-left",
-                scrub: true
-            });
+        if (!containerRef.current || !progressBarRef.current) return;
 
-            // Animate progress bar
-            gsap.fromTo(progressBarRef.current,
-                { height: "0%" },
-                {
-                    height: "100%",
-                    ease: "none",
-                    scrollTrigger: {
+        const rafId = requestAnimationFrame(() => {
+            if (!containerRef.current || !progressBarRef.current) return;
+
+            const ctx = gsap.context(() => {
+                try {
+                    // Pin the left content while scrolling through steps
+                    ScrollTrigger.create({
                         trigger: containerRef.current,
-                        start: "top center",
-                        end: "bottom center",
-                        scrub: 0.5
-                    }
-                }
-            );
+                        start: "top top",
+                        end: "bottom bottom",
+                        pin: ".process-left",
+                        scrub: true
+                    });
 
-            // Animate steps appearing
-            gsap.utils.toArray(".process-step").forEach((step: any, i) => {
-                gsap.fromTo(step,
-                    { opacity: 0.2, scale: 0.95 },
-                    {
-                        opacity: 1,
-                        scale: 1,
-                        duration: 0.5,
-                        scrollTrigger: {
-                            trigger: step,
-                            start: "top center",
-                            end: "bottom center",
-                            toggleActions: "play reverse play reverse",
+                    // Animate progress bar
+                    gsap.fromTo(progressBarRef.current,
+                        { height: "0%" },
+                        {
+                            height: "100%",
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: containerRef.current,
+                                start: "top center",
+                                end: "bottom center",
+                                scrub: 0.5
+                            }
                         }
-                    }
-                );
-            });
+                    );
 
-        }, containerRef);
+                    // Animate steps appearing
+                    gsap.utils.toArray(".process-step").forEach((step: any, i) => {
+                        gsap.fromTo(step,
+                            { opacity: 0.2, scale: 0.95 },
+                            {
+                                opacity: 1,
+                                scale: 1,
+                                duration: 0.5,
+                                scrollTrigger: {
+                                    trigger: step,
+                                    start: "top center",
+                                    end: "bottom center",
+                                    toggleActions: "play reverse play reverse",
+                                }
+                            }
+                        );
+                    });
+                } catch (error) {
+                    console.error("ScrollTrigger initialization error:", error);
+                }
+            }, containerRef);
 
-        return () => ctx.revert();
+            return () => ctx.revert();
+        });
+
+        return () => {
+            cancelAnimationFrame(rafId);
+        };
     }, []);
 
     return (

@@ -99,31 +99,52 @@ export function KeyPillarsSection() {
     const [activeIndex, setActiveIndex] = useState(0);
 
     useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            // ScrollTrigger for pinning and scrubbing
-            ScrollTrigger.create({
-                trigger: triggerRef.current,
-                start: "top top",
-                end: "+=300%", // 300% / 4 slides = ~75% viewport per slide scroll duration
-                pin: true,
-                scrub: 0.5,
-                onUpdate: (self) => {
-                    // Calculate active index based on scroll progress (0-1)
-                    // We have 4 items, so we split progress into 4 segments
-                    // 0.00-0.25 -> 0
-                    // 0.25-0.50 -> 1
-                    // 0.50-0.75 -> 2
-                    // 0.75-1.00 -> 3
-                    const idx = Math.min(
-                        t.pillars.length - 1,
-                        Math.floor(self.progress * t.pillars.length)
-                    );
-                    setActiveIndex(idx);
-                }
-            });
-        }, triggerRef);
+        // Ensure the trigger element exists before creating ScrollTrigger
+        if (!triggerRef.current) return;
 
-        return () => ctx.revert();
+        let ctx: ReturnType<typeof gsap.context> | null = null;
+
+        // Use requestAnimationFrame to ensure DOM is fully ready and painted
+        const rafId = requestAnimationFrame(() => {
+            // Double-check the ref still exists after RAF
+            if (!triggerRef.current) return;
+
+            ctx = gsap.context(() => {
+                try {
+                    // ScrollTrigger for pinning and scrubbing
+                    ScrollTrigger.create({
+                        trigger: triggerRef.current,
+                        start: "top top",
+                        end: "+=300%", // 300% / 4 slides = ~75% viewport per slide scroll duration
+                        pin: true,
+                        scrub: 0.5,
+                        onUpdate: (self) => {
+                            // Calculate active index based on scroll progress (0-1)
+                            // We have 4 items, so we split progress into 4 segments
+                            // 0.00-0.25 -> 0
+                            // 0.25-0.50 -> 1
+                            // 0.50-0.75 -> 2
+                            // 0.75-1.00 -> 3
+                            const idx = Math.min(
+                                t.pillars.length - 1,
+                                Math.floor(self.progress * t.pillars.length)
+                            );
+                            setActiveIndex(idx);
+                        }
+                    });
+                } catch (error) {
+                    console.error("ScrollTrigger initialization error:", error);
+                }
+            }, triggerRef);
+        });
+
+        // CRITICAL: Clean up BOTH the RAF and the GSAP context
+        return () => {
+            cancelAnimationFrame(rafId);
+            if (ctx) {
+                ctx.revert();
+            }
+        };
     }, [language, t.pillars.length]);
 
     // Current active pillar data

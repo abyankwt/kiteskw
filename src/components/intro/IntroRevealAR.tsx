@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import splashLogo from "@/assets/branding/splash_logo.png";
+import { LottiePlayer } from "@/components/ui/LottiePlayer";
 
 interface IntroRevealARProps {
     onComplete: () => void;
@@ -105,14 +106,29 @@ export function IntroRevealAR({ onComplete }: IntroRevealARProps) {
     // Split for animation
     const splitText = arabicText.split("");
 
+    // Subtle particle animation for splash background
+    const particlesUrl = "https://lottie.host/3bf5632e-7cd9-4c25-873e-c4cbdbd6c0e2/qPYSdNCk3M.json";
+
     return (
         <div
             ref={containerRef}
             className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0B0F14] text-white"
             aria-hidden="true"
         >
+            {/* Subtle Background Particles */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none">
+                <LottiePlayer
+                    animationData={particlesUrl}
+                    loop={true}
+                    autoplay={true}
+                    speed={0.5}
+                    lazyLoad={false}
+                    ariaLabel="Background animation"
+                />
+            </div>
+
             {/* Logo */}
-            <div className="relative mb-8 md:mb-10">
+            <div className="relative mb-8 md:mb-10 z-10">
                 <img
                     ref={logoRef}
                     src={splashLogo}
@@ -124,7 +140,7 @@ export function IntroRevealAR({ onComplete }: IntroRevealARProps) {
             {/* Arabic Text */}
             <h1
                 ref={textRef}
-                className="font-heading font-bold text-xl md:text-2xl lg:text-3xl text-center px-4 leading-relaxed"
+                className="font-heading font-bold text-xl md:text-2xl lg:text-3xl text-center px-4 leading-relaxed relative z-10"
                 dir="rtl"
             >
                 {splitText.map((char, index) => (

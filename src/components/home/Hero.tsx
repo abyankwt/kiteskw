@@ -9,6 +9,8 @@ import { EcosystemNav } from "@/components/home/EcosystemNav";
 import { TrustBadges } from "@/components/home/TrustBadges";
 import { ScrollIndicator } from "@/components/home/ScrollIndicator";
 import { gsap } from "@/lib/gsap";
+import { LottiePlayer } from "@/components/ui/LottiePlayer";
+import { TypeWriter } from "@/components/ui/TypeWriter";
 
 export function Hero() {
     const { language, isRTL } = useLanguage();
@@ -76,18 +78,31 @@ export function Hero() {
 
     const content = {
         en: {
-            headline: "SIMULATE EVERYTHING",
+            headlines: [
+                "SIMULATE EVERYTHING",
+                "ENGINEER TOMORROW",
+                "INNOVATE FASTER",
+                "BUILD SMARTER",
+            ],
             description: "Advanced simulation, training, and sustainability solutions trusted by engineering leaders across the GCC.",
             ctaPrimary: "Talk to Our Experts",
             ctaSecondary: "Explore Capabilities",
         },
         ar: {
-            headline: "حاكي كل شيء",
+            headlines: [
+                "حاكي كل شيء",
+                "صمم الغد",
+                "ابتكر أسرع",
+                "ابنِ أذكى",
+            ],
             description: "حلول محاكاة وتدريب واستدامة متطورة موثوقة من قادة الهندسة في دول مجلس التعاون الخليجي.",
             ctaPrimary: "تحدث إلى خبرائنا",
             ctaSecondary: "استكشف القدرات",
         },
     }[language];
+
+    // Animated arrow for CTA hover effect
+    const arrowAnimationUrl = "https://lottie.host/0affe2ef-c16c-4c9e-bc11-a27b1e970827/4UOREGxUPA.json";
 
     return (
         <section
@@ -152,12 +167,17 @@ export function Hero() {
                             <div className="relative">
                                 {/* Gradient Glow - Enhancement #6 */}
                                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 blur-3xl opacity-0 animate-glow-pulse" />
-                                <h1 className="hero-element font-heading font-extrabold text-[2.75rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.0] sm:leading-[0.9] tracking-tighter text-white mb-4 lg:mb-6 uppercase relative z-10"
+                                <h1 className="hero-element font-heading font-extrabold text-[2.75rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.0] sm:leading-[0.9] tracking-tighter text-white mb-4 lg:mb-6 uppercase relative z-10 min-h-[1.1em]"
                                     style={{
                                         textRendering: 'geometricPrecision',
                                         WebkitFontSmoothing: 'antialiased',
                                     }}>
-                                    {content.headline}
+                                    <TypeWriter
+                                        phrases={content.headlines}
+                                        typingSpeed={100}
+                                        deletingSpeed={60}
+                                        pauseTime={2500}
+                                    />
                                 </h1>
                             </div>
 

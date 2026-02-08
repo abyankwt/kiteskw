@@ -1,7 +1,9 @@
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { gsap } from "@/lib/gsap";
 import { CustomEase } from "gsap/all";
+import { LottiePlayer } from "@/components/ui/LottiePlayer";
+import { celebrationAnimations } from "@/lib/lottieAnimations";
 
 // Register CustomEase if not already registered globally, or just use the cubic-bezier string directly in ease
 gsap.registerPlugin(CustomEase);
@@ -51,6 +53,8 @@ export function HeroKPI({ startDelay = 0 }: HeroKPIProps) {
     const { language } = useLanguage();
     const containerRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const [showCelebration, setShowCelebration] = useState(false);
+    const completedCountRef = useRef(0);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -121,6 +125,13 @@ export function HeroKPI({ startDelay = 0 }: HeroKPIProps) {
                                     }
                                 });
                             }
+
+                            // Trigger celebration when all KPIs complete
+                            completedCountRef.current += 1;
+                            if (completedCountRef.current === kpiData.length) {
+                                setShowCelebration(true);
+                                setTimeout(() => setShowCelebration(false), 2500);
+                            }
                         }
                     }, 0);
 
@@ -141,8 +152,23 @@ export function HeroKPI({ startDelay = 0 }: HeroKPIProps) {
     return (
         <div
             ref={containerRef}
-            className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 lg:mt-24 pointer-events-auto"
+            className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 lg:mt-24 pointer-events-auto relative"
         >
+            {/* Celebration Lottie Overlay */}
+            {showCelebration && (
+                <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center">
+                    <div className="w-64 h-64">
+                        <LottiePlayer
+                            animationData={celebrationAnimations.confetti}
+                            loop={false}
+                            autoplay={true}
+                            ariaLabel="Celebration animation"
+                            className="w-full h-full"
+                        />
+                    </div>
+                </div>
+            )}
+
             <div className="w-full p-6 lg:p-10 border border-[rgba(255,255,255,0.22)] rounded-[10px] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-16 relative z-20">
                     {kpiData.map((item, index) => (

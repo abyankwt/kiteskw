@@ -31,19 +31,9 @@ export const ServicesBentoGrid = ({ services }: ServicesBentoGridProps) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[400px]">
                     {services.map((service, index) => {
                         const Icon = getIconByName(service.icon);
-
-                        // Layout Logic:
-                        // 1st item (Prototype) -> Large (2 cols on desktop)
-                        // 2nd item (Consultation) -> Tall (Row span 2)? No, let's keep it simple first
-                        // Let's make the first item span 2 cols to create a "Hero Service" feel, or alternate.
-                        // Actually, Software Distribution (technology) might deserve a unique spot.
-
                         // Simple robust layout:
                         // Item 0 (Prototype): col-span-2
-                        // Item 1 (Consultation): col-span-1
-                        // Item 2 (Training): col-span-1
                         // Item 3 (Software): col-span-2
-
                         const isWide = index === 0 || index === 3;
 
                         return (

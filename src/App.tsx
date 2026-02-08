@@ -26,57 +26,67 @@ const queryClient = new QueryClient();
 // Wrapper for Layout to handle location-based re-renders if needed, 
 // though here we mainly need it to pass the hidden state.
 const AppLayout = ({ showIntro }: { showIntro: boolean }) => {
-  return (
-    <Layout hidden={showIntro}>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/expertise" element={<Expertise />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/services/:serviceId" element={<ServiceDetail />} />
-        <Route path="/training" element={<Training />} />
-        <Route path="/partners" element={<Partners />} />
-        <Route path="/partners/:partnerId" element={<PartnerDetail />} />
-        <Route path="/insights" element={<Insights />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/contact" element={<Contact />} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Layout>
-  );
+    return (
+        <Layout hidden={showIntro}>
+            <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/expertise" element={<Expertise />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/services/:serviceId" element={<ServiceDetail />} />
+                <Route path="/training" element={<Training />} />
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/partners/:partnerId" element={<PartnerDetail />} />
+                <Route path="/insights" element={<Insights />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/contact" element={<Contact />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </Layout>
+    );
 };
 
 
 const AppContent = () => {
-  const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const location = useLocation();
+    const [previousPath, setPreviousPath] = useState(location.pathname);
 
-  const handleSplashComplete = () => {
-    setIsLoading(false);
-  };
+    // Trigger splash screen on route change
+    useEffect(() => {
+        if (location.pathname !== previousPath) {
+            setIsLoading(true);
+            setPreviousPath(location.pathname);
+        }
+    }, [location.pathname, previousPath]);
 
-  return (
-    <>
-      {isLoading && <SplashScreen onComplete={handleSplashComplete} />}
-      <AppLayout showIntro={isLoading} />
-    </>
-  );
+    const handleSplashComplete = () => {
+        setIsLoading(false);
+    };
+
+    return (
+        <>
+            {isLoading && <SplashScreen onComplete={handleSplashComplete} />}
+            <AppLayout showIntro={isLoading} />
+        </>
+    );
 };
 
 const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ScrollToTop />
-            <AppContent />
-          </BrowserRouter>
-        </TooltipProvider>
-      </LanguageProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
+    <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+            <LanguageProvider>
+                <TooltipProvider>
+                    <Toaster />
+                    <Sonner />
+                    <BrowserRouter>
+                        <ScrollToTop />
+                        <AppContent />
+                    </BrowserRouter>
+                </TooltipProvider>
+            </LanguageProvider>
+        </QueryClientProvider>
+    </HelmetProvider>
 );
 
 export default App;

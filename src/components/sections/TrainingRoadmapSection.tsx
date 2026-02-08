@@ -8,19 +8,37 @@ export const TrainingRoadmapSection = () => {
     const progressRef = useRef(0);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            ScrollTrigger.create({
-                trigger: sectionRef.current,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-                onUpdate: (self) => {
-                    progressRef.current = self.progress;
-                }
-            });
-        }, sectionRef);
+        if (!sectionRef.current) return;
 
-        return () => ctx.revert();
+        let ctx: ReturnType<typeof gsap.context> | null = null;
+
+        const rafId = requestAnimationFrame(() => {
+            if (!sectionRef.current) return;
+
+            ctx = gsap.context(() => {
+                try {
+                    ScrollTrigger.create({
+                        trigger: sectionRef.current,
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            progressRef.current = self.progress;
+                        }
+                    });
+                } catch (error) {
+                    console.error("ScrollTrigger initialization error:", error);
+                }
+            }, sectionRef);
+        });
+
+        // CRITICAL: Clean up BOTH the RAF and the GSAP context
+        return () => {
+            cancelAnimationFrame(rafId);
+            if (ctx) {
+                ctx.revert();
+            }
+        };
     }, []);
 
     return (

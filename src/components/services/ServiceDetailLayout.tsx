@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, BookOpen, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatedCheckmark } from "@/components/ui/AnimatedCheckmark";
 
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { ServiceDetailContent, ServiceData } from "@/data/serviceDetailData";
@@ -319,8 +320,8 @@ export const ServiceDetailLayout = ({ data }: ServiceDetailLayoutProps) => {
                                 <StaggerContainer className="grid md:grid-cols-2 gap-x-12 gap-y-6" staggerDelay={70}>
                                     {content.deliverables.items.map((item, i) => (
                                         <StaggerItem key={i} index={i}>
-                                            <div className="flex items-start gap-4 p-4 rounded-lg bg-background border border-border/60 shadow-sm hover:border-gray-200 transition-colors">
-                                                <CheckCircle2 className="text-logo-codgray shrink-0 mt-0.5" size={20} strokeWidth={1.5} />
+                                            <div className="flex items-start gap-4 p-4 rounded-lg bg-background border border-border/60 shadow-sm hover:border-gray-200 transition-colors group">
+                                                <AnimatedCheckmark size="md" variant="default" className="shrink-0 mt-0.5 text-logo-codgray" />
                                                 <span className="font-body text-base text-foreground/90">{item}</span>
                                             </div>
                                         </StaggerItem>
@@ -493,8 +494,8 @@ export const ServiceDetailLayout = ({ data }: ServiceDetailLayoutProps) => {
                             <StaggerContainer className="grid sm:grid-cols-2 gap-4" staggerDelay={100}>
                                 {content.impact.outcomes.map((outcome, index) => (
                                     <StaggerItem key={index} index={index}>
-                                        <div className="flex items-center gap-3 p-4 rounded-lg bg-secondary/30 border border-border/50">
-                                            <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
+                                        <div className="flex items-center gap-3 p-4 rounded-lg bg-secondary/30 border border-border/50 group">
+                                            <AnimatedCheckmark size="md" variant="success" className="shrink-0 text-emerald-600" />
                                             <span className="font-heading text-sm font-bold text-foreground/80 uppercase tracking-wide">
                                                 {outcome}
                                             </span>

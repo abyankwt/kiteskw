@@ -102,12 +102,12 @@ export function ServicesMegaMenu({ isOpen, onClose }: ServicesMegaMenuProps) {
                     })}
                 </div>
 
-                {/* Enhanced Footer Button */}
-                <div className="mt-14 pt-10 border-t-2 border-gray-200 flex justify-center">
+                {/* View All Services Link */}
+                <div className="text-center pt-12 mt-8 border-t border-gray-100">
                     <Link
                         to="/services"
                         onClick={onClose}
-                        className="group inline-flex items-center gap-3 text-sm font-bold uppercase tracking-wider text-white bg-black hover:bg-gray-800 transition-all py-4 px-10 rounded-lg shadow-md hover:shadow-xl"
+                        className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-gray-600 hover:text-black transition-colors group"
                     >
                         <span>{language === 'ar' ? "عرض جميع الخدمات" : "View All Services"}</span>
                         <ArrowRight size={18} className={cn("transition-transform group-hover:translate-x-1", isRTL ? "rotate-180 group-hover:-translate-x-1" : "")} />

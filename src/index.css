@@ -642,6 +642,24 @@
   .animate-stats-glow {
     animation: stats-completion-glow 1.5s ease-out forwards;
   }
+
+  /* TypeWriter Cursor Blink Animation */
+  @keyframes blink {
+
+    0%,
+    50% {
+      opacity: 1;
+    }
+
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .animate-blink {
+    animation: blink 1s step-end infinite;
+  }
 }
 
 /* Reduced Motion Support */

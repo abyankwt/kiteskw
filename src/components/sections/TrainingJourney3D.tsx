@@ -102,21 +102,37 @@ export function TrainingJourney3D() {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        if (!containerRef.current) return;
+
+        let ctx: ReturnType<typeof gsap.context> | null = null;
+
+        const rafId = requestAnimationFrame(() => {
             if (!containerRef.current) return;
 
-            ScrollTrigger.create({
-                trigger: containerRef.current,
-                start: "top center",
-                end: "bottom center",
-                scrub: 1,
-                onUpdate: (self) => {
-                    setProgress(self.progress);
+            ctx = gsap.context(() => {
+                try {
+                    ScrollTrigger.create({
+                        trigger: containerRef.current,
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            setProgress(self.progress);
+                        }
+                    });
+                } catch (error) {
+                    console.error("ScrollTrigger initialization error:", error);
                 }
-            });
-        }, containerRef);
+            }, containerRef);
+        });
 
-        return () => ctx.revert();
+        // CRITICAL: Clean up BOTH the RAF and the GSAP context
+        return () => {
+            cancelAnimationFrame(rafId);
+            if (ctx) {
+                ctx.revert();
+            }
+        };
     }, []);
 
     return (

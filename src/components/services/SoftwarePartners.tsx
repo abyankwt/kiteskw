@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ArrowUpRight } from "lucide-react";
+import { LottiePlayer } from "@/components/ui/LottiePlayer";
 
 interface PartnerItem {
     name: string;
@@ -42,6 +43,9 @@ export const SoftwarePartners = ({ data }: SoftwarePartnersProps) => {
 };
 
 const PartnerCard = ({ partner, index }: { partner: PartnerItem; index: number }) => {
+    // Verified badge animation
+    const badgeAnimationUrl = "https://lottie.host/d4c6e7fa-85c0-4b32-a85f-7d5c4e44b49c/OqGKnKZj2O.json";
+
     return (
         <div
             className="group relative h-full bg-white/[0.03] border border-white/10 rounded-2xl p-8 hover:bg-white/[0.06] transition-all duration-500 overflow-hidden backdrop-blur-sm hover:-translate-y-1 hover:shadow-2xl"
@@ -63,6 +67,19 @@ const PartnerCard = ({ partner, index }: { partner: PartnerItem; index: number }
                 className="absolute top-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
                 style={{ backgroundColor: partner.color }}
             />
+
+            {/* Verified Badge - Appears on Hover */}
+            <div className="absolute top-4 right-4 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <LottiePlayer
+                    animationData={badgeAnimationUrl}
+                    loop={false}
+                    autoplay={false}
+                    playOnHover={true}
+                    speed={1}
+                    ariaLabel="Verified partner badge"
+                    className="w-full h-full"
+                />
+            </div>
 
             <div className="relative z-10 flex flex-col h-full">
                 {/* Logo Area (Fallback to Text if Image Fails/Missing) */}

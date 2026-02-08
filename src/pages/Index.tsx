@@ -11,12 +11,17 @@ import { KeyPillarsSection } from "@/components/sections/KeyPillarsSection";
 import { CTASection } from "@/components/sections/CTASection";
 
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+// TEMP DISABLED: import { IntroRevealAR } from "@/components/intro/IntroRevealAR";
 
 const Index = () => {
+  // TEMP DISABLED: const [introComplete, setIntroComplete] = useState(false);
+
   return (
     <>
       <SEO page="home" />
       <SkipLink />
+
+      {/* TEMP DISABLED: {!introComplete && <IntroRevealAR onComplete={() => setIntroComplete(true)} />} */}
 
       <ErrorBoundary>
         {/* 1. Hero Section - Lead with value proposition */}

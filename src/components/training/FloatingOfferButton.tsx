@@ -1,5 +1,5 @@
-import { Gift } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LottiePlayer } from "@/components/ui/LottiePlayer";
 
 interface FloatingOfferButtonProps {
     onClick: () => void;
@@ -7,6 +7,9 @@ interface FloatingOfferButtonProps {
 }
 
 export function FloatingOfferButton({ onClick, visible = true }: FloatingOfferButtonProps) {
+    // Free gift animation from LottieFiles - sparkly gift box
+    const giftAnimation = "https://lottie.host/e5100b63-3e4a-4601-810d-9dedc1a40cf9/DRzHMcNRNG.json";
+
     return (
         <div
             className={cn(
@@ -21,7 +24,18 @@ export function FloatingOfferButton({ onClick, visible = true }: FloatingOfferBu
                 {/* Pulse Ring */}
                 <span className="absolute inset-0 rounded-full bg-blue-500 opacity-75 animate-ping group-hover:animate-none" />
 
-                <Gift className="text-white relative z-10" size={24} />
+                {/* Animated Gift Icon */}
+                <div className="w-6 h-6 relative z-10">
+                    <LottiePlayer
+                        animationData={giftAnimation}
+                        loop={true}
+                        autoplay={false}
+                        playOnHover={true}
+                        speed={1.2}
+                        ariaLabel="Gift icon"
+                        className="w-full h-full"
+                    />
+                </div>
 
                 {/* Tooltip / Label */}
                 <div className="absolute left-full ml-4 bg-white text-slate-900 text-xs font-bold px-3 py-1.5 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all whitespace-nowrap pointer-events-none">
