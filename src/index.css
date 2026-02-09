@@ -356,6 +356,11 @@
     }
   }
 
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+
   /* Category badge */
   .badge-category {
     @apply px-3 py-1.5 text-xs font-medium border border-border bg-background text-foreground;
@@ -660,6 +665,57 @@
   .animate-blink {
     animation: blink 1s step-end infinite;
   }
+
+  /* Hero Enhancement Animations - NEW */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 0.3;
+    }
+
+    90% {
+      opacity: 0.3;
+    }
+
+    100% {
+      transform: translate(50px, -100vh) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  .animate-float {
+    animation: float 20s linear infinite;
+    will-change: transform, opacity;
+  }
+
+  @keyframes gradient-shift {
+
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .hero-gradient-mesh {
+    background: linear-gradient(45deg,
+        #0B0F14 0%,
+        #1a1f2e 25%,
+        #0e1621 50%,
+        #1c2333 75%,
+        #0B0F14 100%);
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
 }
 
 /* Reduced Motion Support */
@@ -694,5 +750,17 @@
   /* Disable hover lift */
   .hover-lift:hover {
     transform: none !important;
+  }
+}
+
+/* Custom Cursor - Hide default cursor on desktop */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+
+  /* Ensure text selection still works */
+  ::selection {
+    background: rgba(59, 130, 246, 0.3);
   }
 }

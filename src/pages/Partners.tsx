@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import { partners as allPartners, type Partner } from "@/data/partners";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { FloatingParticles } from "@/components/hero/FloatingParticles";
+import { NetworkLines } from "@/components/hero/NetworkLines";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
+import { cn } from "@/lib/utils";
 
 interface PartnersContent {
   pageTitle: string;
@@ -50,6 +54,7 @@ const brandColors: Record<string, string> = {
 export default function Partners() {
   const { language } = useLanguage();
   const t = useContent<PartnersContent>('partners');
+  const { x: mouseX, y: mouseY } = useMouseParallax(7);
 
   // Fallback for new category label
   const getCategoryTitle = (id: string) => {
@@ -61,10 +66,19 @@ export default function Partners() {
     <div className="bg-white min-h-screen">
       <SEO page="partners" />
 
-      {/* Dark Premium Hero - Matches other pages */}
+      {/* Hero Section - Enhanced Network Theme */}
       <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden text-center">
+        {/* Animated Gradient Mesh */}
+        <div className="hero-gradient-mesh absolute inset-0 z-0" />
+
+        {/* Network Connection Lines */}
+        <NetworkLines />
+
+        {/* Blue Network Particles */}
+        <FloatingParticles count={15} color="rgba(99, 102, 241, 0.3)" />
+
         {/* Noise Texture */}
-        <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-[5]" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-4xl mx-auto">
@@ -79,7 +93,16 @@ export default function Partners() {
               </Link>
             </div>
 
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-[1.1]">
+            <h1
+              className={cn(
+                "font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] text-white",
+                "transition-transform duration-200 ease-out"
+              )}
+              style={{
+                transform: `translate(${mouseX}px, ${mouseY}px)`,
+                willChange: 'transform'
+              }}
+            >
               {t.pageTitle}
             </h1>
             <p className="font-body text-lg sm:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">

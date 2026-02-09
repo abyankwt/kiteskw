@@ -11,6 +11,9 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scr
 import { getIconByName } from "@/lib/iconUtils";
 import { cn } from "@/lib/utils";
 import { ServicesBentoGrid } from "@/components/services/ServicesBentoGrid";
+import { useParallax } from "@/hooks/useParallax";
+import { FloatingParticles } from "@/components/hero/FloatingParticles";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 
 const content = {
@@ -183,6 +186,13 @@ const Services = () => {
     const t = content[language];
     const containerRef = useRef<HTMLDivElement>(null);
 
+    // Parallax effect for hero background
+    const { ref: parallaxRef, offset: parallaxOffset } = useParallax({
+        speed: 0.3,
+        enableInViewport: true
+    });
+    const { x: mouseX, y: mouseY } = useMouseParallax(6);
+
     useEffect(() => {
         // Keep existing animations if they are still relevant, or simplified.
         // The Bento Grid handles its own scroll reveal.
@@ -211,10 +221,16 @@ const Services = () => {
             <SEO page="services" />
             <SkipLink />
 
-            {/* Dark Premium Hero */}
+            {/* Dark Premium Hero - Enhanced Corporate Blue */}
             <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden">
+                {/* Animated Gradient Mesh */}
+                <div className="hero-gradient-mesh absolute inset-0 z-0" />
+
+                {/* Corporate Blue Particles */}
+                <FloatingParticles count={18} color="rgba(59, 130, 246, 0.35)" />
+
                 {/* Noise Texture */}
-                <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+                <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-[5]" />
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                     <ScrollReveal>
@@ -222,7 +238,16 @@ const Services = () => {
                             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                             {t.hero.title}
                         </div>
-                        <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-[1.1] max-w-4xl mx-auto">
+                        <h1
+                            className={cn(
+                                "font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-[1.1] max-w-4xl mx-auto",
+                                "transition-transform duration-200 ease-out"
+                            )}
+                            style={{
+                                transform: `translate(${mouseX}px, ${mouseY}px)`,
+                                willChange: 'transform'
+                            }}
+                        >
                             Engineering Excellence, <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">Delivered.</span>
                         </h1>

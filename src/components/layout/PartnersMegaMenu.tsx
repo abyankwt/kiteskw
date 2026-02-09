@@ -92,13 +92,13 @@ export function PartnersMegaMenu({ isOpen, onClose }: PartnersMegaMenuProps) {
                                         key={partner.id}
                                         to={`/partners/${partner.id}`}
                                         onClick={onClose}
-                                        className="group relative bg-white p-4 rounded-lg border border-slate-200/60 hover:border-blue-500/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center aspect-[3/2] overflow-hidden"
+                                        className="group relative bg-white p-2 rounded-lg border border-slate-200/60 hover:border-blue-500/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center aspect-[3/2] overflow-hidden"
                                     >
                                         {partner.logo ? (
                                             <img
                                                 src={partner.logo}
                                                 alt={partner.name}
-                                                className="w-full h-full object-contain p-1 transition-all duration-300 group-hover:scale-105"
+                                                className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105"
                                             />
                                         ) : (
                                             <span className="text-xs font-bold text-slate-400 group-hover:text-slate-900 text-center">{partner.name}</span>

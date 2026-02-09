@@ -6,6 +6,12 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ExpertiseGrid } from "@/components/expertise/ExpertiseGrid";
 import { IndustrySpotlight } from "@/components/services/IndustrySpotlight";
+import { useEffect, useRef } from "react";
+import { gsap } from "@/lib/gsap";
+import { FloatingParticles } from "@/components/hero/FloatingParticles";
+import { TechnicalGrid } from "@/components/hero/TechnicalGrid";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
+import { cn } from "@/lib/utils";
 
 // Content Data
 const content = {
@@ -121,29 +127,97 @@ export default function Expertise() {
   const { language, isRTL } = useLanguage();
   const t = content[language];
 
+  // Refs for GSAP animations
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const introRef = useRef<HTMLParagraphElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
+
+  // Mouse parallax effect
+  const { x: mouseX, y: mouseY } = useMouseParallax(8);
+
+  // GSAP entrance animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Eyebrow badge
+      gsap.from(eyebrowRef.current, {
+        opacity: 0,
+        y: 10,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+
+      // Title
+      gsap.from(titleRef.current, {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.1,
+        ease: "power2.out",
+      });
+
+      // Intro text
+      gsap.from(introRef.current, {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.3,
+        ease: "power2.out",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div className="bg-background">
       <SEO page="expertise" />
       <SkipLink />
 
-      {/* Page Hero - Dark Cinematic */}
+      {/* Page Hero - Enhanced with Engineering Theme */}
       <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden text-center">
+        {/* Animated Gradient Mesh Background */}
+        <div className="hero-gradient-mesh absolute inset-0 z-0" />
+
+        {/* Technical Grid Pattern */}
+        <div className="opacity-[0.08]">
+          <TechnicalGrid />
+        </div>
+
+        {/* Floating Particles - More Visible */}
+        <FloatingParticles count={25} color="rgba(168, 85, 247, 0.4)" />
+
         {/* Noise Texture */}
-        <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.05] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-[5]" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <ScrollReveal className="max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold uppercase tracking-[0.2em] text-purple-400 mb-8 backdrop-blur-sm">
+          <div className="max-w-4xl mx-auto">
+            <div
+              ref={eyebrowRef}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold uppercase tracking-[0.2em] text-purple-400 mb-8 backdrop-blur-sm"
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
               {t.hero.eyebrow}
             </div>
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-[1.1]">
+            <h1
+              ref={titleRef}
+              className={cn(
+                "font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tighter leading-[1.1]",
+                "transition-transform duration-200 ease-out"
+              )}
+              style={{
+                transform: `translate(${mouseX}px, ${mouseY}px)`,
+                willChange: 'transform'
+              }}
+            >
               {t.hero.title}
             </h1>
-            <p className="font-body text-lg sm:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed mb-10">
+            <p
+              ref={introRef}
+              className="font-body text-lg sm:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed mb-10"
+            >
               {t.hero.intro}
             </p>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 

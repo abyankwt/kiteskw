@@ -18,10 +18,15 @@ import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Send, Clock, Building2 } 
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { FloatingParticles } from "@/components/hero/FloatingParticles";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
+import { cn } from "@/lib/utils";
 
 interface ContactContent {
   pageTitle: string;
   intro: string;
+  email: string; // Added for direct access to email value
+  phone: string; // Added for direct access to phone value
   form: {
     labels: {
       name: string;
@@ -66,6 +71,9 @@ export default function Contact() {
   const { language } = useLanguage();
   const t = useContent<ContactContent>('contact');
   const { toast } = useToast();
+  const emailHref = `mailto:${t?.email || "info@kites-kwv.com"}`;
+  const phoneHref = `tel:${t?.phone || "+966533332000"}`;
+  const { x: mouseX, y: mouseY } = useMouseParallax(5);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -155,10 +163,16 @@ export default function Contact() {
       <SEO page="contact" />
 
 
-      {/* Hero Section */}
+      {/* Hero Section - Enhanced Welcoming Cyan Theme */}
       <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden">
+        {/* Animated Gradient Mesh */}
+        <div className="hero-gradient-mesh absolute inset-0 z-0" />
+
+        {/* Welcoming Cyan Particles */}
+        <FloatingParticles count={16} color="rgba(34, 211, 238, 0.3)" />
+
         {/* Noise Texture */}
-        <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.04] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-[5]" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-3xl mx-auto text-center">
@@ -168,7 +182,16 @@ export default function Contact() {
               <span className="text-sm font-bold text-white uppercase tracking-wide">Get In Touch</span>
             </div>
 
-            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight leading-tight bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+            <h1
+              className={cn(
+                "font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1] text-white",
+                "transition-transform duration-200 ease-out"
+              )}
+              style={{
+                transform: `translate(${mouseX}px, ${mouseY}px)`,
+                willChange: 'transform'
+              }}
+            >
               {t.pageTitle}
             </h1>
             <p className="font-body text-base sm:text-lg lg:text-xl text-white/80 font-light max-w-2xl mx-auto px-2 sm:px-0 mb-8">

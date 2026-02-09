@@ -20,6 +20,8 @@ import { TrustBadges } from "@/components/training/TrustBadges";
 import { ComparisonMatrix } from "@/components/training/ComparisonMatrix";
 import { BundleOfferCard, EarlyBirdOfferCard } from "@/components/training/SpecialOfferCard";
 import { gsap } from "@/lib/gsap";
+import { FloatingParticles } from "@/components/hero/FloatingParticles";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 // Mock Data for Trending Courses
 const TRENDING_COURSES = [
@@ -138,6 +140,7 @@ const Training = () => {
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const primaryCTARef = useRef<HTMLDivElement>(null);
     const secondaryCTARef = useRef<HTMLAnchorElement>(null);
+    const { x: mouseX, y: mouseY } = useMouseParallax(5);
 
     const handleScrollToPrograms = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -205,22 +208,33 @@ const Training = () => {
                 message="Early Bird Discount - Limited Seats Available!"
             />
 
-            {/* SECTION 1 — Hero Section */}
+            {/* SECTION 1 — Hero Section - Enhanced Educational Theme */}
             <section
                 ref={heroRef}
                 className="relative pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-[#0B0F14]"
                 id="main-content"
             >
-                {/* Deep Navy Gradient */}
-                <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0B0F14] to-[#101826]" />
+                {/* Animated Gradient Mesh */}
+                <div className="hero-gradient-mesh absolute inset-0 z-0" />
+
+                {/* Educational Amber Particles */}
+                <FloatingParticles count={20} color="rgba(251, 191, 36, 0.25)" />
+
                 {/* Subtle Noise */}
-                <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-0" />
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-[5]" />
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className={cn("max-w-4xl mx-auto text-center", isRTL && "text-right")}>
                         <h1
                             ref={titleRef}
-                            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-[1.05] tracking-tight"
+                            className={cn(
+                                "font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-[1.05] tracking-tight",
+                                "transition-transform duration-200 ease-out"
+                            )}
+                            style={{
+                                transform: `translate(${mouseX}px, ${mouseY}px)`,
+                                willChange: 'transform'
+                            }}
                         >
                             {t.hero.title}
                         </h1>

@@ -7,6 +7,9 @@ import { Calendar, MapPin, ArrowRight, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { events, type Event, type EventType } from "@/data/events";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
+import { AnimatedCounter } from "@/components/training/AnimatedCounter";
+import { FloatingParticles } from "@/components/hero/FloatingParticles";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 import { cn } from "@/lib/utils";
 
 interface EventsContent {
@@ -22,6 +25,7 @@ export default function Events() {
   const { language } = useLanguage();
   const t = useContent<EventsContent>('events');
   const [activeFilter, setActiveFilter] = useState<EventType | 'all'>('all');
+  const { x: mouseX, y: mouseY } = useMouseParallax(6);
   const [isFilterSticky, setIsFilterSticky] = useState(false);
 
   // Sticky filter behavior on scroll
@@ -193,10 +197,16 @@ export default function Events() {
       <SEO page="events" />
 
 
-      {/* Hero Section */}
+      {/* Hero Section - Enhanced Dynamic Theme */}
       <section className="pt-32 pb-16 lg:pt-48 lg:pb-24 bg-black relative overflow-hidden">
+        {/* Animated Gradient Mesh */}
+        <div className="hero-gradient-mesh absolute inset-0 z-0" />
+
+        {/* Dynamic Green/Emerald Particles */}
+        <FloatingParticles count={22} color="rgba(16, 185, 129, 0.3)" />
+
         {/* Noise Texture */}
-        <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.03] bg-[url('/noise.png')] mix-blend-overlay pointer-events-none z-[5]" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-4xl mx-auto text-center">
@@ -206,10 +216,17 @@ export default function Events() {
               <span className="text-sm font-bold text-white uppercase tracking-wide">Events & Workshops</span>
             </div>
 
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                {t.pageTitle}
-              </span>
+            <h1
+              className={cn(
+                "font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] text-white",
+                "transition-transform duration-200 ease-out"
+              )}
+              style={{
+                transform: `translate(${mouseX}px, ${mouseY}px)`,
+                willChange: 'transform'
+              }}
+            >
+              {t.pageTitle}
             </h1>
 
             <p className="font-body text-lg sm:text-xl lg:text-2xl text-white/80 font-light max-w-3xl mx-auto leading-relaxed">
