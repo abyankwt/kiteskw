@@ -48,7 +48,7 @@ export const testimonials: Testimonial[] = [
             en: "KITES transformed our simulation capabilities. Their training programs equipped our engineers with cutting-edge skills that directly improved our project outcomes.",
             ar: "حولت كايتس قدراتنا في المحاكاة. برامجهم التدريبية زودت مهندسينا بمهارات متقدمة أثرت مباشرة على نتائج مشاريعنا."
         },
-        photo: "/images/testimonials/default-avatar.jpg",
+        photo: "/images/testimonials/ahmed-al-mansouri.jpg",
         rating: 5,
         location: {
             en: "Riyadh, Saudi Arabia",
@@ -77,7 +77,7 @@ export const testimonials: Testimonial[] = [
             en: "The technical expertise and hands-on support from KITES helped us accelerate our renewable energy projects. Their simulation tools are world-class.",
             ar: "الخبرة الفنية والدعم العملي من كايتس ساعدنا في تسريع مشاريع الطاقة المتجددة. أدوات المحاكاة الخاصة بهم عالمية المستوى."
         },
-        photo: "/images/testimonials/default-avatar.jpg",
+        photo: "/images/testimonials/fatima-al-qasimi.jpg",
         rating: 5,
         location: {
             en: "Dubai, UAE",
@@ -106,7 +106,7 @@ export const testimonials: Testimonial[] = [
             en: "Our partnership with KITES brought advanced simulation capabilities to our research programs. Their consultants are highly knowledgeable and professional.",
             ar: "شراكتنا مع كايتس أضافت قدرات محاكاة متقدمة لبرامجنا البحثية. استشاريوهم ذوو معرفة عالية واحترافية."
         },
-        photo: "/images/testimonials/default-avatar.jpg",
+        photo: "/images/testimonials/mohammed-al-thani.jpg",
         rating: 5,
         location: {
             en: "Dhahran, Saudi Arabia",
@@ -135,7 +135,7 @@ export const testimonials: Testimonial[] = [
             en: "KITES delivered exceptional structural analysis training. The practical approach and real-world examples made complex concepts easy to understand and apply.",
             ar: "قدمت كايتس تدريباً استثنائياً في التحليل الإنشائي. النهج العملي والأمثلة الواقعية جعلت المفاهيم المعقدة سهلة الفهم والتطبيق."
         },
-        photo: "/images/testimonials/default-avatar.jpg",
+        photo: "/images/testimonials/khalid-al-harbi.jpg",
         rating: 5,
         location: {
             en: "Doha, Qatar",
@@ -164,7 +164,7 @@ export const testimonials: Testimonial[] = [
             en: "Working with KITES on urban planning simulation was transformative. Their innovative approach helped us visualize and optimize sustainable city designs.",
             ar: "العمل مع كايتس على محاكاة التخطيط العمراني كان تحويلياً. نهجهم المبتكر ساعدنا في تصور وتحسين تصاميم المدن المستدامة."
         },
-        photo: "/images/testimonials/default-avatar.jpg",
+        photo: "/images/testimonials/sara-al-dosari.jpg",
         rating: 5,
         location: {
             en: "NEOM, Saudi Arabia",
@@ -193,7 +193,7 @@ export const testimonials: Testimonial[] = [
             en: "The process optimization consulting from KITES resulted in significant efficiency gains. Their data-driven approach and expertise are unmatched.",
             ar: "استشارات تحسين العمليات من كايتس أدت إلى مكاسب كبيرة في الكفاءة. نهجهم القائم على البيانات وخبرتهم لا مثيل لها."
         },
-        photo: "/images/testimonials/default-avatar.jpg",
+        photo: "/images/testimonials/omar-al-shamsi.jpg",
         rating: 5,
         location: {
             en: "Jubail, Saudi Arabia",
