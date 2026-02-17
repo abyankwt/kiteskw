@@ -752,15 +752,3 @@
     transform: none !important;
   }
 }
-
-/* Custom Cursor - Hide default cursor on desktop */
-@media (hover: hover) and (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-
-  /* Ensure text selection still works */
-  ::selection {
-    background: rgba(59, 130, 246, 0.3);
-  }
-}

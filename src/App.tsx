@@ -21,7 +21,7 @@ import ScrollToTop from "@/components/common/ScrollToTop";
 import { Layout } from "@/components/layout/Layout";
 import { SplashScreen } from "@/components/splash/SplashScreen";
 import { PageTransition } from "@/components/transitions/PageTransition";
-import { CustomCursor } from "@/components/ui/CustomCursor";
+
 
 const queryClient = new QueryClient();
 
@@ -74,7 +74,7 @@ const AppContent = () => {
         <>
             {isLoading && <SplashScreen onComplete={handleSplashComplete} />}
             <AppLayout showIntro={isLoading} />
-            <CustomCursor />
+
         </>
     );
 };
