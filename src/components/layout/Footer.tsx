@@ -161,8 +161,8 @@ export function Footer() {
                 <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-white/10 transition-colors">
                   <Mail size={16} className="text-slate-400 group-hover:text-white transition-colors" strokeWidth={1.5} />
                 </div>
-                <a href="mailto:info@kites-kw.com" className="text-sm font-medium text-logo-gunsmoke group-hover:text-white transition-colors">
-                  info@kites-kw.com
+                <a href="mailto:info@kites.com.kw" className="text-sm font-medium text-logo-gunsmoke group-hover:text-white transition-colors">
+                  info@kites.com.kw
                 </a>
               </li>
 
