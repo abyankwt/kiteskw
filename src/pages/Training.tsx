@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
+import { usePublishedCourses, useEnrollCheckout } from "@/hooks/useCourses";
+import toast from "react-hot-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { TrainingOffersModal } from "@/components/training/TrainingOffersModal";
 import { TrainingOffersSection } from "@/components/training/TrainingOffersSection";
 import { TrainingBentoGrid } from "@/components/training/TrainingBentoGrid";
@@ -130,6 +133,48 @@ import { TrainingTimelineEnhanced } from "@/components/services/TrainingTimeline
 const Training = () => {
     const { language, isRTL } = useLanguage();
     const t = content[language];
+
+    // --- API Integration: load courses dynamically ---
+    const { data: apiCoursesData } = usePublishedCourses({ limit: 8 });
+    const { user } = useAuth();
+    const checkout = useEnrollCheckout();
+
+    const handleEnroll = async (courseId: string) => {
+        if (!user) {
+            toast.error('Please sign in to enroll in a course.');
+            return;
+        }
+        try {
+            const result = await checkout.mutateAsync(courseId);
+            if (result.free) {
+                toast.success('You are now enrolled!');
+            } else if (result.paymentUrl) {
+                window.location.href = result.paymentUrl;
+            }
+        } catch (err: any) {
+            const msg = err?.response?.data?.error;
+            if (msg === 'Already enrolled in this course') {
+                toast.success('You are already enrolled in this course.');
+            } else {
+                toast.error(msg || 'Enrollment failed. Please try again.');
+            }
+        }
+    };
+
+    // Build trending course cards — prefer API data, fall back to hardcoded
+    const whatsappBase = `https://wa.me/96522092260?text=I'm%20interested%20in%20the%20course:%20`;
+    const trendingCourses = apiCoursesData?.data?.slice(0, 4).map((c: any, i: number) => ({
+        id: c.id,
+        title: c.title,
+        category: c.category,
+        rating: c.rating,
+        reviews: c.enrollmentCount,
+        duration: c.duration || '—',
+        level: c.level,
+        image: c.thumbnailUrl || TRENDING_COURSES[i % TRENDING_COURSES.length]?.image || '/assets/training/solidworks-level-1.png',
+        badge: i === 0 ? 'Best Seller' : i === 1 ? 'Certification' : i === 2 ? 'Trending' : 'New',
+        price: c.price === 0 ? 'Free' : `KWD ${c.effectivePrice?.toFixed(3)}`,
+    })) ?? TRENDING_COURSES;
 
     // Get training data from servicesDetailData
     const trainingData = servicesDetailData["training"]?.[language];
@@ -341,12 +386,13 @@ const Training = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {TRENDING_COURSES.map((course, index) => (
+                        {trendingCourses.map((course, index) => (
                             <EnhancedCourseCard
                                 key={course.id}
                                 course={course}
-                                whatsappUrl={whatsappUrl}
+                                whatsappUrl={`${whatsappBase}${encodeURIComponent(course.title)}`}
                                 index={index}
+                                onEnroll={user ? handleEnroll : undefined}
                             />
                         ))}
                     </div>

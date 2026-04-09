@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import Expertise from "./pages/Expertise";
@@ -21,12 +22,14 @@ import ScrollToTop from "@/components/common/ScrollToTop";
 import { Layout } from "@/components/layout/Layout";
 import { SplashScreen } from "@/components/splash/SplashScreen";
 import { PageTransition } from "@/components/transitions/PageTransition";
-
+import { PrivateRoute } from "@/components/admin/PrivateRoute";
+import AdminLogin from "@/pages/auth/AdminLogin";
+import AdminLayout from "@/pages/admin/AdminLayout";
+import PaymentSuccess from "@/pages/PaymentSuccess";
+import PaymentFailure from "@/pages/PaymentFailure";
 
 const queryClient = new QueryClient();
 
-// Wrapper for Layout to handle location-based re-renders if needed, 
-// though here we mainly need it to pass the hidden state.
 const AppLayout = ({ showIntro }: { showIntro: boolean }) => {
     const location = useLocation();
 
@@ -44,6 +47,8 @@ const AppLayout = ({ showIntro }: { showIntro: boolean }) => {
                     <Route path="/insights" element={<Insights />} />
                     <Route path="/events" element={<Events />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/payment/success" element={<PaymentSuccess />} />
+                    <Route path="/payment/failure" element={<PaymentFailure />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>
@@ -52,13 +57,11 @@ const AppLayout = ({ showIntro }: { showIntro: boolean }) => {
     );
 };
 
-
 const AppContent = () => {
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const [previousPath, setPreviousPath] = useState(location.pathname);
 
-    // Trigger splash screen on route change
     useEffect(() => {
         if (location.pathname !== previousPath) {
             setIsLoading(true);
@@ -74,7 +77,6 @@ const AppContent = () => {
         <>
             {isLoading && <SplashScreen onComplete={handleSplashComplete} />}
             <AppLayout showIntro={isLoading} />
-
         </>
     );
 };
@@ -82,16 +84,31 @@ const AppContent = () => {
 const App = () => (
     <HelmetProvider>
         <QueryClientProvider client={queryClient}>
-            <LanguageProvider>
-                <TooltipProvider>
-                    <Toaster />
-                    <Sonner />
-                    <BrowserRouter>
-                        <ScrollToTop />
-                        <AppContent />
-                    </BrowserRouter>
-                </TooltipProvider>
-            </LanguageProvider>
+            <AuthProvider>
+                <LanguageProvider>
+                    <TooltipProvider>
+                        <Toaster />
+                        <Sonner />
+                        <BrowserRouter>
+                            <ScrollToTop />
+                            <Routes>
+                                {/* Admin routes — completely outside public Layout, SplashScreen, Header/Footer */}
+                                <Route path="/admin/login" element={<AdminLogin />} />
+                                <Route
+                                    path="/admin/*"
+                                    element={
+                                        <PrivateRoute roles={['SUPER_ADMIN', 'ADMIN', 'STAFF']}>
+                                            <AdminLayout />
+                                        </PrivateRoute>
+                                    }
+                                />
+                                {/* Public site */}
+                                <Route path="/*" element={<AppContent />} />
+                            </Routes>
+                        </BrowserRouter>
+                    </TooltipProvider>
+                </LanguageProvider>
+            </AuthProvider>
         </QueryClientProvider>
     </HelmetProvider>
 );

@@ -1,0 +1,13 @@
+Options -MultiViews
+RewriteEngine On
+
+# Don't rewrite API or upload requests
+RewriteCond %{REQUEST_URI} !^/api
+RewriteCond %{REQUEST_URI} !^/uploads
+
+# Don't rewrite existing files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# All other requests → SPA entry point
+RewriteRule ^ /index.html [L]
