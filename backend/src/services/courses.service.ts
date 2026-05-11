@@ -223,6 +223,44 @@ export async function unpublishCourse(id: string) {
   return formatCourse(rows[0]);
 }
 
+export async function getFeaturedCourses() {
+  const { rows } = await pool.query(
+    `SELECT * FROM courses WHERE featured = TRUE AND status = 'published'
+     ORDER BY featured_order ASC, created_at ASC`
+  );
+  return rows.map(formatCourse);
+}
+
+export async function setFeatured(id: string, featured: boolean, order?: number) {
+  const { rows } = await pool.query(
+    `UPDATE courses
+     SET featured = $1, featured_order = COALESCE($2, featured_order), updated_at = NOW()
+     WHERE id = $3 RETURNING *`,
+    [featured, order ?? null, id]
+  );
+  if (rows.length === 0) throw { status: 404, message: 'Course not found' };
+  return formatCourse(rows[0]);
+}
+
+export async function reorderFeatured(orderedIds: string[]) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    for (let i = 0; i < orderedIds.length; i++) {
+      await client.query(
+        `UPDATE courses SET featured_order = $1, updated_at = NOW() WHERE id = $2`,
+        [i + 1, orderedIds[i]]
+      );
+    }
+    await client.query('COMMIT');
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
 async function generateUniqueSlug(title: string): Promise<string> {
   let slug = slugify(title);
   let suffix = 0;

@@ -24,6 +24,8 @@ import { SplashScreen } from "@/components/splash/SplashScreen";
 import { PageTransition } from "@/components/transitions/PageTransition";
 import { PrivateRoute } from "@/components/admin/PrivateRoute";
 import AdminLogin from "@/pages/auth/AdminLogin";
+import Login from "@/pages/auth/Login";
+import Register from "@/pages/auth/Register";
 import AdminLayout from "@/pages/admin/AdminLayout";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentFailure from "@/pages/PaymentFailure";
@@ -92,6 +94,9 @@ const App = () => (
                         <BrowserRouter>
                             <ScrollToTop />
                             <Routes>
+                                {/* Auth pages — no header/footer */}
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/register" element={<Register />} />
                                 {/* Admin routes — completely outside public Layout, SplashScreen, Header/Footer */}
                                 <Route path="/admin/login" element={<AdminLogin />} />
                                 <Route

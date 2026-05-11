@@ -2,13 +2,13 @@ import { SEO } from "@/components/common/SEO";
 import { SkipLink } from "@/components/common/SkipLink";
 import { ArrowRight, Star, Clock, Users, Trophy, Sparkles, CheckCircle2, Quote, BookOpen, Target, Briefcase, MessageCircle, Flame } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCmsPage, getBlockValue, getBlockJson } from "@/hooks/useCmsPage";
 import { Link } from "react-router-dom";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
-import { usePublishedCourses, useEnrollCheckout } from "@/hooks/useCourses";
-import toast from "react-hot-toast";
-import { useAuth } from "@/contexts/AuthContext";
+import { useFeaturedCourses } from "@/hooks/useCourses";
+import { EnrollmentModal } from "@/components/training/EnrollmentModal";
 import { TrainingOffersModal } from "@/components/training/TrainingOffersModal";
 import { TrainingOffersSection } from "@/components/training/TrainingOffersSection";
 import { TrainingBentoGrid } from "@/components/training/TrainingBentoGrid";
@@ -21,7 +21,6 @@ import { EnhancedStatsSection } from "@/components/training/EnhancedStatsSection
 import { LimitedTimeOfferBanner } from "@/components/training/LimitedTimeOfferBanner";
 import { TrustBadges } from "@/components/training/TrustBadges";
 import { ComparisonMatrix } from "@/components/training/ComparisonMatrix";
-import { BundleOfferCard, EarlyBirdOfferCard } from "@/components/training/SpecialOfferCard";
 import { gsap } from "@/lib/gsap";
 import { FloatingParticles } from "@/components/hero/FloatingParticles";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
@@ -134,36 +133,127 @@ const Training = () => {
     const { language, isRTL } = useLanguage();
     const t = content[language];
 
-    // --- API Integration: load courses dynamically ---
-    const { data: apiCoursesData } = usePublishedCourses({ limit: 8 });
-    const { user } = useAuth();
-    const checkout = useEnrollCheckout();
+    // CMS overrides — fall back to hardcoded content if unavailable
+    const { data: cms } = useCmsPage('training');
+    const s = cms?.sections;
+    const loc = language as 'en' | 'ar';
+    const g = (sk: string, fk: string) => getBlockValue(s?.[sk], fk, loc) ?? undefined;
+    const gj = (sk: string, fk: string) => getBlockJson(s?.[sk], fk) ?? undefined;
 
-    const handleEnroll = async (courseId: string) => {
-        if (!user) {
-            toast.error('Please sign in to enroll in a course.');
-            return;
-        }
-        try {
-            const result = await checkout.mutateAsync(courseId);
-            if (result.free) {
-                toast.success('You are now enrolled!');
-            } else if (result.paymentUrl) {
-                window.location.href = result.paymentUrl;
-            }
-        } catch (err: any) {
-            const msg = err?.response?.data?.error;
-            if (msg === 'Already enrolled in this course') {
-                toast.success('You are already enrolled in this course.');
-            } else {
-                toast.error(msg || 'Enrollment failed. Please try again.');
-            }
-        }
+    const hero = {
+        title: g('hero', 'title') ?? t.hero.title,
+        subtitle: g('hero', 'subtitle') ?? t.hero.subtitle,
+        secondaryCTA: g('hero', 'cta_secondary') ?? t.hero.secondaryCTA,
     };
 
-    // Build trending course cards — prefer API data, fall back to hardcoded
+    const banner = (() => {
+        const discount = getBlockValue(s?.['banner'], 'discount', 'en') ?? '20%';
+        const expiryDate = getBlockValue(s?.['banner'], 'expiry_date', 'en') ?? '2026-07-01T23:59:59';
+        const seats = parseInt(getBlockValue(s?.['banner'], 'remaining_seats', 'en') ?? '12');
+        const message = g('banner', 'message') ?? 'Early Bird Discount - Limited Seats Available!';
+        return { discount, expiryDate, remainingSeats: seats, message };
+    })();
+
+    const heroStats = {
+        enrolledCount: parseInt(getBlockValue(s?.['stats'], 'enrolled_count', 'en') ?? '500'),
+        ratingValue: parseFloat(getBlockValue(s?.['stats'], 'rating_value', 'en') ?? '4.9'),
+        careerGrowthPct: parseInt(getBlockValue(s?.['stats'], 'career_growth_pct', 'en') ?? '98'),
+        enrolledLabel: g('stats', 'enrolled_label') ?? 'Engineers Enrolled',
+        ratingLabel: g('stats', 'rating_label') ?? 'Average Rating',
+        careerLabel: g('stats', 'career_label') ?? 'Career Growth',
+    };
+
+    const reviews = (() => {
+        const raw = gj('reviews', 'items');
+        if (!raw) return REVIEWS;
+        return raw.map((r: any, i: number) => ({
+            id: r.id ?? i,
+            name: r.name,
+            role: r.role,
+            company: r.company,
+            text: r.text,
+            avatar: r.avatar,
+        }));
+    })();
+
+    const specialOffers = (() => {
+        const raw = gj('special_offers', 'items');
+        if (!raw || raw.length < 2) return null;
+        return raw.map((o: any) => ({
+            title: loc === 'ar' ? (o.title_ar ?? o.title) : o.title,
+            description: loc === 'ar' ? (o.description_ar ?? o.description) : o.description,
+            discount: o.discount,
+            features: loc === 'ar' ? (o.features_ar ?? o.features) : o.features,
+            ctaText: loc === 'ar' ? (o.ctaText_ar ?? o.ctaText) : o.ctaText,
+            ctaLink: o.ctaLink,
+            variant: o.variant as 'primary' | 'secondary',
+        }));
+    })();
+
+    const trustBadges = (() => {
+        const title = g('trust', 'title');
+        const description = g('trust', 'description');
+        const raw = gj('trust', 'items');
+        if (!raw) return { title, description, badges: undefined };
+        const badges = raw.map((b: any) => ({
+            icon: b.icon,
+            title: loc === 'ar' ? (b.title_ar ?? b.title) : b.title,
+            description: loc === 'ar' ? (b.description_ar ?? b.description) : b.description,
+            color: b.color,
+        }));
+        return { title, description, badges };
+    })();
+
+    const finalCta = {
+        urgencyText: g('final_cta', 'urgency_text') ?? 'Limited Spots for Next Intake',
+        title: g('final_cta', 'title') ?? 'Ready to Start Learning?',
+        description: g('final_cta', 'description') ?? `Join 500+ engineers who have advanced their careers with KITES training.`,
+        trustSignals: (() => {
+            const raw = gj('final_cta', 'trust_signals');
+            return raw ?? ['Money-back guarantee', 'Free trial lesson', 'Industry-certified trainers'];
+        })(),
+    };
+
+    // --- NEW CMS sections ---
+    const offersSection = {
+        tagline: g('offers_section', 'tagline') ?? undefined,
+        heading: g('offers_section', 'heading') ?? undefined,
+        items: gj('offers_section', 'items') ?? undefined,
+    };
+
+    const whyKites = {
+        tagline:  g('why_kites', 'tagline')  ?? undefined,
+        heading:  g('why_kites', 'heading')  ?? undefined,
+        subtitle: g('why_kites', 'subtitle') ?? undefined,
+        features: gj('why_kites', 'features') ?? undefined,
+    };
+
+    const comparison = {
+        badgeText: g('comparison', 'badge_text') ?? undefined,
+        heading:   g('comparison', 'heading')    ?? undefined,
+        subtitle:  g('comparison', 'subtitle')   ?? undefined,
+        ctaText:   g('comparison', 'cta_text')   ?? undefined,
+        ctaNote:   g('comparison', 'cta_note')   ?? undefined,
+        features:  gj('comparison', 'features')  ?? undefined,
+    };
+
+    const learningPaths = {
+        tagline:  g('learning_paths', 'tagline')  ?? undefined,
+        heading:  g('learning_paths', 'heading')  ?? undefined,
+        subtitle: g('learning_paths', 'subtitle') ?? undefined,
+        paths:    gj('learning_paths', 'paths')   ?? undefined,
+    };
+
+    const trustPartnersLabel = g('trust', 'partners_label') ?? undefined;
+    const trustPartners      = gj('trust', 'partners')      ?? undefined;
+
+    // --- API Integration: load courses dynamically ---
+    const { data: featuredCoursesData } = useFeaturedCourses();
+    const [enrollingCourse, setEnrollingCourse] = useState<{ id: string | number; title: string; price: string } | null>(null);
+
+    // Build trending course cards from featured list (admin-controlled order)
     const whatsappBase = `https://wa.me/96522092260?text=I'm%20interested%20in%20the%20course:%20`;
-    const trendingCourses = apiCoursesData?.data?.slice(0, 4).map((c: any, i: number) => ({
+    const trendingCourses = featuredCoursesData?.map((c: any, i: number) => ({
         id: c.id,
         title: c.title,
         category: c.category,
@@ -172,9 +262,14 @@ const Training = () => {
         duration: c.duration || '—',
         level: c.level,
         image: c.thumbnailUrl || TRENDING_COURSES[i % TRENDING_COURSES.length]?.image || '/assets/training/solidworks-level-1.png',
-        badge: i === 0 ? 'Best Seller' : i === 1 ? 'Certification' : i === 2 ? 'Trending' : 'New',
-        price: c.price === 0 ? 'Free' : `KWD ${c.effectivePrice?.toFixed(3)}`,
+        badge: ['Best Seller', 'Certification', 'Trending', 'New', 'Popular', 'Advanced', 'Beginner', 'In Demand', 'Featured'][i] ?? 'New',
+        price: c.price === 0 ? 'Free' : c.effectivePrice ? `KWD ${c.effectivePrice.toFixed(3)}` : 'Contact for pricing',
     })) ?? TRENDING_COURSES;
+
+    const handleEnroll = (courseId: string) => {
+        const course = trendingCourses.find((c) => String(c.id) === courseId);
+        if (course) setEnrollingCourse(course);
+    };
 
     // Get training data from servicesDetailData
     const trainingData = servicesDetailData["training"]?.[language];
@@ -204,7 +299,7 @@ const Training = () => {
             const timer = setTimeout(() => {
                 setShowOffersModal(true);
                 sessionStorage.setItem("hasSeenTrainingOffer", "true");
-            }, 800); // 800ms delay for snappier feel
+            }, 10000);
             return () => clearTimeout(timer);
         }
     }, []);
@@ -247,16 +342,16 @@ const Training = () => {
 
             {/* Limited Time Offer Banner */}
             <LimitedTimeOfferBanner
-                discount="20%"
-                expiryDate="2026-02-15T23:59:59"
-                remainingSeats={12}
-                message="Early Bird Discount - Limited Seats Available!"
+                discount={banner.discount}
+                expiryDate={banner.expiryDate}
+                remainingSeats={banner.remainingSeats}
+                message={banner.message}
             />
 
             {/* SECTION 1 — Hero Section - Enhanced Educational Theme */}
             <section
                 ref={heroRef}
-                className="relative pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-[#0B0F14]"
+                className="relative pt-48 pb-12 sm:pt-48 sm:pb-16 lg:pt-56 lg:pb-24 overflow-hidden bg-[#0B0F14]"
                 id="main-content"
             >
                 {/* Animated Gradient Mesh */}
@@ -281,32 +376,33 @@ const Training = () => {
                                 willChange: 'transform'
                             }}
                         >
-                            {t.hero.title}
+                            {hero.title}
                         </h1>
                         <p
                             ref={subtitleRef}
                             className="font-body text-base sm:text-lg lg:text-xl text-slate-400/90 max-w-3xl mx-auto font-light px-2 sm:px-0 mb-10 lg:mb-12"
                         >
-                            {t.hero.subtitle}
+                            {hero.subtitle}
                         </p>
 
                         {/* CTAs */}
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12">
                             <div ref={primaryCTARef} className="w-full sm:w-auto">
                                 <a
-                                    href={whatsappUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                    href="#featured-courses"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        document.getElementById('featured-courses')?.scrollIntoView({ behavior: 'smooth' });
+                                    }}
                                     onMouseEnter={(e) => {
                                         gsap.to(e.currentTarget, { scale: 1.05, duration: 0.3, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
                                     }}
                                     onMouseLeave={(e) => {
                                         gsap.to(e.currentTarget, { scale: 1, duration: 0.3, ease: "cubic-bezier(0.4, 0, 0.2, 1)" });
                                     }}
-                                    className="inline-flex items-center px-8 py-4 bg-[#25D366] text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-[#20BD5A] transition-all duration-300 group shadow-lg hover:shadow-[0_0_25px_rgba(37,211,102,0.4)] w-full justify-center relative animate-pulse-subtle"
+                                    className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-blue-700 transition-all duration-300 group shadow-lg hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] w-full justify-center relative"
                                 >
-                                    <MessageCircle size={18} className="mr-2" />
-                                    <span>Start Free Consultation</span>
+                                    <span>Browse Courses</span>
                                     <ArrowRight
                                         size={16}
                                         className={cn(
@@ -322,7 +418,7 @@ const Training = () => {
                                 onClick={handleScrollToPrograms}
                                 className="inline-flex items-center text-sm font-semibold text-white/90 hover:text-white transition-colors duration-300 group underline underline-offset-4 decoration-white/30 hover:decoration-white/60"
                             >
-                                <span>{t.hero.secondaryCTA}</span>
+                                <span>{hero.secondaryCTA}</span>
                                 <ArrowRight
                                     size={14}
                                     className={cn(
@@ -338,21 +434,21 @@ const Training = () => {
                             <div className="flex items-center gap-2 text-slate-400">
                                 <CheckCircle2 size={16} className="text-emerald-500" />
                                 <span>
-                                    <AnimatedCounter end={500} suffix="+" className="font-bold text-white" /> Engineers Enrolled
+                                    <AnimatedCounter end={heroStats.enrolledCount} suffix="+" className="font-bold text-white" /> {heroStats.enrolledLabel}
                                 </span>
                             </div>
                             <div className="hidden sm:block w-px h-4 bg-slate-700" />
                             <div className="flex items-center gap-2 text-slate-400">
                                 <Star size={16} className="text-yellow-500 fill-yellow-500" />
                                 <span>
-                                    <AnimatedCounter end={4.9} suffix="/5" className="font-bold text-white" /> Average Rating
+                                    <AnimatedCounter end={heroStats.ratingValue} suffix="/5" className="font-bold text-white" /> {heroStats.ratingLabel}
                                 </span>
                             </div>
                             <div className="hidden sm:block w-px h-4 bg-slate-700" />
                             <div className="flex items-center gap-2 text-slate-400">
                                 <Trophy size={16} className="text-blue-500" />
                                 <span>
-                                    <AnimatedCounter end={98} suffix="%" className="font-bold text-white" /> Career Growth
+                                    <AnimatedCounter end={heroStats.careerGrowthPct} suffix="%" className="font-bold text-white" /> {heroStats.careerLabel}
                                 </span>
                             </div>
                         </div>
@@ -362,6 +458,9 @@ const Training = () => {
 
             {/* POPUP MODAL */}
             <TrainingOffersModal open={showOffersModal} onOpenChange={setShowOffersModal} />
+
+            {/* ENROLLMENT MODAL */}
+            <EnrollmentModal course={enrollingCourse} onClose={() => setEnrollingCourse(null)} />
 
             {/* SECTION 2: REMOVED BANNER */}
 
@@ -385,14 +484,14 @@ const Training = () => {
                         </a>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {trendingCourses.map((course, index) => (
                             <EnhancedCourseCard
                                 key={course.id}
                                 course={course}
                                 whatsappUrl={`${whatsappBase}${encodeURIComponent(course.title)}`}
                                 index={index}
-                                onEnroll={user ? handleEnroll : undefined}
+                                onEnroll={handleEnroll}
                             />
                         ))}
                     </div>
@@ -400,26 +499,38 @@ const Training = () => {
             </section>
 
             {/* Trust Badges Section */}
-            <TrustBadges />
+            <TrustBadges
+                title={trustBadges.title}
+                description={trustBadges.description}
+                badges={trustBadges.badges}
+                partnersLabel={trustPartnersLabel}
+                partners={trustPartners}
+            />
 
             {/* SECTION: OFFERS GRID */}
-            <TrainingOffersSection />
+            <TrainingOffersSection
+                tagline={offersSection.tagline}
+                heading={offersSection.heading}
+                items={offersSection.items}
+            />
 
             {/* SECTION: BENTO GRID FEATURES */}
-            <TrainingBentoGrid />
+            <TrainingBentoGrid
+                tagline={whyKites.tagline}
+                heading={whyKites.heading}
+                subtitle={whyKites.subtitle}
+                features={whyKites.features}
+            />
 
             {/* Comparison Matrix Section */}
-            <ComparisonMatrix />
-
-            {/* Special Offer Card - Bundle Offer */}
-            <section className="py-12 bg-gradient-to-br from-slate-50 to-blue-50">
-                <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                        <BundleOfferCard />
-                        <EarlyBirdOfferCard />
-                    </div>
-                </div>
-            </section>
+            <ComparisonMatrix
+                badgeText={comparison.badgeText}
+                heading={comparison.heading}
+                subtitle={comparison.subtitle}
+                ctaText={comparison.ctaText}
+                ctaNote={comparison.ctaNote}
+                features={comparison.features}
+            />
 
             {/* SECTION: LEARNING PATH INFOGRAPHIC (Enhanced) */}
             <section className="py-24 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
@@ -432,15 +543,15 @@ const Training = () => {
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <span className="text-emerald-600 font-bold uppercase tracking-widest text-xs">Career Roadmap</span>
-                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mt-2 mb-4">Your Journey to Expertise</h2>
-                        <p className="text-slate-600 text-lg">Choose your path and join <AnimatedCounter end={500} suffix="+" className="font-bold text-emerald-600" /> engineers advancing their careers.</p>
+                        <span className="text-blue-600 font-bold uppercase tracking-widest text-xs">{learningPaths.tagline ?? 'Career Roadmap'}</span>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mt-2 mb-4">{learningPaths.heading ?? 'Your Journey to Expertise'}</h2>
+                        <p className="text-slate-600 text-lg">{learningPaths.subtitle ?? <>Choose your path and join <AnimatedCounter end={500} suffix="+" className="font-bold text-blue-600" /> engineers advancing their careers.</>}</p>
                     </div>
 
                     <div className="relative">
                         {/* Connecting Line (Desktop) - Enhanced */}
                         <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-1 bg-slate-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-purple-500 origin-left animate-[grow-width_3s_ease-out_forwards]" />
+                            <div className="h-full bg-blue-500 origin-left animate-[grow-width_3s_ease-out_forwards]" />
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8 relative">
@@ -467,31 +578,31 @@ const Training = () => {
                                     {/* Duration Badge */}
                                     <div className="absolute top-4 right-4 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
                                         <Clock size={12} />
-                                        4-6 weeks
+                                        {learningPaths.paths?.[0]?.duration ?? '4-6 weeks'}
                                     </div>
 
-                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-blue-600 transition-colors">1. Foundation</h3>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-blue-600 transition-colors">1. {learningPaths.paths?.[0]?.title ?? 'Foundation'}</h3>
 
                                     <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                                        Master the basics of engineering simulation and CAD design to ace your capstone projects.
+                                        {learningPaths.paths?.[0]?.description ?? 'Master the basics of engineering simulation and CAD design to ace your capstone projects.'}
                                     </p>
 
                                     {/* Stats */}
                                     <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
                                         <Users size={14} className="text-blue-500" />
-                                        <AnimatedCounter end={340} suffix=" completed" className="font-semibold" />
+                                        <AnimatedCounter end={learningPaths.paths?.[0]?.completed ?? 340} suffix=" completed" className="font-semibold" />
                                     </div>
 
                                     {/* CTA */}
                                     <a
-                                        href="https://wa.me/96522092260?text=I'm interested in the Foundation program"
+                                        href={learningPaths.paths?.[0]?.cta_link ?? "https://wa.me/96522092260?text=I'm interested in the Foundation program"}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        <MessageCircle size={16} className="mr-2" />
-                                        Start Foundation Path
+                                        <ArrowRight size={16} className="mr-2" />
+                                        {learningPaths.paths?.[0]?.cta_text ?? 'Start Foundation Path'}
                                     </a>
                                 </div>
                             </div>
@@ -499,8 +610,8 @@ const Training = () => {
                             {/* Step 2 - Certification */}
                             <div className="relative group mt-8 md:mt-0">
                                 {/* Connection Dot */}
-                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-4 border-emerald-500 rounded-full items-center justify-center z-10 shadow-lg shadow-emerald-500/30 group-hover:scale-125 transition-all duration-300 delay-100">
-                                    <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-4 border-blue-500 rounded-full items-center justify-center z-10 shadow-lg shadow-blue-500/30 group-hover:scale-125 transition-all duration-300 delay-100">
+                                    <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
                                 </div>
 
                                 {/* Card */}
@@ -509,47 +620,48 @@ const Training = () => {
                                     className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group/card cursor-pointer min-h-[400px] flex flex-col"
                                 >
                                     {/* Gradient Overlay */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
 
                                     {/* Icon with Rotation */}
-                                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white mb-6 relative z-10 shadow-lg shadow-emerald-500/30 group-hover/card:rotate-12 transition-transform duration-500">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mb-6 relative z-10 shadow-lg shadow-blue-500/30 group-hover/card:rotate-12 transition-transform duration-500">
                                         <Target size={30} className="group-hover/card:scale-110 transition-transform" />
                                     </div>
 
                                     {/* Duration Badge */}
-                                    <div className="absolute top-4 right-4 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                    <div className="absolute top-4 right-4 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
                                         <Clock size={12} />
-                                        8-12 weeks
+                                        {learningPaths.paths?.[1]?.duration ?? '8-12 weeks'}
                                     </div>
 
-                                    {/* Popular Badge */}
-                                    <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-                                        <Flame size={10} />
-                                        Most Popular
-                                    </div>
+                                    {(learningPaths.paths?.[1]?.badge ?? 'Most Popular') && (
+                                        <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+                                            <Flame size={10} />
+                                            {learningPaths.paths?.[1]?.badge ?? 'Most Popular'}
+                                        </div>
+                                    )}
 
-                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-emerald-600 transition-colors">2. Certification</h3>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-blue-600 transition-colors">2. {learningPaths.paths?.[1]?.title ?? 'Certification'}</h3>
 
                                     <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                                        Earn professional credentials (CFD, FEA) to demonstrate competency to top employers.
+                                        {learningPaths.paths?.[1]?.description ?? 'Earn professional credentials (CFD, FEA) to demonstrate competency to top employers.'}
                                     </p>
 
                                     {/* Stats */}
                                     <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
-                                        <Users size={14} className="text-emerald-500" />
-                                        <AnimatedCounter end={215} suffix=" completed" className="font-semibold" />
+                                        <Users size={14} className="text-blue-500" />
+                                        <AnimatedCounter end={learningPaths.paths?.[1]?.completed ?? 215} suffix=" completed" className="font-semibold" />
                                     </div>
 
                                     {/* CTA */}
                                     <a
-                                        href="https://wa.me/96522092260?text=I'm interested in the Certification program"
+                                        href={learningPaths.paths?.[1]?.cta_link ?? "https://wa.me/96522092260?text=I'm interested in the Certification program"}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
+                                        className="inline-flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        <MessageCircle size={16} className="mr-2" />
-                                        Get Certified Now
+                                        <ArrowRight size={16} className="mr-2" />
+                                        {learningPaths.paths?.[1]?.cta_text ?? 'Get Certified Now'}
                                     </a>
                                 </div>
                             </div>
@@ -557,51 +669,51 @@ const Training = () => {
                             {/* Step 3 - Mastery */}
                             <div className="relative group mt-16 md:mt-0">
                                 {/* Connection Dot */}
-                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-4 border-purple-500 rounded-full items-center justify-center z-10 shadow-lg shadow-purple-500/30 group-hover:scale-125 transition-all duration-300 delay-200">
-                                    <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse" />
+                                <div className="hidden md:flex absolute -top-6 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-4 border-blue-500 rounded-full items-center justify-center z-10 shadow-lg shadow-blue-500/30 group-hover:scale-125 transition-all duration-300 delay-200">
+                                    <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
                                 </div>
 
                                 {/* Card */}
                                 <div
-                                    className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group/card cursor-pointer min-h-[400px] flex flex-col"
+                                    className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 relative overflow-hidden group/card cursor-pointer min-h-[400px] flex flex-col"
                                     style={{ transform: "perspective(1000px)" }}
                                 >
                                     {/* Gradient Overlay */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
 
                                     {/* Icon with Rotation */}
-                                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-6 relative z-10 shadow-lg shadow-purple-500/30 group-hover/card:rotate-12 transition-transform duration-500">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mb-6 relative z-10 shadow-lg shadow-blue-500/30 group-hover/card:rotate-12 transition-transform duration-500">
                                         <Trophy size={30} className="group-hover/card:scale-110 transition-transform" />
                                     </div>
 
                                     {/* Duration Badge */}
-                                    <div className="absolute top-4 right-4 bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                    <div className="absolute top-4 right-4 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
                                         <Clock size={12} />
-                                        12+ weeks
+                                        {learningPaths.paths?.[2]?.duration ?? '12+ weeks'}
                                     </div>
 
-                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-purple-600 transition-colors">3. Mastery</h3>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover/card:text-blue-600 transition-colors">3. {learningPaths.paths?.[2]?.title ?? 'Mastery'}</h3>
 
                                     <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                                        Lead teams and innovation. Advanced corporate training to upskill entire departments.
+                                        {learningPaths.paths?.[2]?.description ?? 'Lead teams and innovation. Advanced corporate training to upskill entire departments.'}
                                     </p>
 
                                     {/* Stats */}
                                     <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
-                                        <Users size={14} className="text-purple-500" />
-                                        <AnimatedCounter end={87} suffix=" completed" className="font-semibold" />
+                                        <Users size={14} className="text-blue-500" />
+                                        <AnimatedCounter end={learningPaths.paths?.[2]?.completed ?? 87} suffix=" completed" className="font-semibold" />
                                     </div>
 
                                     {/* CTA */}
                                     <a
-                                        href="https://wa.me/96522092260?text=I'm interested in the Mastery program"
+                                        href={learningPaths.paths?.[2]?.cta_link ?? "https://wa.me/96522092260?text=I'm interested in the Mastery program"}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
+                                        className="inline-flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition-all shadow-md hover:shadow-lg"
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        <MessageCircle size={16} className="mr-2" />
-                                        Achieve Mastery
+                                        <ArrowRight size={16} className="mr-2" />
+                                        {learningPaths.paths?.[2]?.cta_text ?? 'Achieve Mastery'}
                                     </a>
                                 </div>
                             </div>
@@ -669,7 +781,7 @@ const Training = () => {
                     </ScrollReveal>
 
                     <StaggerContainer className="grid md:grid-cols-3 gap-6">
-                        {REVIEWS.map((review, i) => (
+                        {reviews.map((review, i) => (
                             <StaggerItem key={review.id} index={i} className="bg-slate-50 p-8 rounded-2xl shadow-sm border border-slate-100 relative">
                                 <Quote size={24} className="text-slate-200 absolute top-6 right-6" />
                                 <div className="flex gap-1 mb-4">
@@ -700,12 +812,12 @@ const Training = () => {
                     {/* Urgency Badge */}
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider mb-6">
                         <Clock size={14} className="animate-pulse" />
-                        Limited Spots for February 2026 Intake
+                        {finalCta.urgencyText}
                     </div>
 
-                    <h2 className="text-3xl sm:text-5xl font-bold text-white mb-6">Ready to Start Learning?</h2>
+                    <h2 className="text-3xl sm:text-5xl font-bold text-white mb-6">{finalCta.title}</h2>
                     <p className="text-slate-400 max-w-xl mx-auto mb-10 text-lg">
-                        Join <AnimatedCounter end={500} suffix="+" className="font-bold text-white" /> engineers who have advanced their careers with KITES training.
+                        {finalCta.description}
                     </p>
 
                     {/* Dual CTAs */}
@@ -731,18 +843,12 @@ const Training = () => {
 
                     {/* Trust Signals */}
                     <div className="flex flex-wrap items-center justify-center gap-6 mt-10 text-xs text-slate-500">
-                        <div className="flex items-center gap-1.5">
-                            <CheckCircle2 size={14} className="text-emerald-500" />
-                            <span>Money-back guarantee</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                            <CheckCircle2 size={14} className="text-emerald-500" />
-                            <span>Free trial lesson</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                            <CheckCircle2 size={14} className="text-emerald-500" />
-                            <span>Industry-certified trainers</span>
-                        </div>
+                        {finalCta.trustSignals.map((signal: string, i: number) => (
+                            <div key={i} className="flex items-center gap-1.5">
+                                <CheckCircle2 size={14} className="text-emerald-500" />
+                                <span>{signal}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

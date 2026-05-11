@@ -29,6 +29,8 @@ export function formatCourse(row: any) {
     enrollmentCount: row.enrollment_count,
     certified: row.certified,
     color: row.color,
+    featured: row.featured ?? false,
+    featuredOrder: row.featured_order ?? 0,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

@@ -17,9 +17,30 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
       email: payload.email,
       role: payload.role,
       fullName: payload.fullName,
+      permissions: Array.isArray(payload.permissions) ? payload.permissions : [],
     };
     next();
-  } catch (err) {
+  } catch {
     return res.status(401).json({ error: 'Invalid or expired access token' });
   }
+}
+
+export function optionalAuth(req: Request, _res: Response, next: NextFunction) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (token) {
+    try {
+      const payload = jwt.verify(token, jwtConfig.accessSecret) as any;
+      req.user = {
+        id: payload.id,
+        email: payload.email,
+        role: payload.role,
+        fullName: payload.fullName,
+        permissions: Array.isArray(payload.permissions) ? payload.permissions : [],
+      };
+    } catch {
+      // token invalid — treat as anonymous
+    }
+  }
+  next();
 }

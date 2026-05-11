@@ -10,6 +10,7 @@ router.post('/refresh', authController.refresh);
 router.post('/logout', authController.logout);
 router.get('/me', authenticateToken, authController.me);
 router.post('/register', authenticateToken, requireSuperAdmin, authController.register);
+router.post('/signup', authController.registerPublic);
 router.patch('/change-password', authenticateToken, authController.changePassword);
 
 export default router;

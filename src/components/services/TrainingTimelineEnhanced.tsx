@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import { BookOpen, Clock, CheckCircle2, Search, X, Users, Star, Award, MessageCircle, ExternalLink, TrendingUp, Grid3x3, List, ChevronDown, Filter } from "lucide-react";
+import { BookOpen, Clock, CheckCircle2, Search, X, Users, Star, Award, MessageCircle, ExternalLink, Grid3x3, List, ChevronDown, Filter } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getCourseMetadata, categoryColors } from "@/data/courseMetadata";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ interface TimelineItemProps {
 const TimelineItem = ({ title, duration, description, outline, index, isLast, who_should_attend, standards }: TimelineItemProps) => {
     const { language } = useLanguage();
     const itemRef = useRef<HTMLDivElement>(null);
-    const imageRef = useRef<HTMLDivElement>(null);
+    const imageRef = useRef<HTMLAnchorElement>(null);
     const isEven = index % 2 === 0;
 
     // Get course metadata
@@ -149,28 +149,27 @@ const TimelineItem = ({ title, duration, description, outline, index, isLast, wh
                 "hidden md:flex flex-col justify-center",
                 isEven ? "md:order-2 md:pl-16" : "md:order-1 md:pr-16"
             )}>
-                <div
-                    ref={imageRef}
-                    className="w-full max-w-md h-96 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 relative group cursor-pointer border-4 border-white"
+                <a
+                    ref={imageRef as React.Ref<HTMLAnchorElement>}
+                    href={`${whatsappUrl}?text=${encodeURIComponent(enrollMessage)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full max-w-md h-96 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 relative group block border-4 border-white"
                 >
                     <img
                         src={metadata.image}
                         alt={title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 relative z-10"
-                        onLoad={() => {
-                            console.log('✅ Image loaded successfully:', metadata.image, 'for course:', title);
-                        }}
                         onError={(e) => {
-                            console.error('❌ Image failed to load:', metadata.image, 'for course:', title);
                             e.currentTarget.style.display = 'none';
                         }}
                     />
 
-                    {/* Overlay */}
+                    {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6 z-20">
                         <div className="text-white">
-                            <TrendingUp size={16} className="mb-2" />
-                            <p className="text-sm font-bold">{language === 'en' ? 'Click to preview' : 'انقر للمعاينة'}</p>
+                            <MessageCircle size={16} className="mb-2" />
+                            <p className="text-sm font-bold">{language === 'en' ? 'Enquire on WhatsApp' : 'استفسر عبر واتساب'}</p>
                         </div>
                     </div>
 
@@ -185,7 +184,7 @@ const TimelineItem = ({ title, duration, description, outline, index, isLast, wh
                             🔥 Hot
                         </div>
                     )}
-                </div>
+                </a>
             </div>
         </div>
     );
@@ -289,16 +288,16 @@ export const TrainingTimelineEnhanced = ({ courses }: { courses: any[] }) => {
                 const items = self.selector(".timeline-item");
                 items.forEach((item: any) => {
                     gsap.fromTo(item,
-                        { opacity: 0, y: 50 },
+                        { opacity: 0, y: 30 },
                         {
                             opacity: 1,
                             y: 0,
-                            duration: 0.8,
+                            duration: 0.7,
                             ease: "power2.out",
                             scrollTrigger: {
                                 trigger: item,
-                                start: "top 80%",
-                                toggleActions: "play none none reverse"
+                                start: "top 85%",
+                                toggleActions: "play none none none"
                             }
                         }
                     );

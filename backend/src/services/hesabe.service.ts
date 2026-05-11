@@ -22,7 +22,7 @@ interface HesabePaymentRequest {
   variable5?: string;
 }
 
-interface HesabeDecryptedResponse {
+export interface HesabeDecryptedResponse {
   status: boolean;
   message: string;
   resultCode: string;
@@ -74,8 +74,8 @@ export function createPaymentPayload(params: {
     merchantCode: hesabeConfig.merchantCode,
     amount: parseFloat(params.amount.toFixed(3)),
     currency: 'KWD',
-    responseUrl: `${process.env.API_BASE_URL}/api/v1/payments/webhook`,
-    failureUrl: `${process.env.FRONTEND_URL}/payment/failure?orderId=${params.orderId}`,
+    responseUrl: `${process.env.API_BASE_URL}/api/v1/payments/callback`,
+    failureUrl: `${process.env.API_BASE_URL}/api/v1/payments/failure-callback?orderId=${params.orderId}`,
     version: '2.0',
     orderReferenceNumber: params.orderId,
     variable1: params.userId,
@@ -83,6 +83,16 @@ export function createPaymentPayload(params: {
   };
 
   const jsonPayload = JSON.stringify(payload);
+
+  console.log('[Hesabe] Payload being sent:', JSON.stringify(payload, null, 2));
+  console.log('[Hesabe] Config:', {
+    merchantCode: hesabeConfig.merchantCode,
+    accessCode: hesabeConfig.accessCode,
+    secretKeyLength: hesabeConfig.secretKey.length,
+    ivLength: hesabeConfig.iv.length,
+    paymentUrl: hesabeConfig.paymentUrl,
+  });
+
   const encryptedPayload = encrypt(jsonPayload);
 
   const paymentUrl = `${hesabeConfig.paymentUrl}?data=${encodeURIComponent(encryptedPayload)}&accessCode=${hesabeConfig.accessCode}`;

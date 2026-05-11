@@ -98,40 +98,48 @@ export function SpecialOfferCard({
     );
 }
 
-// Pre-configured variants for quick use
-export function BundleOfferCard() {
+interface OfferCardOverrides {
+    title?: string;
+    description?: string;
+    discount?: string;
+    features?: string[];
+    ctaText?: string;
+    ctaLink?: string;
+}
+
+export function BundleOfferCard(overrides: OfferCardOverrides = {}) {
     return (
         <SpecialOfferCard
-            title="Bundle & Save Big"
-            description="Enroll in 2 or more courses and get exclusive discounts plus bonus materials"
-            discount="30%"
-            features={[
+            title={overrides.title ?? "Bundle & Save Big"}
+            description={overrides.description ?? "Enroll in 2 or more courses and get exclusive discounts plus bonus materials"}
+            discount={overrides.discount ?? "30%"}
+            features={overrides.features ?? [
                 "Enroll in 2+ courses simultaneously",
                 "Free downloadable resource library",
                 "Priority placement assistance",
                 "Exclusive networking events access"
             ]}
-            ctaText="View Course Bundles"
-            ctaLink="https://wa.me/96522092260"
+            ctaText={overrides.ctaText ?? "View Course Bundles"}
+            ctaLink={overrides.ctaLink ?? "https://wa.me/96522092260"}
             variant="primary"
         />
     );
 }
 
-export function EarlyBirdOfferCard() {
+export function EarlyBirdOfferCard(overrides: OfferCardOverrides = {}) {
     return (
         <SpecialOfferCard
-            title="Early Bird Special"
-            description="Register before the deadline and secure your spot with exclusive early bird benefits"
-            discount="20%"
-            features={[
+            title={overrides.title ?? "Early Bird Special"}
+            description={overrides.description ?? "Register before the deadline and secure your spot with exclusive early bird benefits"}
+            discount={overrides.discount ?? "20%"}
+            features={overrides.features ?? [
                 "First 50 enrollments only",
                 "Free 1-on-1 consultation session",
                 "Lifetime access to course updates",
                 "Certificate fast-track processing"
             ]}
-            ctaText="Claim Early Bird Discount"
-            ctaLink="https://wa.me/96522092260"
+            ctaText={overrides.ctaText ?? "Claim Early Bird Discount"}
+            ctaLink={overrides.ctaLink ?? "https://wa.me/96522092260"}
             variant="secondary"
         />
     );

@@ -1,5 +1,6 @@
 import { SEO } from "@/components/common/SEO";
 import { SkipLink } from "@/components/common/SkipLink";
+import { useCmsPage, getBlockValue, getBlockJson } from "@/hooks/useCmsPage";
 
 import { useRef, useEffect } from "react";
 import { ArrowRight, CheckCircle2, Check } from "lucide-react";
@@ -186,6 +187,47 @@ const Services = () => {
     const t = content[language];
     const containerRef = useRef<HTMLDivElement>(null);
 
+    // CMS overrides — fall back to hardcoded content if CMS is unavailable
+    const { data: cms } = useCmsPage('services');
+    const s = cms?.sections;
+    const loc = language as 'en' | 'ar';
+    const g = (sk: string, fk: string) => getBlockValue(s?.[sk], fk, loc) ?? undefined;
+    const gj = (sk: string, fk: string) => getBlockJson(s?.[sk], fk) ?? undefined;
+
+    const hero = {
+        title: g('hero', 'title') ?? t.hero.title,
+        intro: g('hero', 'intro') ?? t.hero.intro,
+    };
+    const approach = {
+        label: g('approach', 'label') ?? t.approach.label,
+        steps: (() => {
+            const raw = gj('approach', 'steps');
+            if (!raw) return t.approach.steps;
+            return raw.map((st: any) => ({
+                label: loc === 'ar' ? st.label_ar : st.label,
+                icon: st.icon,
+                desc: loc === 'ar' ? st.desc_ar : st.desc,
+            }));
+        })(),
+    };
+    const services = (() => {
+        const raw = gj('services', 'items');
+        if (!raw) return t.services;
+        return raw.map((sv: any) => ({
+            id: sv.id, icon: sv.icon,
+            category: loc === 'ar' ? sv.category_ar : sv.category,
+            title: loc === 'ar' ? sv.title_ar : sv.title,
+            solves: loc === 'ar' ? sv.solves_ar : sv.solves,
+            how: loc === 'ar' ? sv.how_ar : sv.how,
+            outcomes: loc === 'ar' ? sv.outcomes_ar : sv.outcomes,
+        }));
+    })();
+    const cta = {
+        trust: g('cta', 'trust') ?? t.cta.final.trust,
+        title: g('cta', 'title') ?? t.cta.final.title,
+        btn: g('cta', 'btn') ?? t.cta.final.btn,
+    };
+
     // Parallax effect for hero background
     const { ref: parallaxRef, offset: parallaxOffset } = useParallax({
         speed: 0.3,
@@ -236,7 +278,7 @@ const Services = () => {
                     <ScrollReveal>
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400 mb-8 backdrop-blur-sm">
                             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                            {t.hero.title}
+                            {hero.title}
                         </div>
                         <h1
                             className={cn(
@@ -252,7 +294,7 @@ const Services = () => {
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">Delivered.</span>
                         </h1>
                         <p className="font-body text-lg sm:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed mb-12">
-                            {t.hero.intro}
+                            {hero.intro}
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -271,7 +313,7 @@ const Services = () => {
             <section className="methodology-section py-20 lg:py-28 bg-white border-b border-gray-100 relative">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <ScrollReveal className="text-center mb-16">
-                        <h2 className="font-heading text-3xl font-bold text-slate-900 mb-4">{t.approach.label}</h2>
+                        <h2 className="font-heading text-3xl font-bold text-slate-900 mb-4">{approach.label}</h2>
                         <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
                     </ScrollReveal>
 
@@ -280,7 +322,7 @@ const Services = () => {
                         <div className="methodology-line hidden lg:block absolute top-[40px] left-[10%] right-[10%] h-[2px] bg-gray-100 z-0 origin-left" />
 
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
-                            {t.approach.steps.map((step, index) => (
+                            {approach.steps.map((step, index) => (
                                 <StaggerItem key={index} index={index}>
                                     <div className="relative z-10 flex flex-col items-center text-center group">
                                         <div className="w-20 h-20 rounded-2xl bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-primary/30 group-hover:shadow-lg transition-all duration-300">
@@ -303,7 +345,7 @@ const Services = () => {
 
             {/* Main Services Bento Grid */}
             <div id="offerings">
-                <ServicesBentoGrid services={t.services} />
+                <ServicesBentoGrid services={services} />
             </div>
 
             {/* CTA Section (Retained Dark Theme) */}
@@ -313,16 +355,16 @@ const Services = () => {
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <ScrollReveal>
                         <span className="block text-[11px] font-bold uppercase tracking-[0.3em] text-white/40 mb-10">
-                            {t.cta.final.trust}
+                            {cta.trust}
                         </span>
                         <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-14 tracking-tighter leading-[1.1]">
-                            {t.cta.final.title}
+                            {cta.title}
                         </h2>
                         <Link
                             to="/contact"
                             className="inline-flex items-center text-sm font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-all duration-300 group border border-white/10 hover:bg-white/5 hover:border-white/30 px-10 py-5 rounded-sm"
                         >
-                            <span>{t.cta.final.btn}</span>
+                            <span>{cta.btn}</span>
                             <ArrowRight size={18} className={`ml-3 transition-transform duration-300 ${isRTL ? "rotate-180 group-hover:-translate-x-1.5" : "group-hover:translate-x-1.5"}`} />
                         </Link>
                     </ScrollReveal>

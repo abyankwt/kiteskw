@@ -1,8 +1,10 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 Read this entire file before starting any task.
 
-This project is a **React + TypeScript + Vite frontend** for KITES (Kuwait Institute for Training & Engineering Simulations).
+This project is a **React + TypeScript + Vite frontend** with a **Node.js/Express backend** for KITES (Kuwait Institute for Training & Engineering Simulations).
 
 The goal is to deliver an **enterprise-grade, institutional website** that positions KITES as a **value-added engineering simulation partner**, not a software reseller.
 
@@ -27,57 +29,84 @@ The website must feel like:
 
 ---
 
+# Commands
+
+## Frontend
+
+```bash
+bun install        # Install dependencies
+bun run dev        # Dev server on port 8080
+bun run build      # Production build → dist/
+bun run lint       # ESLint
+bun run preview    # Preview build
+```
+
+`npm` also works — `.npmrc` sets `legacy-peer-deps=true`. No test suite is configured.
+
+## Backend
+
+```bash
+cd backend
+npm install
+npm run dev        # Nodemon dev server
+npm run migrate    # Run DB migrations
+npm run build      # Compile TypeScript
+```
+
+See [backend/SETUP.md](backend/SETUP.md) for database setup and environment variables.
+
+---
+
+# Architecture
+
+## Frontend
+
+**Path alias:** `@/` maps to `src/`.
+
+**Routing** (`src/App.tsx`): React Router v6. Every page is wrapped in `<PageTransition>`. A `<SplashScreen>` fires on route changes. Provider stack (outermost → innermost): `HelmetProvider` → `QueryClientProvider` → `LanguageProvider` → `AuthContext` → `TooltipProvider` → `BrowserRouter`.
+
+Pages live in `src/pages/`. Dynamic routes: `/services/:serviceId`, `/partners/:partnerId`. Admin routes live under `src/pages/admin/`, guarded by `src/components/admin/PrivateRoute.tsx`.
+
+**Localization:** English/Arabic (RTL) via `src/contexts/LanguageContext.tsx`, which flips `document.dir`/`document.lang`. JSON content is in `src/content/{en,ar}/` and loaded with the `useContent<T>()` hook (`src/hooks/useContent.ts`) via Vite glob imports. Hard-coded content (service detail copy, course metadata) lives in `src/data/`.
+
+**UI Components:**
+- shadcn/ui primitives in `src/components/ui/` (Radix UI based). Add new ones via the shadcn CLI.
+- Domain components grouped by feature: `src/components/{home,sections,services,training,layout,admin,…}`.
+- Design tokens defined in `tailwind.config.ts`.
+
+**State & Data Fetching:** TanStack Query v5 for server state. Auth state via `src/contexts/AuthContext.tsx`. Form state via React Hook Form + Zod. API calls go through `src/lib/apiClient.ts`.
+
+**SEO:** Per-route metadata in `src/config/seo.config.ts`, rendered by `src/components/common/SEO.tsx` via `react-helmet-async`.
+
+**Third-party widgets:** Voiceflow chatbot injected in `index.html`. WhatsApp floating button at `src/components/WhatsAppFloatingButton.tsx`.
+
+## Backend
+
+Node.js + Express + TypeScript, located in `backend/`. PostgreSQL database accessed via `pg` connection pool (`backend/src/db/pool.ts`).
+
+Key areas:
+- **Auth:** JWT-based (`backend/src/config/jwt.ts`), middleware in `backend/src/middleware/auth.ts`, RBAC in `backend/src/middleware/rbac.ts`.
+- **Payments:** Hesabe payment gateway (`backend/src/services/hesabe.service.ts`).
+- **Routes:** auth, courses, enrollments, payments, admin (users, courses, enrollments, analytics).
+- **Migrations:** SQL files in `backend/src/db/migrations/`, run via `backend/src/db/migrate.ts`.
+- **File uploads:** Multer config at `backend/src/config/multer.ts`.
+
+Environment variables required: see `backend/.env.example` and `.env.example` (frontend).
+
+---
+
 # Tech Stack
 
 - React 18 + TypeScript + Vite (SWC)
 - Tailwind CSS + shadcn/ui
 - React Router v6
 - GSAP (primary animation engine)
-- Framer Motion (secondary use only if needed)
+- Framer Motion (secondary, only if needed)
 - @react-three/fiber + drei (hero visuals)
-- TanStack Query
+- Lottie (`lottie-react`) — pre-rendered JSON animations; definitions in `src/lib/lottieAnimations.ts`
+- TanStack Query v5
 - react-helmet-async
-
----
-
-# Commands
-
-## Install dependencies
-bun install
-
-## Start dev server
-bun run dev
-
-## Build
-bun run build
-
-## Lint
-bun run lint
-
-## Preview build
-bun run preview
-
----
-
-# Architecture
-
-Routes are defined in:
-
-src/App.tsx
-
-All pages use:
-
-Layout (Header + Footer)
-
-Pages include:
-
-- Home
-- Services
-- Expertise
-- Partners
-- Events
-- Contact
-- Service detail pages (/services/:serviceId)
+- Express + PostgreSQL (backend)
 
 ---
 
@@ -143,7 +172,9 @@ All animations must feel:
 
 Use:
 
+```
 cubic-bezier(0.4, 0, 0.2, 1)
+```
 
 Never use:
 
@@ -156,7 +187,7 @@ Never use:
 
 ## GSAP Rules (PRIMARY)
 
-GSAP is the main animation engine.
+GSAP is the main animation engine. Utilities in `src/lib/gsap.ts`.
 
 Use GSAP for:
 
@@ -167,6 +198,13 @@ Use GSAP for:
 - Section transitions
 
 Do NOT mix multiple animation systems unnecessarily.
+
+When using GSAP:
+
+- Never break layout
+- Never shift content unexpectedly
+- Always test responsiveness
+- Always clean up animations on unmount
 
 ---
 
@@ -200,23 +238,7 @@ Must include:
 - Headline
 - Supporting paragraph
 - 2 CTAs
-- KPI stats
-
----
-
-## Hero KPIs
-
-Stats must:
-
-- Animate using GSAP count-up
-- Trigger on load or scroll
-- Be smooth and readable
-
-Never:
-
-- jump instantly
-- flicker
-- animate aggressively
+- KPI stats (GSAP count-up, smooth, trigger on load or scroll)
 
 ---
 
@@ -226,10 +248,7 @@ Service cards must:
 
 - Be rectangular (no rounded styles)
 - Have clean spacing (p-10)
-- Include:
-  - title
-  - description
-  - subtle CTA
+- Include: title, description, subtle CTA
 
 Hover behavior:
 
@@ -237,11 +256,7 @@ Hover behavior:
 - slight lift (-translate-y-1)
 - shadow increase
 
-CTA style:
-
-- text-based
-- underline animation
-- arrow shift
+CTA style: text-based, underline animation, arrow shift.
 
 ---
 
@@ -252,145 +267,111 @@ Logos must:
 - ALWAYS be visible
 - ALWAYS be full color
 
-Never:
+Never: grayscale by default, hide until hover, fade to invisible.
 
-- grayscale by default
-- hide until hover
-- fade to invisible
-
-Hover:
-
-- slight scale (1.04)
-- subtle blue glow
+Hover: slight scale (1.04), subtle blue glow.
 
 ---
 
 # Technology Partners (Scrolling Logos)
 
-This section is HIGH IMPACT.
-
-Rules:
-
-- horizontal auto-scroll ONLY
-- logos must be:
-  - large
-  - equal size
-  - fully visible
-
-Animation:
-
-- center logo zooms in (1.15–1.25)
-- then zooms out smoothly
-- continuous loop
-
-Speed:
-
-- must be readable (not too slow)
-- adjustable but smooth
-
-Never:
-
-- vertical scrolling
-- tiny logos
-- grayscale logos
+- Horizontal auto-scroll ONLY
+- Logos must be large, equal size, fully visible
+- Center logo zooms in (1.15–1.25) then zooms out smoothly, continuous loop
+- Speed must be readable and smooth
+- Never: vertical scrolling, tiny logos, grayscale logos
 
 ---
 
 # Navigation (Mega Menu)
 
-Services and Partners must use:
+Services and Partners use full-width dropdowns, white background, rectangular layout.
 
-- full-width dropdown
-- white background
-- rectangular layout
-
-Structure:
-
-Services:
-- list + context panel
-
-Partners:
-- categories + logo grid
+- Services: list + context panel
+- Partners: categories + logo grid
 
 ---
 
 # Content & Messaging Rules
 
-Avoid:
+Avoid: "we sell software", "buy now", aggressive marketing language.
 
-- "we sell software"
-- "buy now"
-- aggressive marketing language
+Use: "engineering solutions", "capability development", "partnership", "long-term value".
 
-Use:
-
-- "engineering solutions"
-- "capability development"
-- "partnership"
-- "long-term value"
-
-Tone:
-
-- advisory
-- expert
-- institutional
-
----
-
-# UI Consistency Rules
-
-- Do NOT create duplicate components
-- Reuse shared components
-- Maintain spacing consistency
-- Maintain typography consistency
-
----
-
-# Responsiveness Rules
-
-- Mobile-first
-- No horizontal scroll
-- Clean stacking
-- Proper spacing across all breakpoints
-
----
-
-# GSAP Safety Rules
-
-When using GSAP:
-
-- Never break layout
-- Never shift content unexpectedly
-- Always test responsiveness
-- Always clean up animations
-
----
-
-# Debugging Rules
-
-If animation breaks:
-
-- check positioning
-- check transform conflicts
-- check container height
-- check overflow issues
+Tone: advisory, expert, institutional.
 
 ---
 
 # Development Rules
 
+- Do NOT create duplicate components — reuse shared ones
 - Do NOT introduce new UI styles randomly
 - Do NOT change layout structure unless required
 - Do NOT add flashy animations
 - Always preserve design consistency
+- Mobile-first, no horizontal scroll, proper spacing across all breakpoints
 
 ---
 
-# Safe Refactoring Rules
+# Coding Principles (Karpathy Skills)
 
-- Do not break existing sections
-- Do not remove working animations without reason
-- Do not change core structure
+Behavioral guidelines to reduce common LLM coding mistakes.
+
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+
+## 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them — don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+## 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it — don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+## 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
 ---
 

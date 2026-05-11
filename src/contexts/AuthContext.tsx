@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import axios from 'axios';
 import { setAccessToken } from '@/lib/apiClient';
 
@@ -14,8 +14,11 @@ export interface AuthUser {
 
 interface AuthContextType {
   user: AuthUser | null;
+  permissions: string[];
   isLoading: boolean;
+  hasPermission: (key: string) => boolean;
   login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string, fullName: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -25,9 +28,15 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api/v1';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [permissions, setPermissions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Attempt to restore session on mount using refresh token cookie
+  const hasPermission = useCallback(
+    (key: string) => permissions.includes(key),
+    [permissions]
+  );
+
+  // Restore session on mount using refresh token cookie
   useEffect(() => {
     const restoreSession = async () => {
       try {
@@ -38,8 +47,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         );
         setAccessToken(data.accessToken);
         setUser(data.user);
+        setPermissions(data.permissions ?? []);
       } catch {
         setUser(null);
+        setPermissions([]);
       } finally {
         setIsLoading(false);
       }
@@ -56,6 +67,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
     setAccessToken(data.accessToken);
     setUser(data.user);
+    setPermissions(data.permissions ?? []);
+  };
+
+  const signup = async (email: string, password: string, fullName: string) => {
+    await axios.post(`${API_BASE_URL}/auth/signup`, { email, password, fullName });
+    // Auto-login after registration
+    const { data } = await axios.post(
+      `${API_BASE_URL}/auth/login`,
+      { email, password },
+      { withCredentials: true }
+    );
+    setAccessToken(data.accessToken);
+    setUser(data.user);
+    setPermissions(data.permissions ?? []);
   };
 
   const logout = async () => {
@@ -66,10 +91,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     setAccessToken(null);
     setUser(null);
+    setPermissions([]);
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, permissions, isLoading, hasPermission, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

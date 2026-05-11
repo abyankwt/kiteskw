@@ -19,9 +19,9 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const { accessToken, refreshToken, user } = await authService.loginUser(email, password);
+    const { accessToken, refreshToken, user, permissions } = await authService.loginUser(email, password);
     res.cookie(REFRESH_COOKIE, refreshToken, COOKIE_OPTIONS);
-    res.json({ accessToken, user });
+    res.json({ accessToken, user, permissions });
   } catch (err) {
     next(err);
   }
@@ -34,9 +34,9 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
       return res.status(401).json({ error: 'No refresh token' });
     }
 
-    const { accessToken, refreshToken, user } = await authService.refreshAccessToken(token);
+    const { accessToken, refreshToken, user, permissions } = await authService.refreshAccessToken(token);
     res.cookie(REFRESH_COOKIE, refreshToken, COOKIE_OPTIONS);
-    res.json({ accessToken, user });
+    res.json({ accessToken, user, permissions });
   } catch (err) {
     next(err);
   }
@@ -64,6 +64,22 @@ export async function register(req: Request, res: Response, next: NextFunction) 
       return res.status(400).json({ error: 'Email, password, and full name are required' });
     }
     const user = await authService.createUser(email, password, fullName, role);
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function registerPublic(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { email, password, fullName } = req.body;
+    if (!email || !password || !fullName) {
+      return res.status(400).json({ error: 'Email, password, and full name are required' });
+    }
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters' });
+    }
+    const user = await authService.createUser(email, password, fullName, 'STUDENT');
     res.status(201).json(user);
   } catch (err) {
     next(err);

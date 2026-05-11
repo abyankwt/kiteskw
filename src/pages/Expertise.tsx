@@ -1,4 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCmsPage, getBlockValue, getBlockJson } from "@/hooks/useCmsPage";
 import { SEO } from "@/components/common/SEO";
 import { SkipLink } from "@/components/common/SkipLink";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
@@ -127,6 +128,58 @@ export default function Expertise() {
   const { language, isRTL } = useLanguage();
   const t = content[language];
 
+  // CMS overrides — fall back to hardcoded content if unavailable
+  const { data: cms } = useCmsPage('expertise');
+  const s = cms?.sections;
+  const loc = language as 'en' | 'ar';
+  const g = (sk: string, fk: string) => getBlockValue(s?.[sk], fk, loc) ?? undefined;
+  const gj = (sk: string, fk: string) => getBlockJson(s?.[sk], fk) ?? undefined;
+
+  const hero = {
+    eyebrow: g('hero', 'eyebrow') ?? t.hero.eyebrow,
+    title: g('hero', 'title') ?? t.hero.title,
+    intro: g('hero', 'intro') ?? t.hero.intro,
+  };
+  const methodology = {
+    title: g('methodology', 'title') ?? t.methodology.title,
+    steps: (() => {
+      const raw = gj('methodology', 'steps');
+      if (!raw) return t.methodology.steps;
+      return raw.map((st: any) => ({
+        title: loc === 'ar' ? st.title_ar : st.title,
+        desc: loc === 'ar' ? st.desc_ar : st.desc,
+      }));
+    })(),
+  };
+  const areas = (() => {
+    const raw = gj('areas', 'items');
+    if (!raw) return t.areas;
+    return raw.map((a: any) => ({
+      icon: a.icon,
+      title: loc === 'ar' ? a.title_ar : a.title,
+      description: loc === 'ar' ? a.description_ar : a.description,
+      outcome: loc === 'ar' ? a.outcome_ar : a.outcome,
+    }));
+  })();
+  const industries = (() => {
+    const title = g('industries', 'title') ?? t.industries.title;
+    const raw = gj('industries', 'list');
+    const list = raw ? raw.map((i: any) => loc === 'ar' ? i.ar : i.en) : t.industries.list;
+    return { title, list };
+  })();
+  const leadership = {
+    title: g('leadership', 'title') ?? t.leadershipTitle,
+    description: g('leadership', 'description') ?? t.leadershipDescription,
+  };
+  const metrics = (() => {
+    const raw = gj('metrics', 'items');
+    if (!raw) return t.metrics;
+    return raw.map((m: any) => ({
+      value: m.value,
+      label: loc === 'ar' ? m.label_ar : m.label,
+    }));
+  })();
+
   // Refs for GSAP animations
   const titleRef = useRef<HTMLHeadingElement>(null);
   const introRef = useRef<HTMLParagraphElement>(null);
@@ -196,7 +249,7 @@ export default function Expertise() {
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-bold uppercase tracking-[0.2em] text-purple-400 mb-8 backdrop-blur-sm"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-              {t.hero.eyebrow}
+              {hero.eyebrow}
             </div>
             <h1
               ref={titleRef}
@@ -209,13 +262,13 @@ export default function Expertise() {
                 willChange: 'transform'
               }}
             >
-              {t.hero.title}
+              {hero.title}
             </h1>
             <p
               ref={introRef}
               className="font-body text-lg sm:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed mb-10"
             >
-              {t.hero.intro}
+              {hero.intro}
             </p>
           </div>
         </div>
@@ -227,7 +280,7 @@ export default function Expertise() {
           <div className="max-w-5xl mx-auto">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="font-heading text-2xl font-bold text-slate-900 mb-4">{t.methodology.title}</h2>
+                <h2 className="font-heading text-2xl font-bold text-slate-900 mb-4">{methodology.title}</h2>
                 <div className="h-0.5 w-12 bg-logo-alto mx-auto opacity-20" />
               </div>
             </ScrollReveal>
@@ -236,7 +289,7 @@ export default function Expertise() {
               {/* Connector Line (Desktop) */}
               <div className="hidden md:block absolute top-[28px] left-[16%] right-[16%] h-px bg-slate-200 z-0" />
 
-              {t.methodology.steps.map((step, idx) => (
+              {methodology.steps.map((step, idx) => (
                 <ScrollReveal key={idx} delay={idx * 150} className="relative z-10 flex flex-col items-center text-center group">
                   <div className="w-14 h-14 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center text-sm font-bold text-slate-400 mb-6 shadow-sm transition-all duration-300 group-hover:border-primary/50 group-hover:text-primary group-hover:scale-110">
                     0{idx + 1}
@@ -251,7 +304,7 @@ export default function Expertise() {
       </section>
 
       {/* Core Expertise Grid */}
-      <ExpertiseGrid areas={t.areas} />
+      <ExpertiseGrid areas={areas} />
 
       {/* Industries Spotlight */}
       <IndustrySpotlight />
@@ -264,15 +317,15 @@ export default function Expertise() {
           <div className="max-w-4xl mx-auto text-center">
             <ScrollReveal>
               <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-8 leading-tight">
-                {t.leadershipTitle}
+                {leadership.title}
               </h2>
               <p className="font-body text-lg lg:text-xl text-slate-400/90 font-light mb-16 max-w-3xl mx-auto">
-                {t.leadershipDescription}
+                {leadership.description}
               </p>
 
               {/* Metrics Row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-16">
-                {t.metrics.map((metric, i) => (
+                {metrics.map((metric, i) => (
                   <div key={i} className="flex flex-col items-center group">
                     <span className="text-4xl lg:text-5xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-300">{metric.value}</span>
                     <span className="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-white/60 transition-colors">{metric.label}</span>

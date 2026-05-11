@@ -1,5 +1,5 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Star, Clock, MessageCircle, Users, TrendingUp, Flame } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Star, Clock, MessageCircle, Users, TrendingUp, Flame, ArrowRight, CreditCard } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { CourseAvailabilityBadge } from './CourseAvailabilityBadge';
@@ -28,33 +28,7 @@ export const EnhancedCourseCard = ({ course, whatsappUrl, index, onEnroll }: Cou
     const [showPreview, setShowPreview] = useState(false);
     const cardRef = useRef<HTMLElement>(null);
 
-    // 3D Tilt Effect — element-agnostic
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), {
-        stiffness: 300,
-        damping: 30,
-    });
-    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), {
-        stiffness: 300,
-        damping: 30,
-    });
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const x = (e.clientX - centerX) / (rect.width / 2);
-        const y = (e.clientY - centerY) / (rect.height / 2);
-        mouseX.set(x);
-        mouseY.set(y);
-    };
-
     const handleMouseLeave = () => {
-        mouseX.set(0);
-        mouseY.set(0);
         setIsHovered(false);
         setShowPreview(false);
     };
@@ -71,10 +45,9 @@ export const EnhancedCourseCard = ({ course, whatsappUrl, index, onEnroll }: Cou
 
     const innerContent = (
         <motion.div
-            className="bg-[#1A1F29] rounded-xl overflow-hidden border border-white/5 hover:border-blue-500/50 transition-all duration-500 relative"
-            style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-            whileHover={{ scale: 1.03, boxShadow: '0 20px 40px rgba(59, 130, 246, 0.3)' }}
-            transition={{ duration: 0.3 }}
+            className="bg-[#1A1F29] rounded-xl overflow-hidden border border-white/5 hover:border-blue-500/50 transition-colors duration-300 relative"
+            whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(59, 130, 246, 0.25)' }}
+            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
         >
             {/* Image Container */}
             <div className="h-48 relative overflow-hidden">
@@ -125,9 +98,18 @@ export const EnhancedCourseCard = ({ course, whatsappUrl, index, onEnroll }: Cou
                     <span className="text-blue-400">{course.level}</span>
                 </div>
 
-                <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 min-h-[56px] group-hover:text-blue-400 transition-colors">
+                <h3 className="text-lg font-bold text-white mb-1 line-clamp-2 min-h-[56px] group-hover:text-blue-400 transition-colors">
                     {course.title}
                 </h3>
+
+                {course.price && (
+                    <div className="flex items-center gap-1.5 mb-2">
+                        <CreditCard size={12} className="text-blue-400" />
+                        <span className={`text-xs font-semibold ${course.price === 'Free' ? 'text-emerald-400' : course.price === 'Contact for pricing' ? 'text-slate-400' : 'text-blue-400'}`}>
+                            {course.price}
+                        </span>
+                    </div>
+                )}
 
                 <motion.div
                     className="flex items-center gap-1.5 text-xs text-emerald-400 mb-3 bg-emerald-500/10 px-2 py-1 rounded-md"
@@ -146,10 +128,10 @@ export const EnhancedCourseCard = ({ course, whatsappUrl, index, onEnroll }: Cou
                         <span className="text-xs text-slate-500">({course.reviews})</span>
                     </div>
                     <motion.span
-                        className="text-xs font-bold text-white bg-white/5 px-3 py-1.5 rounded-md group-hover:bg-[#25D366] group-hover:text-white transition-colors flex items-center gap-1.5"
+                        className="text-xs font-bold text-white bg-white/5 px-3 py-1.5 rounded-md group-hover:bg-blue-600 group-hover:text-white transition-colors flex items-center gap-1.5"
                         whileHover={{ scale: 1.05 }}
                     >
-                        <MessageCircle size={12} />
+                        <ArrowRight size={12} />
                         Enroll Now
                     </motion.span>
                 </div>
@@ -186,7 +168,7 @@ export const EnhancedCourseCard = ({ course, whatsappUrl, index, onEnroll }: Cou
 
             {/* Glow Effect */}
             <motion.div
-                className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl opacity-0 blur-lg -z-10"
+                className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-blue-400 rounded-xl opacity-0 blur-lg -z-10"
                 animate={{ opacity: isHovered ? 0.3 : 0 }}
                 transition={{ duration: 0.3 }}
             />
@@ -195,8 +177,6 @@ export const EnhancedCourseCard = ({ course, whatsappUrl, index, onEnroll }: Cou
 
     const commonMotionProps = {
         className: 'group relative block',
-        style: { perspective: 1000 } as any,
-        onMouseMove: handleMouseMove as any,
         onMouseEnter: () => setIsHovered(true),
         onMouseLeave: handleMouseLeave,
         initial: { opacity: 0, y: 20 },
@@ -210,7 +190,7 @@ export const EnhancedCourseCard = ({ course, whatsappUrl, index, onEnroll }: Cou
                 ref={cardRef as React.Ref<HTMLDivElement>}
                 onClick={() => onEnroll(String(course.id))}
                 {...commonMotionProps}
-                style={{ ...commonMotionProps.style, cursor: 'pointer' }}
+                style={{ cursor: 'pointer' }}
             >
                 {innerContent}
             </motion.div>

@@ -5,9 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc",
+    "build": "tsc && xcopy /E /I /Y src\\db\\migrations dist\\db\\migrations",
     "start": "node dist/index.js",
-    "migrate": "node -e \"require('./dist/db/migrate.js')\""
+    "migrate": "node -e \"require('./dist/db/migrate.js')\"",
+    "create-admin": "npx ts-node src/db/create-admin.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

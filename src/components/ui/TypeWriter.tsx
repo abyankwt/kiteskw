@@ -69,12 +69,6 @@ export function TypeWriter({
     return (
         <span className={cn("inline-flex items-baseline", className)}>
             <span>{displayText}</span>
-            <span
-                className={cn(
-                    "inline-block w-[3px] h-[0.9em] bg-white ml-1 animate-blink",
-                    cursorClassName
-                )}
-            />
         </span>
     );
 }

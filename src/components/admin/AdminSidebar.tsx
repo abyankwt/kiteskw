@@ -6,15 +6,35 @@ import {
   BarChart3,
   LogOut,
   ChevronRight,
+  Globe,
+  Image,
+  Shield,
+  GraduationCap,
+  CreditCard,
+  Star,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
-const navItems = [
-  { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, exact: true },
-  { label: 'Courses', href: '/admin/courses', icon: BookOpen },
-  { label: 'Users', href: '/admin/users', icon: Users, roles: ['SUPER_ADMIN', 'ADMIN'] },
-  { label: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+interface NavItem {
+  label: string;
+  href: string;
+  icon: any;
+  exact?: boolean;
+  permission?: string;
+}
+
+const navItems: NavItem[] = [
+  { label: 'Dashboard',   href: '/admin',            icon: LayoutDashboard, exact: true, permission: 'dashboard:view' },
+  { label: 'Courses',     href: '/admin/courses',    icon: BookOpen,         permission: 'courses:read' },
+  { label: 'Trending',    href: '/admin/featured',   icon: Star,             permission: 'courses:read' },
+  { label: 'Enrollments', href: '/admin/enrollments',icon: GraduationCap,    permission: 'enrollments:read' },
+  { label: 'Payments',    href: '/admin/payments',   icon: CreditCard,       permission: 'enrollments:read' },
+  { label: 'Analytics',   href: '/admin/analytics',  icon: BarChart3,        permission: 'analytics:view' },
+  { label: 'CMS Editor',  href: '/admin/cms',        icon: Globe,            permission: 'cms:read' },
+  { label: 'Media',       href: '/admin/media',      icon: Image,            permission: 'media:upload' },
+  { label: 'Users',       href: '/admin/users',      icon: Users,            permission: 'users:read' },
+  { label: 'Roles',       href: '/admin/roles',      icon: Shield,           permission: 'roles:manage' },
 ];
 
 const roleLabels: Record<string, string> = {
@@ -26,7 +46,7 @@ const roleLabels: Record<string, string> = {
 
 export function AdminSidebar() {
   const { pathname } = useLocation();
-  const { user, logout } = useAuth();
+  const { user, hasPermission, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -36,6 +56,11 @@ export function AdminSidebar() {
 
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname.startsWith(href);
+
+  const visibleItems = navItems.filter((item) => {
+    if (!item.permission) return true;
+    return hasPermission(item.permission);
+  });
 
   return (
     <aside className="w-60 h-screen bg-gray-900 flex flex-col border-r border-gray-800 shrink-0">
@@ -55,8 +80,7 @@ export function AdminSidebar() {
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         <p className="text-gray-500 text-xs font-medium uppercase tracking-wider px-2 mb-3">Main</p>
-        {navItems.map((item) => {
-          if (item.roles && user && !item.roles.includes(user.role)) return null;
+        {visibleItems.map((item) => {
           const active = isActive(item.href, item.exact);
           return (
             <Link

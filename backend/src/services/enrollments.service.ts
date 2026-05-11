@@ -1,5 +1,29 @@
 import pool from '../db/pool';
 import * as hesabeService from './hesabe.service';
+import bcrypt from 'bcryptjs';
+
+export async function guestCheckout({ courseId, fullName, email, phone }: {
+  courseId: string;
+  fullName: string;
+  email: string;
+  phone?: string;
+}) {
+  // Find or create a STUDENT account for this email
+  const existing = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase().trim()]);
+  let user;
+  if (existing.rows.length > 0) {
+    user = existing.rows[0];
+  } else {
+    const hash = await bcrypt.hash(Math.random().toString(36) + Date.now(), 10);
+    const { rows } = await pool.query(
+      `INSERT INTO users (email, password_hash, full_name, role) VALUES ($1, $2, $3, 'STUDENT') RETURNING *`,
+      [email.toLowerCase().trim(), hash, fullName]
+    );
+    user = rows[0];
+  }
+
+  return initiateCheckout(user.id, courseId);
+}
 
 export async function initiateCheckout(userId: string, courseId: string) {
   // Check course exists and is published

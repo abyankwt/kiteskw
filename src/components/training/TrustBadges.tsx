@@ -1,39 +1,56 @@
 import { Shield, Award, Users, Lock, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export function TrustBadges() {
-    const badges = [
-        {
-            icon: Shield,
-            title: 'ISO 9001 Certified',
-            description: 'Quality Management',
-            color: 'blue'
-        },
-        {
-            icon: Award,
-            title: 'Industry Partners',
-            description: 'SolidWorks & ANSYS',
-            color: 'purple'
-        },
-        {
-            icon: Users,
-            title: '500+ Graduates',
-            description: '95% Placement Rate',
-            color: 'green'
-        },
-        {
-            icon: CheckCircle2,
-            title: 'Money-Back Guarantee',
-            description: '100% Satisfaction',
-            color: 'emerald'
-        },
-        {
-            icon: Lock,
-            title: 'Secure Payment',
-            description: 'SSL Encrypted',
-            color: 'slate'
-        }
-    ];
+const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+    Shield, Award, Users, Lock, CheckCircle2,
+};
+
+interface TrustBadgeItem {
+    icon: string;
+    title: string;
+    description: string;
+    color: string;
+}
+
+interface PartnerItem {
+    name: string;
+    logo_url?: string | null;
+}
+
+interface TrustBadgesProps {
+    title?: string;
+    description?: string;
+    badges?: TrustBadgeItem[];
+    partnersLabel?: string;
+    partners?: PartnerItem[];
+}
+
+const DEFAULT_BADGES: TrustBadgeItem[] = [
+    { icon: 'Shield',       title: 'ISO 9001 Certified',    description: 'Quality Management',     color: 'blue'    },
+    { icon: 'Award',        title: 'Industry Partners',     description: 'SolidWorks & ANSYS',     color: 'purple'  },
+    { icon: 'Users',        title: '500+ Graduates',        description: '95% Placement Rate',     color: 'green'   },
+    { icon: 'CheckCircle2', title: 'Money-Back Guarantee',  description: '100% Satisfaction',      color: 'emerald' },
+    { icon: 'Lock',         title: 'Secure Payment',        description: 'SSL Encrypted',          color: 'slate'   },
+];
+
+const DEFAULT_PARTNERS: PartnerItem[] = [
+    { name: 'SolidWorks' },
+    { name: 'ANSYS' },
+    { name: 'MATLAB' },
+];
+
+export function TrustBadges({
+    title = 'Trusted by Professionals Across the GCC',
+    description = 'Industry-recognized certifications and partnerships that guarantee quality training',
+    badges: badgesProp,
+    partnersLabel = 'Proud Training Partners',
+    partners: partnersProp,
+}: TrustBadgesProps = {}) {
+    const partners = partnersProp ?? DEFAULT_PARTNERS;
+    const badges = (badgesProp ?? DEFAULT_BADGES).map(b => ({
+        ...b,
+        Icon: ICON_MAP[b.icon] ?? Shield,
+    }));
 
     const colorClasses = {
         blue: {
@@ -78,17 +95,17 @@ export function TrustBadges() {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-10">
                     <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-                        Trusted by Professionals Across the GCC
+                        {title}
                     </h2>
                     <p className="text-slate-600 max-w-2xl mx-auto">
-                        Industry-recognized certifications and partnerships that guarantee quality training
+                        {description}
                     </p>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
                     {badges.map((badge, index) => {
                         const colors = colorClasses[badge.color as keyof typeof colorClasses];
-                        const Icon = badge.icon;
+                        const Icon = badge.Icon;
 
                         return (
                             <motion.div
@@ -121,22 +138,20 @@ export function TrustBadges() {
                     })}
                 </div>
 
-                {/* Additional Partner Logos */}
+                {/* Partner Logos */}
                 <div className="mt-12 pt-8 border-t border-slate-200">
                     <p className="text-center text-sm font-semibold text-slate-600 mb-6">
-                        Proud Training Partners
+                        {partnersLabel}
                     </p>
-                    <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all">
-                        {/* Add actual partner logos here */}
-                        <div className="px-6 py-3 bg-white rounded-lg border border-slate-200 shadow-sm">
-                            <span className="text-lg font-bold text-slate-700">SolidWorks</span>
-                        </div>
-                        <div className="px-6 py-3 bg-white rounded-lg border border-slate-200 shadow-sm">
-                            <span className="text-lg font-bold text-slate-700">ANSYS</span>
-                        </div>
-                        <div className="px-6 py-3 bg-white rounded-lg border border-slate-200 shadow-sm">
-                            <span className="text-lg font-bold text-slate-700">MATLAB</span>
-                        </div>
+                    <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+                        {partners.map((p) => (
+                            <div key={p.name} className="px-6 py-3 bg-white rounded-lg border border-slate-200 shadow-sm">
+                                {p.logo_url
+                                    ? <img src={p.logo_url} alt={p.name} className="h-8 object-contain" />
+                                    : <span className="text-lg font-bold text-slate-700">{p.name}</span>
+                                }
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -32,6 +32,13 @@ export async function recordView(req: Request, res: Response, next: NextFunction
   } catch (err) { next(err); }
 }
 
+export async function listFeatured(req: Request, res: Response, next: NextFunction) {
+  try {
+    const courses = await coursesService.getFeaturedCourses();
+    res.json(courses);
+  } catch (err) { next(err); }
+}
+
 // Admin controllers
 export async function listAll(req: Request, res: Response, next: NextFunction) {
   try {
@@ -124,5 +131,22 @@ export async function unpublish(req: Request, res: Response, next: NextFunction)
   try {
     const course = await coursesService.unpublishCourse(req.params.id);
     res.json(course);
+  } catch (err) { next(err); }
+}
+
+export async function setFeatured(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { featured, order } = req.body;
+    const course = await coursesService.setFeatured(req.params.id, Boolean(featured), order);
+    res.json(course);
+  } catch (err) { next(err); }
+}
+
+export async function reorderFeatured(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { orderedIds } = req.body;
+    if (!Array.isArray(orderedIds)) return res.status(400).json({ error: 'orderedIds must be an array' });
+    await coursesService.reorderFeatured(orderedIds);
+    res.json({ success: true });
   } catch (err) { next(err); }
 }

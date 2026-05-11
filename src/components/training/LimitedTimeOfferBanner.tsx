@@ -46,7 +46,7 @@ export function LimitedTimeOfferBanner({
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -100, opacity: 0 }}
-                className="fixed top-[var(--header-height)] left-0 right-0 z-40 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white shadow-lg"
+                className="fixed top-[var(--header-height)] left-0 right-0 z-40 bg-blue-700 text-white shadow-lg"
             >
                 <div className="container mx-auto px-4 py-3">
                     <div className="flex items-center justify-between gap-4 flex-wrap">

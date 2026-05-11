@@ -3,6 +3,21 @@ import jwt from 'jsonwebtoken';
 import pool from '../db/pool';
 import { jwtConfig } from '../config/jwt';
 import { formatUser } from '../utils/helpers';
+import { getUserPermissions } from './rbac.service';
+
+function buildAccessToken(user: any, permissions: string[]) {
+  return jwt.sign(
+    { id: user.id, email: user.email, role: user.role, fullName: user.full_name, permissions },
+    jwtConfig.accessSecret,
+    { expiresIn: jwtConfig.accessExpiresIn } as any
+  );
+}
+
+function buildRefreshToken(userId: string) {
+  return jwt.sign({ id: userId }, jwtConfig.refreshSecret, {
+    expiresIn: jwtConfig.refreshExpiresIn,
+  } as any);
+}
 
 export async function loginUser(email: string, password: string) {
   const { rows } = await pool.query(
@@ -10,34 +25,17 @@ export async function loginUser(email: string, password: string) {
     [email.toLowerCase().trim()]
   );
 
-  if (rows.length === 0) {
-    throw { status: 401, message: 'Invalid email or password' };
-  }
+  if (rows.length === 0) throw { status: 401, message: 'Invalid email or password' };
 
   const user = rows[0];
   const valid = await bcrypt.compare(password, user.password_hash);
-  if (!valid) {
-    throw { status: 401, message: 'Invalid email or password' };
-  }
+  if (!valid) throw { status: 401, message: 'Invalid email or password' };
 
-  const tokenPayload = {
-    id: user.id,
-    email: user.email,
-    role: user.role,
-    fullName: user.full_name,
-  };
+  const permissions = await getUserPermissions(user.id);
+  const accessToken = buildAccessToken(user, permissions);
+  const refreshToken = buildRefreshToken(user.id);
 
-  const accessToken = jwt.sign(tokenPayload, jwtConfig.accessSecret, {
-    expiresIn: jwtConfig.accessExpiresIn,
-  } as any);
-
-  const refreshToken = jwt.sign(
-    { id: user.id },
-    jwtConfig.refreshSecret,
-    { expiresIn: jwtConfig.refreshExpiresIn } as any
-  );
-
-  return { accessToken, refreshToken, user: formatUser(user) };
+  return { accessToken, refreshToken, user: formatUser(user), permissions };
 }
 
 export async function refreshAccessToken(refreshToken: string) {
@@ -52,51 +50,26 @@ export async function refreshAccessToken(refreshToken: string) {
     'SELECT * FROM users WHERE id = $1 AND is_active = true',
     [payload.id]
   );
-
-  if (rows.length === 0) {
-    throw { status: 401, message: 'User not found' };
-  }
+  if (rows.length === 0) throw { status: 401, message: 'User not found' };
 
   const user = rows[0];
-  const tokenPayload = {
-    id: user.id,
-    email: user.email,
-    role: user.role,
-    fullName: user.full_name,
-  };
+  const permissions = await getUserPermissions(user.id);
+  const newAccessToken = buildAccessToken(user, permissions);
+  const newRefreshToken = buildRefreshToken(user.id);
 
-  const newAccessToken = jwt.sign(tokenPayload, jwtConfig.accessSecret, {
-    expiresIn: jwtConfig.accessExpiresIn,
-  } as any);
-
-  const newRefreshToken = jwt.sign(
-    { id: user.id },
-    jwtConfig.refreshSecret,
-    { expiresIn: jwtConfig.refreshExpiresIn } as any
-  );
-
-  return { accessToken: newAccessToken, refreshToken: newRefreshToken, user: formatUser(user) };
+  return { accessToken: newAccessToken, refreshToken: newRefreshToken, user: formatUser(user), permissions };
 }
 
-export async function createUser(
-  email: string,
-  password: string,
-  fullName: string,
-  role: string
-) {
+export async function createUser(email: string, password: string, fullName: string, role: string) {
   const existing = await pool.query('SELECT id FROM users WHERE email = $1', [email.toLowerCase()]);
-  if (existing.rows.length > 0) {
-    throw { status: 409, message: 'Email already in use' };
-  }
+  if (existing.rows.length > 0) throw { status: 409, message: 'Email already in use' };
 
   const hash = await bcrypt.hash(password, 12);
   const { rows } = await pool.query(
     `INSERT INTO users (email, password_hash, full_name, role)
-     VALUES ($1, $2, $3, $4)
-     RETURNING *`,
+     VALUES ($1, $2, $3, $4) RETURNING *`,
     [email.toLowerCase().trim(), hash, fullName, role]
   );
-
   return formatUser(rows[0]);
 }
 

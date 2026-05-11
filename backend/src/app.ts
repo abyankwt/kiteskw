@@ -7,7 +7,7 @@ import path from 'path';
 
 import { errorHandler } from './middleware/errorHandler';
 
-// Routes
+// Existing routes
 import authRoutes from './routes/auth.routes';
 import courseRoutes from './routes/courses.routes';
 import enrollmentRoutes from './routes/enrollments.routes';
@@ -16,6 +16,12 @@ import adminCourseRoutes from './routes/admin.courses.routes';
 import adminUserRoutes from './routes/admin.users.routes';
 import adminAnalyticsRoutes from './routes/admin.analytics.routes';
 import adminEnrollmentRoutes from './routes/admin.enrollments.routes';
+import adminPaymentRoutes from './routes/admin.payments.routes';
+
+// New routes
+import cmsRoutes from './routes/cms.routes';
+import mediaRoutes from './routes/media.routes';
+import adminRbacRoutes from './routes/admin.rbac.routes';
 
 const app = express();
 
@@ -56,7 +62,7 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Routes
+// Existing routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/courses', courseRoutes);
 app.use('/api/v1/enrollments', enrollmentRoutes);
@@ -65,8 +71,26 @@ app.use('/api/v1/admin/courses', adminCourseRoutes);
 app.use('/api/v1/admin/users', adminUserRoutes);
 app.use('/api/v1/admin/analytics', adminAnalyticsRoutes);
 app.use('/api/v1/admin/enrollments', adminEnrollmentRoutes);
+app.use('/api/v1/admin/payments', adminPaymentRoutes);
 
-// 404
+// New routes
+app.use('/api/v1/cms', cmsRoutes);
+app.use('/api/v1/media', mediaRoutes);
+app.use('/api/v1/admin', adminRbacRoutes);
+
+// Serve React frontend static files (production)
+const distPath = path.join(__dirname, '..', '..', 'dist');
+app.use(express.static(distPath));
+
+// SPA fallback — non-API routes serve index.html
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+    return next();
+  }
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
+// 404 (only reached for unmatched /api/* routes)
 app.use((_req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });

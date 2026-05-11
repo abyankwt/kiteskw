@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Search, UserCheck, UserX, Loader2 } from 'lucide-react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Search, UserCheck, UserX, Loader2, UserPlus, Eye, EyeOff } from 'lucide-react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +10,10 @@ import {
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 import { useAdminUsers } from '@/hooks/useAnalytics';
 import { useAuth } from '@/contexts/AuthContext';
 import apiClient from '@/lib/apiClient';
@@ -29,10 +33,150 @@ const roleBadge = (role: string) => {
   return <Badge className={`${map[role] || ''} border-0`}>{labels[role] || role}</Badge>;
 };
 
+function CreateUserDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const qc = useQueryClient();
+  const { user: me } = useAuth();
+  const [form, setForm] = useState({ fullName: '', email: '', password: '', rbacRoleId: '' });
+  const [showPw, setShowPw] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const { data: rolesData } = useQuery({
+    queryKey: ['admin', 'rbac', 'roles'],
+    queryFn: () => apiClient.get('/admin/roles').then(r => r.data),
+    enabled: open,
+  });
+  const roles: any[] = rolesData?.data || [];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.fullName || !form.email || !form.password || !form.rbacRoleId) {
+      toast.error('All fields are required');
+      return;
+    }
+    if (form.password.length < 8) {
+      toast.error('Password must be at least 8 characters');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      // Step 1: create user account
+      const selectedRole = roles.find(r => r.id === form.rbacRoleId);
+      const legacyRole = selectedRole?.name === 'super_admin' ? 'SUPER_ADMIN' : 'ADMIN';
+
+      const { data: newUser } = await apiClient.post('/auth/register', {
+        email: form.email,
+        password: form.password,
+        fullName: form.fullName,
+        role: legacyRole,
+      });
+
+      // Step 2: assign RBAC role so they get permissions
+      await apiClient.post(`/admin/users/${newUser.id}/roles`, {
+        role_id: form.rbacRoleId,
+        granted_by: me?.id,
+      });
+
+      toast.success(`${form.fullName} created — they can now log in at /admin/login`);
+      qc.invalidateQueries({ queryKey: ['admin', 'users'] });
+      setForm({ fullName: '', email: '', password: '', rbacRoleId: '' });
+      onClose();
+    } catch (err: any) {
+      toast.error(err.response?.data?.error || 'Failed to create user');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={v => !v && onClose()}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Create New User</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+          <div className="space-y-1.5">
+            <Label>Full Name</Label>
+            <Input
+              placeholder="e.g. Ahmad Al-Rashidi"
+              value={form.fullName}
+              onChange={e => setForm(f => ({ ...f, fullName: e.target.value }))}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label>Email</Label>
+            <Input
+              type="email"
+              placeholder="user@kites-kw.com"
+              value={form.email}
+              onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label>Password</Label>
+            <div className="relative">
+              <Input
+                type={showPw ? 'text' : 'password'}
+                placeholder="Min 8 characters"
+                value={form.password}
+                onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPw(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
+            </div>
+          </div>
+          <div className="space-y-1.5">
+            <Label>Access Role</Label>
+            <Select value={form.rbacRoleId} onValueChange={v => setForm(f => ({ ...f, rbacRoleId: v }))}>
+              <SelectTrigger>
+                <SelectValue placeholder="Choose what this user can access..." />
+              </SelectTrigger>
+              <SelectContent>
+                {roles.map((r: any) => (
+                  <SelectItem key={r.id} value={r.id}>
+                    <div>
+                      <span className="font-medium">{r.display_name}</span>
+                      {r.description && (
+                        <span className="text-gray-400 text-xs ml-2">— {r.description}</span>
+                      )}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {form.rbacRoleId && (() => {
+              const r = roles.find(x => x.id === form.rbacRoleId);
+              return r ? (
+                <p className="text-xs text-gray-500">
+                  {Array.isArray(r.permissions) ? r.permissions.length : 0} permissions granted
+                </p>
+              ) : null;
+            })()}
+          </div>
+          <DialogFooter className="pt-2">
+            <Button type="button" variant="outline" onClick={onClose} disabled={saving}>Cancel</Button>
+            <Button type="submit" disabled={saving}>
+              {saving ? <Loader2 size={14} className="animate-spin mr-1.5" /> : <UserPlus size={14} className="mr-1.5" />}
+              Create User
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export default function AdminUsers() {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
   const [page, setPage] = useState(1);
+  const [showCreate, setShowCreate] = useState(false);
   const { user: currentUser } = useAuth();
   const qc = useQueryClient();
 
@@ -73,6 +217,12 @@ export default function AdminUsers() {
           <h1 className="text-xl font-semibold text-gray-900">Users</h1>
           <p className="text-sm text-gray-500 mt-0.5">{pagination?.total ?? 0} users total</p>
         </div>
+        {currentUser?.role === 'SUPER_ADMIN' && (
+          <Button onClick={() => setShowCreate(true)}>
+            <UserPlus size={15} className="mr-1.5" />
+            Create User
+          </Button>
+        )}
       </div>
 
       {/* Filters */}
@@ -198,6 +348,8 @@ export default function AdminUsers() {
           </div>
         </div>
       )}
+
+      <CreateUserDialog open={showCreate} onClose={() => setShowCreate(false)} />
     </div>
   );
 }

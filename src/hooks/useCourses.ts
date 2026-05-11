@@ -31,6 +31,8 @@ export interface ApiCourse {
   enrollmentCount: number;
   certified: boolean;
   color: string;
+  featured: boolean;
+  featuredOrder: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -113,6 +115,35 @@ export function useEnrollCheckout() {
   return useMutation({
     mutationFn: (courseId: string) =>
       apiClient.post('/enrollments/checkout', { courseId }).then((r) => r.data),
+  });
+}
+
+export function useFeaturedCourses() {
+  return useQuery({
+    queryKey: ['courses', 'featured'],
+    queryFn: () => apiClient.get('/courses/featured').then((r) => r.data as ApiCourse[]),
+    staleTime: 60_000,
+  });
+}
+
+export function useSetFeatured() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, featured, order }: { id: string; featured: boolean; order?: number }) =>
+      apiClient.patch(`/admin/courses/${id}/featured`, { featured, order }).then((r) => r.data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['courses', 'featured'] });
+      qc.invalidateQueries({ queryKey: ['admin', 'courses'] });
+    },
+  });
+}
+
+export function useReorderFeatured() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (orderedIds: string[]) =>
+      apiClient.post('/admin/courses/featured/reorder', { orderedIds }).then((r) => r.data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['courses', 'featured'] }),
   });
 }
 

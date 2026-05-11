@@ -4,10 +4,11 @@ import { useAuth, UserRole } from '@/contexts/AuthContext';
 interface PrivateRouteProps {
   children: React.ReactNode;
   roles?: UserRole[];
+  permission?: string;
 }
 
-export function PrivateRoute({ children, roles }: PrivateRouteProps) {
-  const { user, isLoading } = useAuth();
+export function PrivateRoute({ children, roles, permission }: PrivateRouteProps) {
+  const { user, isLoading, hasPermission } = useAuth();
 
   if (isLoading) {
     return (
@@ -25,6 +26,10 @@ export function PrivateRoute({ children, roles }: PrivateRouteProps) {
   }
 
   if (roles && !roles.includes(user.role)) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  if (permission && !hasPermission(permission)) {
     return <Navigate to="/admin" replace />;
   }
 

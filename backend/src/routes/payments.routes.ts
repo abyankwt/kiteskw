@@ -3,34 +3,47 @@ import * as enrollmentsService from '../services/enrollments.service';
 
 const router = Router();
 
-// Hesabe webhook — called by Hesabe servers after payment
-router.post('/webhook', async (req, res, next) => {
+const frontendUrl = () => process.env.FRONTEND_URL || 'http://localhost:8080';
+
+// ── Hesabe browser redirect after successful payment ─────────────────
+// Hesabe redirects the user's browser here (GET) with encrypted `data`
+router.get('/callback', async (req, res) => {
   try {
-    const encryptedData = req.body.data || req.query.data;
+    const encryptedData = req.query.data as string;
     if (!encryptedData) {
-      return res.status(400).json({ error: 'Missing payment data' });
+      return res.redirect(`${frontendUrl()}/payment/failure`);
     }
 
+    const result = await enrollmentsService.handleWebhook(encryptedData);
+
+    if (result.status === true && result.resultCode === '0') {
+      res.redirect(`${frontendUrl()}/payment/success?orderId=${result.orderReferenceNumber}`);
+    } else {
+      res.redirect(`${frontendUrl()}/payment/failure?orderId=${result.orderReferenceNumber}&code=${result.resultCode}`);
+    }
+  } catch (err) {
+    console.error('Payment callback error:', err);
+    res.redirect(`${frontendUrl()}/payment/failure`);
+  }
+});
+
+// ── Hesabe failure redirect ───────────────────────────────────────────
+router.get('/failure-callback', (req, res) => {
+  const orderId = req.query.orderId || '';
+  res.redirect(`${frontendUrl()}/payment/failure?orderId=${orderId}`);
+});
+
+// ── Server-to-server webhook (keep for optional Hesabe portal config) ─
+router.post('/webhook', async (req, res) => {
+  try {
+    const encryptedData = req.body.data || req.query.data;
+    if (!encryptedData) return res.status(400).json({ error: 'Missing payment data' });
     await enrollmentsService.handleWebhook(encryptedData as string);
     res.json({ status: 'ok' });
   } catch (err) {
     console.error('Webhook error:', err);
-    // Return 200 to Hesabe even on error to prevent retries; log the failure
     res.json({ status: 'error', message: String(err) });
   }
-});
-
-// Browser redirects after payment
-router.get('/success', (req, res) => {
-  const orderId = req.query.orderId || '';
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8080';
-  res.redirect(`${frontendUrl}/payment/success?orderId=${orderId}`);
-});
-
-router.get('/failure', (req, res) => {
-  const orderId = req.query.orderId || '';
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8080';
-  res.redirect(`${frontendUrl}/payment/failure?orderId=${orderId}`);
 });
 
 export default router;
