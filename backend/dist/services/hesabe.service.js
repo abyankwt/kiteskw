@@ -40,7 +40,8 @@ function createPaymentPayload(params) {
         responseUrl: `${process.env.API_BASE_URL}/api/v1/payments/callback`,
         failureUrl: `${process.env.API_BASE_URL}/api/v1/payments/failure-callback?orderId=${params.orderId}`,
         version: '2.0',
-        orderReferenceNumber: params.orderId,
+        orderReferenceNumber: params.orderId.replace(/-/g, ''),
+        paymentType: 0,
         variable1: params.userId,
         variable2: params.courseId,
     };
