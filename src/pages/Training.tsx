@@ -253,18 +253,22 @@ const Training = () => {
 
     // Build trending course cards from featured list (admin-controlled order)
     const whatsappBase = `https://wa.me/96522092260?text=I'm%20interested%20in%20the%20course:%20`;
-    const trendingCourses = featuredCoursesData?.map((c: any, i: number) => ({
-        id: c.id,
-        title: c.title,
-        category: c.category,
-        rating: c.rating,
-        reviews: c.enrollmentCount,
-        duration: c.duration || '—',
-        level: c.level,
-        image: c.thumbnailUrl || TRENDING_COURSES[i % TRENDING_COURSES.length]?.image || '/assets/training/solidworks-level-1.png',
-        badge: ['Best Seller', 'Certification', 'Trending', 'New', 'Popular', 'Advanced', 'Beginner', 'In Demand', 'Featured'][i] ?? 'New',
-        price: c.price === 0 ? 'Free' : c.effectivePrice ? `KWD ${c.effectivePrice.toFixed(3)}` : 'Contact for pricing',
-    })) ?? TRENDING_COURSES;
+    // isFeaturedFromApi is true only when we have a real API response (array, even if empty)
+    const isFeaturedFromApi = Array.isArray(featuredCoursesData);
+    const trendingCourses = isFeaturedFromApi
+        ? featuredCoursesData.map((c: any, i: number) => ({
+            id: c.id,
+            title: c.title,
+            category: c.category,
+            rating: c.rating,
+            reviews: c.enrollmentCount,
+            duration: c.duration || '—',
+            level: c.level,
+            image: c.thumbnailUrl || TRENDING_COURSES[i % TRENDING_COURSES.length]?.image || '/assets/training/solidworks-level-1.png',
+            badge: ['Best Seller', 'Certification', 'Trending', 'New', 'Popular', 'Advanced', 'Beginner', 'In Demand', 'Featured'][i] ?? 'New',
+            price: c.price === 0 ? 'Free' : c.effectivePrice ? `KWD ${c.effectivePrice.toFixed(3)}` : 'Contact for pricing',
+        }))
+        : TRENDING_COURSES;
 
     const handleEnroll = (courseId: string) => {
         const course = trendingCourses.find((c) => String(c.id) === courseId);
@@ -491,7 +495,7 @@ const Training = () => {
                                 course={course}
                                 whatsappUrl={`${whatsappBase}${encodeURIComponent(course.title)}`}
                                 index={index}
-                                onEnroll={handleEnroll}
+                                onEnroll={isFeaturedFromApi ? handleEnroll : undefined}
                             />
                         ))}
                     </div>
