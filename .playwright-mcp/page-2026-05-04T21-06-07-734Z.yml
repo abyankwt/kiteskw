@@ -1,0 +1,1459 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - img [ref=e5]
+  - generic [ref=e7]:
+    - generic:
+      - banner:
+        - generic:
+          - generic:
+            - link "KITES - Kuwait Institute for Training & Engineering Simulations Kuwait Institute for Training and Engineering Simulations":
+              - /url: /
+              - img "KITES - Kuwait Institute for Training & Engineering Simulations"
+              - generic:
+                - generic: Kuwait Institute for Training
+                - generic: and Engineering Simulations
+            - button "Toggle menu":
+              - img
+    - main [ref=e8]:
+      - generic [ref=e10]:
+        - link "Skip to main content" [ref=e11] [cursor=pointer]:
+          - /url: "#main-content"
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - generic [ref=e16]:
+              - img [ref=e17]
+              - generic [ref=e19]: 20% OFF
+            - paragraph [ref=e20]: Early Bird Discount - Limited Seats Available!
+          - generic [ref=e21]:
+            - generic [ref=e22]:
+              - img [ref=e23]
+              - generic [ref=e26]: "Offer ends in:"
+            - generic [ref=e27]:
+              - generic [ref=e28]:
+                - generic [ref=e29]: "57"
+                - generic [ref=e30]: Days
+              - generic [ref=e31]:
+                - generic [ref=e32]: "23"
+                - generic [ref=e33]: Hrs
+              - generic [ref=e34]:
+                - generic [ref=e35]: "53"
+                - generic [ref=e36]: Min
+              - generic [ref=e37]:
+                - generic [ref=e38]: "51"
+                - generic [ref=e39]: Sec
+          - generic [ref=e44]: Only 12 seats left!
+          - button "Close banner" [ref=e45] [cursor=pointer]:
+            - img [ref=e46]
+        - generic [ref=e52]:
+          - heading "Professional Engineering Training" [level=1] [ref=e53]
+          - paragraph [ref=e54]: Elevate your skills with industry-leading courses in simulation and design.
+          - generic [ref=e55]:
+            - link "Start Free Consultation" [ref=e57] [cursor=pointer]:
+              - /url: https://wa.me/96522092260
+              - img [ref=e58]
+              - generic [ref=e60]: Start Free Consultation
+              - img [ref=e61]
+            - link "View Programs" [ref=e63] [cursor=pointer]:
+              - /url: "#programs"
+              - generic [ref=e64]: View Programs
+              - img [ref=e65]
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - img [ref=e69]
+              - generic [ref=e72]:
+                - generic [ref=e73]: 62+
+                - text: Engineers Enrolled
+            - generic [ref=e75]:
+              - img [ref=e76]
+              - generic [ref=e78]:
+                - generic [ref=e79]: 0/5
+                - text: Average Rating
+            - generic [ref=e81]:
+              - img [ref=e82]
+              - generic [ref=e88]:
+                - generic [ref=e89]: 12%
+                - text: Career Growth
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - text: Top Selling
+              - heading "Trending Courses" [level=2] [ref=e94]
+            - link "View all programs" [ref=e95] [cursor=pointer]:
+              - /url: "#curriculum"
+              - text: View all programs
+              - img [ref=e96]
+          - generic [ref=e98]:
+            - generic [ref=e100] [cursor=pointer]:
+              - generic [ref=e101]:
+                - img "SolidWorks – Level 1" [ref=e102]
+                - generic [ref=e104]: Best Seller
+                - generic [ref=e106]:
+                  - img [ref=e107]
+                  - generic [ref=e109]: 5 seats left
+              - generic [ref=e111]:
+                - generic [ref=e112]:
+                  - img [ref=e113]
+                  - generic [ref=e116]: 6 Weeks
+                  - generic [ref=e118]: Advanced
+                - heading "SolidWorks – Level 1" [level=3] [ref=e119]
+                - generic [ref=e120]:
+                  - img [ref=e121]
+                  - generic [ref=e124]: 16 enrolled in last 24 hrs
+                - generic [ref=e125]:
+                  - generic [ref=e126]:
+                    - img [ref=e127]
+                    - generic [ref=e129]: "4.9"
+                    - generic [ref=e130]: (128)
+                  - generic [ref=e131]:
+                    - img [ref=e132]
+                    - text: Enroll Now
+            - generic [ref=e136] [cursor=pointer]:
+              - generic [ref=e137]:
+                - img "SolidWorks Professional Certification" [ref=e138]
+                - generic [ref=e140]: Certification
+                - generic [ref=e142]:
+                  - img [ref=e143]
+                  - generic [ref=e146]: Filling fast
+              - generic [ref=e148]:
+                - generic [ref=e149]:
+                  - img [ref=e150]
+                  - generic [ref=e153]: 4 Weeks
+                  - generic [ref=e155]: Intermediate
+                - heading "SolidWorks Professional Certification" [level=3] [ref=e156]
+                - generic [ref=e157]:
+                  - img [ref=e158]
+                  - generic [ref=e161]: 11 enrolled in last 24 hrs
+                - generic [ref=e162]:
+                  - generic [ref=e163]:
+                    - img [ref=e164]
+                    - generic [ref=e166]: "4.8"
+                    - generic [ref=e167]: (342)
+                  - generic [ref=e168]:
+                    - img [ref=e169]
+                    - text: Enroll Now
+            - generic [ref=e173] [cursor=pointer]:
+              - generic [ref=e174]:
+                - 'img "CFD Mastery: Fluid Dynamics" [ref=e175]'
+                - generic [ref=e177]:
+                  - img [ref=e178]
+                  - text: Trending
+                - generic [ref=e181]:
+                  - img [ref=e182]
+                  - generic [ref=e184]: Most popular
+              - generic [ref=e186]:
+                - generic [ref=e187]:
+                  - img [ref=e188]
+                  - generic [ref=e191]: 8 Weeks
+                  - generic [ref=e193]: Expert
+                - 'heading "CFD Mastery: Fluid Dynamics" [level=3] [ref=e194]'
+                - generic [ref=e195]:
+                  - img [ref=e196]
+                  - generic [ref=e199]: 12 enrolled in last 24 hrs
+                - generic [ref=e200]:
+                  - generic [ref=e201]:
+                    - img [ref=e202]
+                    - generic [ref=e204]: "4.9"
+                    - generic [ref=e205]: (89)
+                  - generic [ref=e206]:
+                    - img [ref=e207]
+                    - text: Enroll Now
+            - generic [ref=e211] [cursor=pointer]:
+              - generic [ref=e212]:
+                - img "MATLAB Fundamental" [ref=e213]
+                - generic [ref=e215]: New
+                - generic [ref=e217]:
+                  - img [ref=e218]
+                  - generic [ref=e220]: 5 seats left
+              - generic [ref=e222]:
+                - generic [ref=e223]:
+                  - img [ref=e224]
+                  - generic [ref=e227]: 5 Days
+                  - generic [ref=e229]: Beginner
+                - heading "MATLAB Fundamental" [level=3] [ref=e230]
+                - generic [ref=e231]:
+                  - img [ref=e232]
+                  - generic [ref=e235]: 6 enrolled in last 24 hrs
+                - generic [ref=e236]:
+                  - generic [ref=e237]:
+                    - img [ref=e238]
+                    - generic [ref=e240]: "4.7"
+                    - generic [ref=e241]: (215)
+                  - generic [ref=e242]:
+                    - img [ref=e243]
+                    - text: Enroll Now
+        - generic [ref=e247]:
+          - generic [ref=e248]:
+            - heading "Trusted by Professionals Across the GCC" [level=2] [ref=e249]
+            - paragraph [ref=e250]: Industry-recognized certifications and partnerships that guarantee quality training
+          - generic [ref=e251]:
+            - generic [ref=e252]:
+              - img [ref=e254]
+              - heading "ISO 9001 Certified" [level=3] [ref=e256]
+              - paragraph [ref=e257]: Quality Management
+            - generic [ref=e258]:
+              - img [ref=e260]
+              - heading "Industry Partners" [level=3] [ref=e263]
+              - paragraph [ref=e264]: SolidWorks & ANSYS
+            - generic [ref=e265]:
+              - img [ref=e267]
+              - heading "500+ Graduates" [level=3] [ref=e272]
+              - paragraph [ref=e273]: 95% Placement Rate
+            - generic [ref=e274]:
+              - img [ref=e276]
+              - heading "Money-Back Guarantee" [level=3] [ref=e279]
+              - paragraph [ref=e280]: 100% Satisfaction
+            - generic [ref=e281]:
+              - img [ref=e283]
+              - heading "Secure Payment" [level=3] [ref=e286]
+              - paragraph [ref=e287]: SSL Encrypted
+          - generic [ref=e288]:
+            - paragraph [ref=e289]: Proud Training Partners
+            - generic [ref=e290]:
+              - generic [ref=e291]: SolidWorks
+              - generic [ref=e292]: ANSYS
+              - generic [ref=e293]: MATLAB
+        - generic [ref=e295]:
+          - generic [ref=e297]:
+            - text: Unlock Savings
+            - heading "Exclusive Offers & Discounts" [level=2] [ref=e298]
+          - generic [ref=e299]:
+            - generic [ref=e300]:
+              - img [ref=e302]
+              - generic [ref=e305]:
+                - generic [ref=e306]: 20% OFF
+                - heading "Corporate Bundle" [level=3] [ref=e307]
+                - paragraph [ref=e308]: Ideal for companies upskilling their engineering teams. Valid for groups of 5+.
+              - link "Claim Offer" [ref=e309] [cursor=pointer]:
+                - /url: https://wa.me/96522092260
+                - text: Claim Offer
+                - img [ref=e310]
+            - generic [ref=e312]:
+              - img [ref=e314]
+              - generic [ref=e317]:
+                - generic [ref=e318]: Flat 50% OFF
+                - heading "Student Special" [level=3] [ref=e319]
+                - paragraph [ref=e320]: Valid for university students with a valid ID card. Start your career strong.
+              - link "Claim Offer" [ref=e321] [cursor=pointer]:
+                - /url: https://wa.me/96522092260
+                - text: Claim Offer
+                - img [ref=e322]
+            - generic [ref=e324]:
+              - img [ref=e326]
+              - generic [ref=e328]:
+                - generic [ref=e329]: 10% OFF
+                - heading "Early Bird" [level=3] [ref=e330]
+                - paragraph [ref=e331]: Book any course 30 days in advance and secure your seat with a discount.
+              - link "Claim Offer" [ref=e332] [cursor=pointer]:
+                - /url: https://wa.me/96522092260
+                - text: Claim Offer
+                - img [ref=e333]
+            - generic [ref=e335]:
+              - img [ref=e337]
+              - generic [ref=e342]:
+                - generic [ref=e343]: 15% OFF
+                - heading "KITES Alumni" [level=3] [ref=e344]
+                - paragraph [ref=e345]: Return for another course and get a loyalty discount. Keep learning.
+              - link "Claim Offer" [ref=e346] [cursor=pointer]:
+                - /url: https://wa.me/96522092260
+                - text: Claim Offer
+                - img [ref=e347]
+        - generic [ref=e350]:
+          - generic [ref=e351]:
+            - text: Why Choose KITES
+            - heading "Engineering Excellence Redefined" [level=2] [ref=e352]
+            - paragraph [ref=e353]: We don't just teach software; we build careers. Our training methodology is designed for rapid skill acquisition and professional impact.
+          - generic [ref=e354]:
+            - generic [ref=e355]:
+              - img [ref=e357]
+              - generic [ref=e360]:
+                - img [ref=e362]
+                - generic [ref=e365]:
+                  - heading "simulation-Driven Learning" [level=3] [ref=e366]
+                  - paragraph [ref=e367]: Forget theory-heavy lectures. Our courses are 80% hands-on simulation labs using industry-standard tools like ANSYS, Abaqus, and SolidWorks.
+            - generic [ref=e368]:
+              - img [ref=e370]
+              - generic [ref=e373]:
+                - img [ref=e375]
+                - heading "Certified Instructors" [level=3] [ref=e378]
+                - paragraph [ref=e379]: Learn from certified experts with 10+ years of field experience in oil & gas and construction.
+            - generic [ref=e381]:
+              - img [ref=e383]
+              - heading "Global Recognition" [level=3] [ref=e386]
+              - paragraph [ref=e387]: Our certifications are recognized by major engineering firms across the GCC region.
+            - generic [ref=e388]:
+              - generic [ref=e389]:
+                - img [ref=e391]
+                - heading "Career Placement Support" [level=3] [ref=e394]
+                - paragraph [ref=e395]: Top performers get direct referrals to our partner network of engineering firms in Kuwait and Saudi Arabia.
+              - generic [ref=e396]:
+                - generic [ref=e397]: 92%
+                - generic [ref=e398]: Placement Rate
+        - generic [ref=e400]:
+          - generic [ref=e401]:
+            - generic [ref=e403]: Why Choose KITES?
+            - heading "Professional Training vs Self-Learning" [level=2] [ref=e404]
+            - paragraph [ref=e405]: See what sets our comprehensive professional training apart from trying to learn on your own
+          - generic [ref=e406]:
+            - generic [ref=e407]:
+              - generic [ref=e408]: Features
+              - generic [ref=e409]: Self-Learning
+              - generic [ref=e410]: KITES Training
+            - generic [ref=e411]:
+              - generic [ref=e412]: Expert Instructor Guidance
+              - img [ref=e415]
+              - img [ref=e420]
+            - generic [ref=e422]:
+              - generic [ref=e423]: ISO 9001 Certified Training
+              - img [ref=e426]
+              - img [ref=e431]
+            - generic [ref=e433]:
+              - generic [ref=e434]: Hands-on Industry Projects
+              - generic [ref=e436]: Limited
+              - img [ref=e439]
+            - generic [ref=e441]:
+              - generic [ref=e442]: Job Placement Assistance
+              - img [ref=e445]
+              - img [ref=e450]
+            - generic [ref=e452]:
+              - generic [ref=e453]: Recognized Certification
+              - img [ref=e456]
+              - img [ref=e461]
+            - generic [ref=e463]:
+              - generic [ref=e464]: Lifetime Access to Materials
+              - generic [ref=e466]: Maybe
+              - img [ref=e469]
+            - generic [ref=e471]:
+              - generic [ref=e472]: 1-on-1 Mentorship
+              - img [ref=e475]
+              - img [ref=e480]
+            - generic [ref=e482]:
+              - generic [ref=e483]: Industry Network Access
+              - img [ref=e486]
+              - img [ref=e491]
+            - generic [ref=e493]:
+              - generic [ref=e494]: Real-world Case Studies
+              - generic [ref=e496]: Limited
+              - img [ref=e499]
+            - generic [ref=e501]:
+              - generic [ref=e502]: Money-Back Guarantee
+              - img [ref=e505]
+              - img [ref=e510]
+          - generic [ref=e512]:
+            - paragraph [ref=e513]: Invest in professional training for guaranteed results
+            - link "Browse Our Courses" [ref=e514] [cursor=pointer]:
+              - /url: /services/training
+              - generic [ref=e515]: Browse Our Courses
+              - img [ref=e516]
+        - generic [ref=e520]:
+          - generic [ref=e524]:
+            - generic [ref=e525]:
+              - img [ref=e526]
+              - generic [ref=e530]: Special Offer
+            - heading "Bundle & Save Big" [level=3] [ref=e531]
+            - paragraph [ref=e532]: Enroll in 2 or more courses and get exclusive discounts plus bonus materials
+            - generic [ref=e533]:
+              - generic [ref=e534]: 30%
+              - generic [ref=e535]: "OFF"
+            - generic [ref=e536]:
+              - generic [ref=e537]:
+                - img [ref=e539]
+                - generic [ref=e541]: Enroll in 2+ courses simultaneously
+              - generic [ref=e542]:
+                - img [ref=e544]
+                - generic [ref=e546]: Free downloadable resource library
+              - generic [ref=e547]:
+                - img [ref=e549]
+                - generic [ref=e551]: Priority placement assistance
+              - generic [ref=e552]:
+                - img [ref=e554]
+                - generic [ref=e556]: Exclusive networking events access
+            - link "View Course Bundles" [ref=e557] [cursor=pointer]:
+              - /url: https://wa.me/96522092260
+              - generic [ref=e558]: View Course Bundles
+              - img [ref=e559]
+            - paragraph [ref=e561]: Limited time offer • Terms & conditions apply
+          - generic [ref=e565]:
+            - generic [ref=e566]:
+              - img [ref=e567]
+              - generic [ref=e571]: Special Offer
+            - heading "Early Bird Special" [level=3] [ref=e572]
+            - paragraph [ref=e573]: Register before the deadline and secure your spot with exclusive early bird benefits
+            - generic [ref=e574]:
+              - generic [ref=e575]: 20%
+              - generic [ref=e576]: "OFF"
+            - generic [ref=e577]:
+              - generic [ref=e578]:
+                - img [ref=e580]
+                - generic [ref=e582]: First 50 enrollments only
+              - generic [ref=e583]:
+                - img [ref=e585]
+                - generic [ref=e587]: Free 1-on-1 consultation session
+              - generic [ref=e588]:
+                - img [ref=e590]
+                - generic [ref=e592]: Lifetime access to course updates
+              - generic [ref=e593]:
+                - img [ref=e595]
+                - generic [ref=e597]: Certificate fast-track processing
+            - link "Claim Early Bird Discount" [ref=e598] [cursor=pointer]:
+              - /url: https://wa.me/96522092260
+              - generic [ref=e599]: Claim Early Bird Discount
+              - img [ref=e600]
+            - paragraph [ref=e602]: Limited time offer • Terms & conditions apply
+        - generic [ref=e607]:
+          - generic [ref=e608]:
+            - text: Career Roadmap
+            - heading "Your Journey to Expertise" [level=2] [ref=e609]
+            - paragraph [ref=e610]:
+              - text: Choose your path and join
+              - generic [ref=e611]: 0+
+              - text: engineers advancing their careers.
+          - generic [ref=e615]:
+            - generic [ref=e619] [cursor=pointer]:
+              - img [ref=e622]
+              - generic [ref=e624]:
+                - img [ref=e625]
+                - text: 4-6 weeks
+              - heading "1. Foundation" [level=3] [ref=e628]
+              - paragraph [ref=e629]: Master the basics of engineering simulation and CAD design to ace your capstone projects.
+              - generic [ref=e630]:
+                - img [ref=e631]
+                - generic [ref=e636]: 0 completed
+              - link "Start Foundation Path" [ref=e637]:
+                - /url: https://wa.me/96522092260?text=I'm interested in the Foundation program
+                - img [ref=e638]
+                - text: Start Foundation Path
+            - generic [ref=e643] [cursor=pointer]:
+              - img [ref=e646]
+              - generic [ref=e650]:
+                - img [ref=e651]
+                - text: 8-12 weeks
+              - generic [ref=e654]:
+                - img [ref=e655]
+                - text: Most Popular
+              - heading "2. Certification" [level=3] [ref=e657]
+              - paragraph [ref=e658]: Earn professional credentials (CFD, FEA) to demonstrate competency to top employers.
+              - generic [ref=e659]:
+                - img [ref=e660]
+                - generic [ref=e665]: 0 completed
+              - link "Get Certified Now" [ref=e666]:
+                - /url: https://wa.me/96522092260?text=I'm interested in the Certification program
+                - img [ref=e667]
+                - text: Get Certified Now
+            - generic [ref=e672] [cursor=pointer]:
+              - img [ref=e675]
+              - generic [ref=e681]:
+                - img [ref=e682]
+                - text: 12+ weeks
+              - heading "3. Mastery" [level=3] [ref=e685]
+              - paragraph [ref=e686]: Lead teams and innovation. Advanced corporate training to upskill entire departments.
+              - generic [ref=e687]:
+                - img [ref=e688]
+                - generic [ref=e693]: 0 completed
+              - link "Achieve Mastery" [ref=e694]:
+                - /url: https://wa.me/96522092260?text=I'm interested in the Mastery program
+                - img [ref=e695]
+                - text: Achieve Mastery
+        - generic [ref=e699]:
+          - generic [ref=e700]:
+            - heading "Professional Training Catalog" [level=2] [ref=e701]
+            - paragraph [ref=e702]: Industry-certified courses to elevate your engineering expertise
+          - generic [ref=e704]:
+            - generic [ref=e705]:
+              - img [ref=e706]
+              - textbox "Search courses..." [ref=e709]
+            - generic [ref=e710]:
+              - button "All (17)" [ref=e711] [cursor=pointer]
+              - button "CAD Design (2)" [ref=e712] [cursor=pointer]
+              - button "Electrical (4)" [ref=e713] [cursor=pointer]
+              - button "Fluid Dynamics (1)" [ref=e714] [cursor=pointer]
+              - button "MEP Systems (2)" [ref=e715] [cursor=pointer]
+              - button "Programming (2)" [ref=e716] [cursor=pointer]
+              - button "Simulation (2)" [ref=e717] [cursor=pointer]
+              - button "Sustainability (4)" [ref=e718] [cursor=pointer]
+            - generic [ref=e719]:
+              - generic [ref=e720]: "View:"
+              - button "Timeline" [ref=e721] [cursor=pointer]:
+                - img [ref=e722]
+                - text: Timeline
+              - button "Grid" [ref=e723] [cursor=pointer]:
+                - img [ref=e724]
+                - text: Grid
+          - generic [ref=e726]:
+            - generic [ref=e728]:
+              - generic [ref=e733]:
+                - generic [ref=e734]:
+                  - generic [ref=e735]: Sustainability
+                  - generic [ref=e736]: Professional
+                  - generic [ref=e737]:
+                    - img [ref=e738]
+                    - text: Certified
+                - heading "Assessment and Design of Environmental Management Systems" [level=3] [ref=e741]
+                - generic [ref=e742]:
+                  - generic [ref=e743]:
+                    - img [ref=e744]
+                    - img [ref=e746]
+                    - img [ref=e748]
+                    - img [ref=e750]
+                    - img [ref=e752]
+                    - generic [ref=e754]: "4.9"
+                  - generic [ref=e755]:
+                    - img [ref=e756]
+                    - generic [ref=e761]: 850 enrolled
+                - generic [ref=e762]:
+                  - img [ref=e763]
+                  - generic [ref=e766]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e767]: The course provides insight on designing an EMS and assessing current EMS for various industries. Individuals will learn the skills of how to design and implement an environmental ...
+                - generic [ref=e768]:
+                  - heading "What You'll Learn" [level=4] [ref=e769]:
+                    - img [ref=e770]
+                    - text: What You'll Learn
+                  - list [ref=e772]:
+                    - listitem [ref=e773]:
+                      - img [ref=e774]
+                      - generic [ref=e777]: Day 1
+                    - listitem [ref=e778]:
+                      - img [ref=e779]
+                      - generic [ref=e782]: Day 2
+                    - listitem [ref=e783]:
+                      - img [ref=e784]
+                      - generic [ref=e787]: Day 3
+                - link "Enroll Now" [ref=e789] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Assessment%20and%20Design%20of%20Environmental%20Management%20Systems%22%20course.
+                  - button "Enroll Now" [ref=e790]:
+                    - img
+                    - text: Enroll Now
+              - link "Assessment and Design of Environmental Management Systems Enquire on WhatsApp" [ref=e792] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Assessment%20and%20Design%20of%20Environmental%20Management%20Systems%22%20course.
+                - img "Assessment and Design of Environmental Management Systems" [ref=e793]
+                - generic [ref=e795]:
+                  - img [ref=e796]
+                  - paragraph [ref=e798]: Enquire on WhatsApp
+                - img [ref=e800]
+            - generic [ref=e802]:
+              - generic [ref=e807]:
+                - generic [ref=e808]:
+                  - generic [ref=e809]: Electrical
+                  - generic [ref=e810]: Intermediate
+                - heading "Electric Wiring and Lighting for Residentials and Commercial Buildings" [level=3] [ref=e811]
+                - generic [ref=e812]:
+                  - generic [ref=e813]:
+                    - img [ref=e814]
+                    - img [ref=e816]
+                    - img [ref=e818]
+                    - img [ref=e820]
+                    - img [ref=e822]
+                    - generic [ref=e824]: "4.7"
+                  - generic [ref=e825]:
+                    - img [ref=e826]
+                    - generic [ref=e831]: 620 enrolled
+                - generic [ref=e832]:
+                  - img [ref=e833]
+                  - generic [ref=e836]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e837]: Introduction of specialized functions for specialized data analysis with various examples. Gain knowledge of electric wiring and lighting for residential and commercial buildings. ...
+                - generic [ref=e838]:
+                  - heading "What You'll Learn" [level=4] [ref=e839]:
+                    - img [ref=e840]
+                    - text: What You'll Learn
+                  - list [ref=e842]:
+                    - listitem [ref=e843]:
+                      - img [ref=e844]
+                      - generic [ref=e847]: Day 1
+                    - listitem [ref=e848]:
+                      - img [ref=e849]
+                      - generic [ref=e852]: Day 2
+                    - listitem [ref=e853]:
+                      - img [ref=e854]
+                      - generic [ref=e857]: Day 3
+                - link "Enroll Now" [ref=e859] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Electric%20Wiring%20and%20Lighting%20for%20Residentials%20and%20Commercial%20Buildings%22%20course.
+                  - button "Enroll Now" [ref=e860]:
+                    - img
+                    - text: Enroll Now
+              - link "Electric Wiring and Lighting for Residentials and Commercial Buildings Enquire on WhatsApp" [ref=e862] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Electric%20Wiring%20and%20Lighting%20for%20Residentials%20and%20Commercial%20Buildings%22%20course.
+                - img "Electric Wiring and Lighting for Residentials and Commercial Buildings" [ref=e863]
+                - generic [ref=e865]:
+                  - img [ref=e866]
+                  - paragraph [ref=e868]: Enquire on WhatsApp
+                - img [ref=e870]
+            - generic [ref=e872]:
+              - generic [ref=e877]:
+                - generic [ref=e878]:
+                  - generic [ref=e879]: Sustainability
+                  - generic [ref=e880]: Professional
+                - heading "Environmental Law" [level=3] [ref=e881]
+                - generic [ref=e882]:
+                  - generic [ref=e883]:
+                    - img [ref=e884]
+                    - img [ref=e886]
+                    - img [ref=e888]
+                    - img [ref=e890]
+                    - img [ref=e892]
+                    - generic [ref=e894]: "4.6"
+                  - generic [ref=e895]:
+                    - img [ref=e896]
+                    - generic [ref=e901]: 450 enrolled
+                - generic [ref=e902]:
+                  - img [ref=e903]
+                  - generic [ref=e906]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e907]: Introduction to global environmental problems and international environmental law. An overview of environmental regulations in Kuwait, impact of resources to the environment and ch...
+                - generic [ref=e908]:
+                  - heading "What You'll Learn" [level=4] [ref=e909]:
+                    - img [ref=e910]
+                    - text: What You'll Learn
+                  - list [ref=e912]:
+                    - listitem [ref=e913]:
+                      - img [ref=e914]
+                      - generic [ref=e917]: Day 1
+                    - listitem [ref=e918]:
+                      - img [ref=e919]
+                      - generic [ref=e922]: Day 2
+                    - listitem [ref=e923]:
+                      - img [ref=e924]
+                      - generic [ref=e927]: Day 3
+                - link "Enroll Now" [ref=e929] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Environmental%20Law%22%20course.
+                  - button "Enroll Now" [ref=e930]:
+                    - img
+                    - text: Enroll Now
+              - link "Environmental Law Enquire on WhatsApp" [ref=e932] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Environmental%20Law%22%20course.
+                - img "Environmental Law" [ref=e933]
+                - generic [ref=e935]:
+                  - img [ref=e936]
+                  - paragraph [ref=e938]: Enquire on WhatsApp
+                - img [ref=e940]
+            - generic [ref=e942]:
+              - generic [ref=e947]:
+                - generic [ref=e948]:
+                  - generic [ref=e949]: Simulation
+                  - generic [ref=e950]: Advanced
+                  - generic [ref=e951]:
+                    - img [ref=e952]
+                    - text: Certified
+                - heading "Finite Element Analysis Applications in Structural Engineering" [level=3] [ref=e955]
+                - generic [ref=e956]:
+                  - generic [ref=e957]:
+                    - img [ref=e958]
+                    - img [ref=e960]
+                    - img [ref=e962]
+                    - img [ref=e964]
+                    - img [ref=e966]
+                    - generic [ref=e968]: "4.8"
+                  - generic [ref=e969]:
+                    - img [ref=e970]
+                    - generic [ref=e975]: 1,200 enrolled
+                - generic [ref=e976]:
+                  - img [ref=e977]
+                  - generic [ref=e980]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e981]: This course introduces the attendee to the concept of numerical methods, specifically the finite element method, as a detailed analysis method for structures. Utilizing state of th...
+                - generic [ref=e982]:
+                  - heading "What You'll Learn" [level=4] [ref=e983]:
+                    - img [ref=e984]
+                    - text: What You'll Learn
+                  - list [ref=e986]:
+                    - listitem [ref=e987]:
+                      - img [ref=e988]
+                      - generic [ref=e991]: Day 1
+                    - listitem [ref=e992]:
+                      - img [ref=e993]
+                      - generic [ref=e996]: Day 2
+                    - listitem [ref=e997]:
+                      - img [ref=e998]
+                      - generic [ref=e1001]: Day 3
+                - link "Enroll Now" [ref=e1003] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Finite%20Element%20Analysis%20Applications%20in%20Structural%20Engineering%22%20course.
+                  - button "Enroll Now" [ref=e1004]:
+                    - img
+                    - text: Enroll Now
+              - link "Finite Element Analysis Applications in Structural Engineering Enquire on WhatsApp 🔥 Hot" [ref=e1006] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Finite%20Element%20Analysis%20Applications%20in%20Structural%20Engineering%22%20course.
+                - img "Finite Element Analysis Applications in Structural Engineering" [ref=e1007]
+                - generic [ref=e1009]:
+                  - img [ref=e1010]
+                  - paragraph [ref=e1012]: Enquire on WhatsApp
+                - img [ref=e1014]
+                - generic [ref=e1016]: 🔥 Hot
+            - generic [ref=e1017]:
+              - generic [ref=e1022]:
+                - generic [ref=e1023]:
+                  - generic [ref=e1024]: CAD Design
+                  - generic [ref=e1025]: Intermediate
+                  - generic [ref=e1026]:
+                    - img [ref=e1027]
+                    - text: Certified
+                - heading "Introduction to SimSolid | ALTAIR" [level=3] [ref=e1030]
+                - generic [ref=e1031]:
+                  - generic [ref=e1032]:
+                    - img [ref=e1033]
+                    - img [ref=e1035]
+                    - img [ref=e1037]
+                    - img [ref=e1039]
+                    - img [ref=e1041]
+                    - generic [ref=e1043]: "4.7"
+                  - generic [ref=e1044]:
+                    - img [ref=e1045]
+                    - generic [ref=e1050]: 780 enrolled
+                - generic [ref=e1051]:
+                  - img [ref=e1052]
+                  - generic [ref=e1055]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1056]: Introduction to CAD/CAM design simulation and benefits. Introduction to SimSolid’s unique performance technology through elimination of geometry simplification and meshing. Simulat...
+                - generic [ref=e1057]:
+                  - heading "What You'll Learn" [level=4] [ref=e1058]:
+                    - img [ref=e1059]
+                    - text: What You'll Learn
+                  - list [ref=e1061]:
+                    - listitem [ref=e1062]:
+                      - img [ref=e1063]
+                      - generic [ref=e1066]: Day 1
+                    - listitem [ref=e1067]:
+                      - img [ref=e1068]
+                      - generic [ref=e1071]: Day 2
+                    - listitem [ref=e1072]:
+                      - img [ref=e1073]
+                      - generic [ref=e1076]: Day 3
+                - link "Enroll Now" [ref=e1078] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20SimSolid%20%7C%20ALTAIR%22%20course.
+                  - button "Enroll Now" [ref=e1079]:
+                    - img
+                    - text: Enroll Now
+              - link "Introduction to SimSolid | ALTAIR Enquire on WhatsApp" [ref=e1081] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20SimSolid%20%7C%20ALTAIR%22%20course.
+                - img "Introduction to SimSolid | ALTAIR" [ref=e1082]
+                - generic [ref=e1084]:
+                  - img [ref=e1085]
+                  - paragraph [ref=e1087]: Enquire on WhatsApp
+                - img [ref=e1089]
+            - generic [ref=e1091]:
+              - generic [ref=e1096]:
+                - generic [ref=e1097]:
+                  - generic [ref=e1098]: Sustainability
+                  - generic [ref=e1099]: Professional
+                  - generic [ref=e1100]:
+                    - img [ref=e1101]
+                    - text: Certified
+                - heading "How to Perform an Environmental Impact Assessment (EIA)" [level=3] [ref=e1104]
+                - generic [ref=e1105]:
+                  - generic [ref=e1106]:
+                    - img [ref=e1107]
+                    - img [ref=e1109]
+                    - img [ref=e1111]
+                    - img [ref=e1113]
+                    - img [ref=e1115]
+                    - generic [ref=e1117]: "4.8"
+                  - generic [ref=e1118]:
+                    - img [ref=e1119]
+                    - generic [ref=e1124]: 920 enrolled
+                - generic [ref=e1125]:
+                  - img [ref=e1126]
+                  - generic [ref=e1129]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1130]: This course has been designed to accommodate individuals working in the fields of environment. Learn how to perform a thorough environmental impact assessment for any project with ...
+                - generic [ref=e1131]:
+                  - heading "What You'll Learn" [level=4] [ref=e1132]:
+                    - img [ref=e1133]
+                    - text: What You'll Learn
+                  - list [ref=e1135]:
+                    - listitem [ref=e1136]:
+                      - img [ref=e1137]
+                      - generic [ref=e1140]: Day 1
+                    - listitem [ref=e1141]:
+                      - img [ref=e1142]
+                      - generic [ref=e1145]: Day 2
+                    - listitem [ref=e1146]:
+                      - img [ref=e1147]
+                      - generic [ref=e1150]: Day 3
+                - link "Enroll Now" [ref=e1152] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22How%20to%20Perform%20an%20Environmental%20Impact%20Assessment%20(EIA)%22%20course.
+                  - button "Enroll Now" [ref=e1153]:
+                    - img
+                    - text: Enroll Now
+              - link "How to Perform an Environmental Impact Assessment (EIA) Enquire on WhatsApp" [ref=e1155] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22How%20to%20Perform%20an%20Environmental%20Impact%20Assessment%20(EIA)%22%20course.
+                - img "How to Perform an Environmental Impact Assessment (EIA)" [ref=e1156]
+                - generic [ref=e1158]:
+                  - img [ref=e1159]
+                  - paragraph [ref=e1161]: Enquire on WhatsApp
+                - img [ref=e1163]
+            - generic [ref=e1165]:
+              - generic [ref=e1170]:
+                - generic [ref=e1171]:
+                  - generic [ref=e1172]: MEP Systems
+                  - generic [ref=e1173]: Beginner
+                - heading "Introduction to Basic HVAC Systems Fundamentals" [level=3] [ref=e1174]
+                - generic [ref=e1175]:
+                  - generic [ref=e1176]:
+                    - img [ref=e1177]
+                    - img [ref=e1179]
+                    - img [ref=e1181]
+                    - img [ref=e1183]
+                    - img [ref=e1185]
+                    - generic [ref=e1187]: "4.5"
+                  - generic [ref=e1188]:
+                    - img [ref=e1189]
+                    - generic [ref=e1194]: 1,450 enrolled
+                - generic [ref=e1195]:
+                  - img [ref=e1196]
+                  - generic [ref=e1199]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1200]: This course introduces the fundamentals of heating, ventilation and air conditioning systems....
+                - generic [ref=e1201]:
+                  - heading "What You'll Learn" [level=4] [ref=e1202]:
+                    - img [ref=e1203]
+                    - text: What You'll Learn
+                  - list [ref=e1205]:
+                    - listitem [ref=e1206]:
+                      - img [ref=e1207]
+                      - generic [ref=e1210]: Day 1
+                    - listitem [ref=e1211]:
+                      - img [ref=e1212]
+                      - generic [ref=e1215]: Day 2
+                    - listitem [ref=e1216]:
+                      - img [ref=e1217]
+                      - generic [ref=e1220]: Day 3
+                - link "Enroll Now" [ref=e1222] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Basic%20HVAC%20Systems%20Fundamentals%22%20course.
+                  - button "Enroll Now" [ref=e1223]:
+                    - img
+                    - text: Enroll Now
+              - link "Introduction to Basic HVAC Systems Fundamentals Enquire on WhatsApp 🔥 Hot" [ref=e1225] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Basic%20HVAC%20Systems%20Fundamentals%22%20course.
+                - img "Introduction to Basic HVAC Systems Fundamentals" [ref=e1226]
+                - generic [ref=e1228]:
+                  - img [ref=e1229]
+                  - paragraph [ref=e1231]: Enquire on WhatsApp
+                - img [ref=e1233]
+                - generic [ref=e1235]: 🔥 Hot
+            - generic [ref=e1236]:
+              - generic [ref=e1241]:
+                - generic [ref=e1242]:
+                  - generic [ref=e1243]: Fluid Dynamics
+                  - generic [ref=e1244]: Advanced
+                  - generic [ref=e1245]:
+                    - img [ref=e1246]
+                    - text: Certified
+                - heading "Computational Fluid Dynamics Modeling" [level=3] [ref=e1249]
+                - generic [ref=e1250]:
+                  - generic [ref=e1251]:
+                    - img [ref=e1252]
+                    - img [ref=e1254]
+                    - img [ref=e1256]
+                    - img [ref=e1258]
+                    - img [ref=e1260]
+                    - generic [ref=e1262]: "4.9"
+                  - generic [ref=e1263]:
+                    - img [ref=e1264]
+                    - generic [ref=e1269]: 1,100 enrolled
+                - generic [ref=e1270]:
+                  - img [ref=e1271]
+                  - generic [ref=e1274]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1275]: Introduction to CFD and its engineering applications....
+                - generic [ref=e1276]:
+                  - heading "What You'll Learn" [level=4] [ref=e1277]:
+                    - img [ref=e1278]
+                    - text: What You'll Learn
+                  - list [ref=e1280]:
+                    - listitem [ref=e1281]:
+                      - img [ref=e1282]
+                      - generic [ref=e1285]: Day 1
+                    - listitem [ref=e1286]:
+                      - img [ref=e1287]
+                      - generic [ref=e1290]: Day 2
+                    - listitem [ref=e1291]:
+                      - img [ref=e1292]
+                      - generic [ref=e1295]: Day 3
+                - link "Enroll Now" [ref=e1297] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Computational%20Fluid%20Dynamics%20Modeling%22%20course.
+                  - button "Enroll Now" [ref=e1298]:
+                    - img
+                    - text: Enroll Now
+              - link "Computational Fluid Dynamics Modeling Enquire on WhatsApp 🔥 Hot" [ref=e1300] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Computational%20Fluid%20Dynamics%20Modeling%22%20course.
+                - img "Computational Fluid Dynamics Modeling" [ref=e1301]
+                - generic [ref=e1303]:
+                  - img [ref=e1304]
+                  - paragraph [ref=e1306]: Enquire on WhatsApp
+                - img [ref=e1308]
+                - generic [ref=e1310]: 🔥 Hot
+            - generic [ref=e1311]:
+              - generic [ref=e1316]:
+                - generic [ref=e1317]:
+                  - generic [ref=e1318]: MEP Systems
+                  - generic [ref=e1319]: Advanced
+                  - generic [ref=e1320]:
+                    - img [ref=e1321]
+                    - text: Certified
+                - heading "Introduction to Detailed Modeling in HVAC" [level=3] [ref=e1324]
+                - generic [ref=e1325]:
+                  - generic [ref=e1326]:
+                    - img [ref=e1327]
+                    - img [ref=e1329]
+                    - img [ref=e1331]
+                    - img [ref=e1333]
+                    - img [ref=e1335]
+                    - generic [ref=e1337]: "4.7"
+                  - generic [ref=e1338]:
+                    - img [ref=e1339]
+                    - generic [ref=e1344]: 680 enrolled
+                - generic [ref=e1345]:
+                  - img [ref=e1346]
+                  - generic [ref=e1349]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1350]: High-level simulation of HVAC systems, focusing on energy modeling, indoor air quality (IAQ), and thermal comfort....
+                - generic [ref=e1351]:
+                  - heading "What You'll Learn" [level=4] [ref=e1352]:
+                    - img [ref=e1353]
+                    - text: What You'll Learn
+                  - list [ref=e1355]:
+                    - listitem [ref=e1356]:
+                      - img [ref=e1357]
+                      - generic [ref=e1360]: Day 1
+                    - listitem [ref=e1361]:
+                      - img [ref=e1362]
+                      - generic [ref=e1365]: Day 2
+                    - listitem [ref=e1366]:
+                      - img [ref=e1367]
+                      - generic [ref=e1370]: Day 3
+                - link "Enroll Now" [ref=e1372] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Detailed%20Modeling%20in%20HVAC%22%20course.
+                  - button "Enroll Now" [ref=e1373]:
+                    - img
+                    - text: Enroll Now
+              - link "Introduction to Detailed Modeling in HVAC Enquire on WhatsApp" [ref=e1375] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Detailed%20Modeling%20in%20HVAC%22%20course.
+                - img "Introduction to Detailed Modeling in HVAC" [ref=e1376]
+                - generic [ref=e1378]:
+                  - img [ref=e1379]
+                  - paragraph [ref=e1381]: Enquire on WhatsApp
+                - img [ref=e1383]
+            - generic [ref=e1385]:
+              - generic [ref=e1390]:
+                - generic [ref=e1391]:
+                  - generic [ref=e1392]: Sustainability
+                  - generic [ref=e1393]: Professional
+                  - generic [ref=e1394]:
+                    - img [ref=e1395]
+                    - text: Certified
+                - heading "Life Cycle Assessment for Environmental Systems and Devices" [level=3] [ref=e1398]
+                - generic [ref=e1399]:
+                  - generic [ref=e1400]:
+                    - img [ref=e1401]
+                    - img [ref=e1403]
+                    - img [ref=e1405]
+                    - img [ref=e1407]
+                    - img [ref=e1409]
+                    - generic [ref=e1411]: "4.8"
+                  - generic [ref=e1412]:
+                    - img [ref=e1413]
+                    - generic [ref=e1418]: 540 enrolled
+                - generic [ref=e1419]:
+                  - img [ref=e1420]
+                  - generic [ref=e1423]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1424]: Training on assessing environmental impacts associated with all stages of a product's life from cradle to grave....
+                - generic [ref=e1425]:
+                  - heading "What You'll Learn" [level=4] [ref=e1426]:
+                    - img [ref=e1427]
+                    - text: What You'll Learn
+                  - list [ref=e1429]:
+                    - listitem [ref=e1430]:
+                      - img [ref=e1431]
+                      - generic [ref=e1434]: Day 1
+                    - listitem [ref=e1435]:
+                      - img [ref=e1436]
+                      - generic [ref=e1439]: Day 2
+                    - listitem [ref=e1440]:
+                      - img [ref=e1441]
+                      - generic [ref=e1444]: Day 3
+                - link "Enroll Now" [ref=e1446] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Life%20Cycle%20Assessment%20for%20Environmental%20Systems%20and%20Devices%22%20course.
+                  - button "Enroll Now" [ref=e1447]:
+                    - img
+                    - text: Enroll Now
+              - link "Life Cycle Assessment for Environmental Systems and Devices Enquire on WhatsApp" [ref=e1449] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Life%20Cycle%20Assessment%20for%20Environmental%20Systems%20and%20Devices%22%20course.
+                - img "Life Cycle Assessment for Environmental Systems and Devices" [ref=e1450]
+                - generic [ref=e1452]:
+                  - img [ref=e1453]
+                  - paragraph [ref=e1455]: Enquire on WhatsApp
+                - img [ref=e1457]
+            - generic [ref=e1459]:
+              - generic [ref=e1464]:
+                - generic [ref=e1465]:
+                  - generic [ref=e1466]: Programming
+                  - generic [ref=e1467]: Beginner
+                - heading "MATLAB Fundamental" [level=3] [ref=e1468]
+                - generic [ref=e1469]:
+                  - generic [ref=e1470]:
+                    - img [ref=e1471]
+                    - img [ref=e1473]
+                    - img [ref=e1475]
+                    - img [ref=e1477]
+                    - img [ref=e1479]
+                    - generic [ref=e1481]: "4.5"
+                  - generic [ref=e1482]:
+                    - img [ref=e1483]
+                    - generic [ref=e1488]: 500 enrolled
+                - generic [ref=e1489]:
+                  - img [ref=e1490]
+                  - generic [ref=e1493]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1494]: This course introduces the fundamentals of MATLAB for engineering and scientific applications. Participants will learn basic programming concepts, data analysis techniques and visu...
+                - generic [ref=e1495]:
+                  - heading "What You'll Learn" [level=4] [ref=e1496]:
+                    - img [ref=e1497]
+                    - text: What You'll Learn
+                  - list [ref=e1499]:
+                    - listitem [ref=e1500]:
+                      - img [ref=e1501]
+                      - generic [ref=e1504]: Day 1
+                    - listitem [ref=e1505]:
+                      - img [ref=e1506]
+                      - generic [ref=e1509]: Day 2
+                    - listitem [ref=e1510]:
+                      - img [ref=e1511]
+                      - generic [ref=e1514]: Day 3
+                - link "Enroll Now" [ref=e1516] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22MATLAB%20Fundamental%22%20course.
+                  - button "Enroll Now" [ref=e1517]:
+                    - img
+                    - text: Enroll Now
+              - link "MATLAB Fundamental Enquire on WhatsApp" [ref=e1519] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22MATLAB%20Fundamental%22%20course.
+                - img "MATLAB Fundamental" [ref=e1520]
+                - generic [ref=e1522]:
+                  - img [ref=e1523]
+                  - paragraph [ref=e1525]: Enquire on WhatsApp
+                - img [ref=e1527]
+            - generic [ref=e1529]:
+              - generic [ref=e1534]:
+                - generic [ref=e1535]:
+                  - generic [ref=e1536]: Simulation
+                  - generic [ref=e1537]: Intermediate
+                - heading "Geotechnical System Simulation & Modeling" [level=3] [ref=e1538]
+                - generic [ref=e1539]:
+                  - generic [ref=e1540]:
+                    - img [ref=e1541]
+                    - img [ref=e1543]
+                    - img [ref=e1545]
+                    - img [ref=e1547]
+                    - img [ref=e1549]
+                    - generic [ref=e1551]: "4.5"
+                  - generic [ref=e1552]:
+                    - img [ref=e1553]
+                    - generic [ref=e1558]: 500 enrolled
+                - generic [ref=e1559]:
+                  - img [ref=e1560]
+                  - generic [ref=e1563]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1564]: This course introduces geotechnical system simulation and modeling techniques used in civil and geotechnical engineering. Participants will learn how to model soil behavior, founda...
+                - generic [ref=e1565]:
+                  - heading "What You'll Learn" [level=4] [ref=e1566]:
+                    - img [ref=e1567]
+                    - text: What You'll Learn
+                  - list [ref=e1569]:
+                    - listitem [ref=e1570]:
+                      - img [ref=e1571]
+                      - generic [ref=e1574]: Day 1
+                    - listitem [ref=e1575]:
+                      - img [ref=e1576]
+                      - generic [ref=e1579]: Day 2
+                    - listitem [ref=e1580]:
+                      - img [ref=e1581]
+                      - generic [ref=e1584]: Day 3
+                - link "Enroll Now" [ref=e1586] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Geotechnical%20System%20Simulation%20%26%20Modeling%22%20course.
+                  - button "Enroll Now" [ref=e1587]:
+                    - img
+                    - text: Enroll Now
+              - link "Geotechnical System Simulation & Modeling Enquire on WhatsApp" [ref=e1589] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Geotechnical%20System%20Simulation%20%26%20Modeling%22%20course.
+                - img "Geotechnical System Simulation & Modeling" [ref=e1590]
+                - generic [ref=e1592]:
+                  - img [ref=e1593]
+                  - paragraph [ref=e1595]: Enquire on WhatsApp
+                - img [ref=e1597]
+            - generic [ref=e1599]:
+              - generic [ref=e1604]:
+                - generic [ref=e1605]:
+                  - generic [ref=e1606]: Programming
+                  - generic [ref=e1607]: Beginner
+                - heading "Minitab Fundamental" [level=3] [ref=e1608]
+                - generic [ref=e1609]:
+                  - generic [ref=e1610]:
+                    - img [ref=e1611]
+                    - img [ref=e1613]
+                    - img [ref=e1615]
+                    - img [ref=e1617]
+                    - img [ref=e1619]
+                    - generic [ref=e1621]: "4.5"
+                  - generic [ref=e1622]:
+                    - img [ref=e1623]
+                    - generic [ref=e1628]: 500 enrolled
+                - generic [ref=e1629]:
+                  - img [ref=e1630]
+                  - generic [ref=e1633]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1634]: This course introduces the fundamentals of Minitab for statistical analysis and quality improvement. Participants will learn how to use Minitab for data analysis, hypothesis testin...
+                - generic [ref=e1635]:
+                  - heading "What You'll Learn" [level=4] [ref=e1636]:
+                    - img [ref=e1637]
+                    - text: What You'll Learn
+                  - list [ref=e1639]:
+                    - listitem [ref=e1640]:
+                      - img [ref=e1641]
+                      - generic [ref=e1644]: Day 1
+                    - listitem [ref=e1645]:
+                      - img [ref=e1646]
+                      - generic [ref=e1649]: Day 2
+                    - listitem [ref=e1650]:
+                      - img [ref=e1651]
+                      - generic [ref=e1654]: Day 3
+                - link "Enroll Now" [ref=e1656] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Minitab%20Fundamental%22%20course.
+                  - button "Enroll Now" [ref=e1657]:
+                    - img
+                    - text: Enroll Now
+              - link "Minitab Fundamental Enquire on WhatsApp" [ref=e1659] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Minitab%20Fundamental%22%20course.
+                - img "Minitab Fundamental" [ref=e1660]
+                - generic [ref=e1662]:
+                  - img [ref=e1663]
+                  - paragraph [ref=e1665]: Enquire on WhatsApp
+                - img [ref=e1667]
+            - generic [ref=e1669]:
+              - generic [ref=e1674]:
+                - generic [ref=e1675]:
+                  - generic [ref=e1676]: Electrical
+                  - generic [ref=e1677]: Intermediate
+                - heading "Operation Protection and Maintenance of Electric Machines" [level=3] [ref=e1678]
+                - generic [ref=e1679]:
+                  - generic [ref=e1680]:
+                    - img [ref=e1681]
+                    - img [ref=e1683]
+                    - img [ref=e1685]
+                    - img [ref=e1687]
+                    - img [ref=e1689]
+                    - generic [ref=e1691]: "4.5"
+                  - generic [ref=e1692]:
+                    - img [ref=e1693]
+                    - generic [ref=e1698]: 500 enrolled
+                - generic [ref=e1699]:
+                  - img [ref=e1700]
+                  - generic [ref=e1703]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1704]: This course provides knowledge on the operation, protection and maintenance of electric machines. Participants will learn about different types of electric machines, protection sys...
+                - generic [ref=e1705]:
+                  - heading "What You'll Learn" [level=4] [ref=e1706]:
+                    - img [ref=e1707]
+                    - text: What You'll Learn
+                  - list [ref=e1709]:
+                    - listitem [ref=e1710]:
+                      - img [ref=e1711]
+                      - generic [ref=e1714]: Day 1
+                    - listitem [ref=e1715]:
+                      - img [ref=e1716]
+                      - generic [ref=e1719]: Day 2
+                    - listitem [ref=e1720]:
+                      - img [ref=e1721]
+                      - generic [ref=e1724]: Day 3
+                - link "Enroll Now" [ref=e1726] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Operation%20Protection%20and%20Maintenance%20of%20Electric%20Machines%22%20course.
+                  - button "Enroll Now" [ref=e1727]:
+                    - img
+                    - text: Enroll Now
+              - link "Operation Protection and Maintenance of Electric Machines Enquire on WhatsApp" [ref=e1729] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Operation%20Protection%20and%20Maintenance%20of%20Electric%20Machines%22%20course.
+                - img "Operation Protection and Maintenance of Electric Machines" [ref=e1730]
+                - generic [ref=e1732]:
+                  - img [ref=e1733]
+                  - paragraph [ref=e1735]: Enquire on WhatsApp
+                - img [ref=e1737]
+            - generic [ref=e1739]:
+              - generic [ref=e1744]:
+                - generic [ref=e1745]:
+                  - generic [ref=e1746]: Electrical
+                  - generic [ref=e1747]: Intermediate
+                - heading "Selection and Installation of Electric Cables" [level=3] [ref=e1748]
+                - generic [ref=e1749]:
+                  - generic [ref=e1750]:
+                    - img [ref=e1751]
+                    - img [ref=e1753]
+                    - img [ref=e1755]
+                    - img [ref=e1757]
+                    - img [ref=e1759]
+                    - generic [ref=e1761]: "4.5"
+                  - generic [ref=e1762]:
+                    - img [ref=e1763]
+                    - generic [ref=e1768]: 500 enrolled
+                - generic [ref=e1769]:
+                  - img [ref=e1770]
+                  - generic [ref=e1773]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1774]: This course provides knowledge on selection criteria and installation practices of electric cables. Participants will learn about cable types, sizing, installation methods and safe...
+                - generic [ref=e1775]:
+                  - heading "What You'll Learn" [level=4] [ref=e1776]:
+                    - img [ref=e1777]
+                    - text: What You'll Learn
+                  - list [ref=e1779]:
+                    - listitem [ref=e1780]:
+                      - img [ref=e1781]
+                      - generic [ref=e1784]: Day 1
+                    - listitem [ref=e1785]:
+                      - img [ref=e1786]
+                      - generic [ref=e1789]: Day 2
+                    - listitem [ref=e1790]:
+                      - img [ref=e1791]
+                      - generic [ref=e1794]: Day 3
+                - link "Enroll Now" [ref=e1796] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Selection%20and%20Installation%20of%20Electric%20Cables%22%20course.
+                  - button "Enroll Now" [ref=e1797]:
+                    - img
+                    - text: Enroll Now
+              - link "Selection and Installation of Electric Cables Enquire on WhatsApp" [ref=e1799] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Selection%20and%20Installation%20of%20Electric%20Cables%22%20course.
+                - img "Selection and Installation of Electric Cables" [ref=e1800]
+                - generic [ref=e1802]:
+                  - img [ref=e1803]
+                  - paragraph [ref=e1805]: Enquire on WhatsApp
+                - img [ref=e1807]
+            - generic [ref=e1809]:
+              - generic [ref=e1814]:
+                - generic [ref=e1815]:
+                  - generic [ref=e1816]: CAD Design
+                  - generic [ref=e1817]: Beginner
+                - heading "SolidWorks – Level 1" [level=3] [ref=e1818]
+                - generic [ref=e1819]:
+                  - generic [ref=e1820]:
+                    - img [ref=e1821]
+                    - img [ref=e1823]
+                    - img [ref=e1825]
+                    - img [ref=e1827]
+                    - img [ref=e1829]
+                    - generic [ref=e1831]: "4.5"
+                  - generic [ref=e1832]:
+                    - img [ref=e1833]
+                    - generic [ref=e1838]: 500 enrolled
+                - generic [ref=e1839]:
+                  - img [ref=e1840]
+                  - generic [ref=e1843]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1844]: This course introduces the fundamentals of SolidWorks for 3D modeling and design. Participants will learn how to create parts, assemblies and drawings using SolidWorks software....
+                - generic [ref=e1845]:
+                  - heading "What You'll Learn" [level=4] [ref=e1846]:
+                    - img [ref=e1847]
+                    - text: What You'll Learn
+                  - list [ref=e1849]:
+                    - listitem [ref=e1850]:
+                      - img [ref=e1851]
+                      - generic [ref=e1854]: Day 1
+                    - listitem [ref=e1855]:
+                      - img [ref=e1856]
+                      - generic [ref=e1859]: Day 2
+                    - listitem [ref=e1860]:
+                      - img [ref=e1861]
+                      - generic [ref=e1864]: Day 3
+                - link "Enroll Now" [ref=e1866] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22SolidWorks%20%E2%80%93%20Level%201%22%20course.
+                  - button "Enroll Now" [ref=e1867]:
+                    - img
+                    - text: Enroll Now
+              - link "SolidWorks – Level 1 Enquire on WhatsApp" [ref=e1869] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22SolidWorks%20%E2%80%93%20Level%201%22%20course.
+                - img "SolidWorks – Level 1" [ref=e1870]
+                - generic [ref=e1872]:
+                  - img [ref=e1873]
+                  - paragraph [ref=e1875]: Enquire on WhatsApp
+                - img [ref=e1877]
+            - generic [ref=e1879]:
+              - generic [ref=e1884]:
+                - generic [ref=e1885]:
+                  - generic [ref=e1886]: Electrical
+                  - generic [ref=e1887]: Intermediate
+                - heading "Variable Frequency Drives and DC Motors" [level=3] [ref=e1888]
+                - generic [ref=e1889]:
+                  - generic [ref=e1890]:
+                    - img [ref=e1891]
+                    - img [ref=e1893]
+                    - img [ref=e1895]
+                    - img [ref=e1897]
+                    - img [ref=e1899]
+                    - generic [ref=e1901]: "4.5"
+                  - generic [ref=e1902]:
+                    - img [ref=e1903]
+                    - generic [ref=e1908]: 500 enrolled
+                - generic [ref=e1909]:
+                  - img [ref=e1910]
+                  - generic [ref=e1913]: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                - paragraph [ref=e1914]: This course provides knowledge on variable frequency drives (VFDs) and DC motors. Participants will learn about speed control methods, operation principles and applications of VFDs...
+                - generic [ref=e1915]:
+                  - heading "What You'll Learn" [level=4] [ref=e1916]:
+                    - img [ref=e1917]
+                    - text: What You'll Learn
+                  - list [ref=e1919]:
+                    - listitem [ref=e1920]:
+                      - img [ref=e1921]
+                      - generic [ref=e1924]: Day 1
+                    - listitem [ref=e1925]:
+                      - img [ref=e1926]
+                      - generic [ref=e1929]: Day 2
+                    - listitem [ref=e1930]:
+                      - img [ref=e1931]
+                      - generic [ref=e1934]: Day 3
+                - link "Enroll Now" [ref=e1936] [cursor=pointer]:
+                  - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Variable%20Frequency%20Drives%20and%20DC%20Motors%22%20course.
+                  - button "Enroll Now" [ref=e1937]:
+                    - img
+                    - text: Enroll Now
+              - link "Variable Frequency Drives and DC Motors Enquire on WhatsApp" [ref=e1939] [cursor=pointer]:
+                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Variable%20Frequency%20Drives%20and%20DC%20Motors%22%20course.
+                - img "Variable Frequency Drives and DC Motors" [ref=e1940]
+                - generic [ref=e1942]:
+                  - img [ref=e1943]
+                  - paragraph [ref=e1945]: Enquire on WhatsApp
+                - img [ref=e1947]
+        - generic [ref=e1952]:
+          - generic [ref=e1953]:
+            - heading "Business Impact" [level=2] [ref=e1954]
+            - paragraph [ref=e1955]: Our approach ensures measurable results that align with your strategic goals, delivering value beyond just technical execution.
+          - generic [ref=e1956]:
+            - generic [ref=e1958]:
+              - img [ref=e1959]
+              - generic [ref=e1962]: Internal Capability
+            - generic [ref=e1964]:
+              - img [ref=e1965]
+              - generic [ref=e1968]: Certified Workforce
+            - generic [ref=e1970]:
+              - img [ref=e1971]
+              - generic [ref=e1974]: Software ROI
+            - generic [ref=e1976]:
+              - img [ref=e1977]
+              - generic [ref=e1980]: Team Productivity
+        - generic [ref=e1982]:
+          - heading "What Our Graduates Say" [level=2] [ref=e1984]
+          - generic [ref=e1985]:
+            - generic [ref=e1986]:
+              - img [ref=e1987]
+              - generic [ref=e1990]:
+                - img [ref=e1991]
+                - img [ref=e1993]
+                - img [ref=e1995]
+                - img [ref=e1997]
+                - img [ref=e1999]
+              - paragraph [ref=e2001]: "\"The FEA training was game-changing. I applied the simulation techniques immediately to my current project. Highly recommended.\""
+              - generic [ref=e2002]:
+                - generic [ref=e2003]: AK
+                - generic [ref=e2004]:
+                  - generic [ref=e2005]: Abdullah K.
+                  - generic [ref=e2006]: Mechanical Engineer, Kuwait Petroleum Corp
+            - generic [ref=e2007]:
+              - img [ref=e2008]
+              - generic [ref=e2011]:
+                - img [ref=e2012]
+                - img [ref=e2014]
+                - img [ref=e2016]
+                - img [ref=e2018]
+                - img [ref=e2020]
+              - paragraph [ref=e2022]: "\"KITES helped me master SolidWorks before graduation. The certification gave me a huge advantage in job interviews.\""
+              - generic [ref=e2023]:
+                - generic [ref=e2024]: SM
+                - generic [ref=e2025]:
+                  - generic [ref=e2026]: Sarah M.
+                  - generic [ref=e2027]: Architecture Student, Kuwait University
+            - generic [ref=e2028]:
+              - img [ref=e2029]
+              - generic [ref=e2032]:
+                - img [ref=e2033]
+                - img [ref=e2035]
+                - img [ref=e2037]
+                - img [ref=e2039]
+                - img [ref=e2041]
+              - paragraph [ref=e2043]: "\"Professional, structured, and practical. The instructors are clearly industry experts, not just academics.\""
+              - generic [ref=e2044]:
+                - generic [ref=e2045]: FA
+                - generic [ref=e2046]:
+                  - generic [ref=e2047]: Fahad Al-Azmi
+                  - generic [ref=e2048]: Project Manager, Ministry of Public Works
+        - generic [ref=e2051]:
+          - generic [ref=e2052]:
+            - img [ref=e2053]
+            - text: Limited Spots for Next Intake
+          - heading "Ready to Start Learning?" [level=2] [ref=e2056]
+          - paragraph [ref=e2057]: Join 500+ engineers who have advanced their careers with KITES training.
+          - generic [ref=e2058]:
+            - link "Chat on WhatsApp" [ref=e2059] [cursor=pointer]:
+              - /url: https://wa.me/96522092260
+              - img [ref=e2060]
+              - text: Chat on WhatsApp
+              - img [ref=e2062]
+            - link "Schedule a Call" [ref=e2064] [cursor=pointer]:
+              - /url: /contact?service=training
+              - text: Schedule a Call
+              - img [ref=e2065]
+          - generic [ref=e2067]:
+            - generic [ref=e2068]:
+              - img [ref=e2069]
+              - generic [ref=e2072]: Money-back guarantee
+            - generic [ref=e2073]:
+              - img [ref=e2074]
+              - generic [ref=e2077]: Free trial lesson
+            - generic [ref=e2078]:
+              - img [ref=e2079]
+              - generic [ref=e2082]: Industry-certified trainers
+    - link "Contact us on WhatsApp" [ref=e2083] [cursor=pointer]:
+      - /url: https://wa.me/96522092260
+      - img [ref=e2084]
+      - generic: Chat with us on WhatsApp
+    - contentinfo [ref=e2086]:
+      - generic [ref=e2087]:
+        - generic [ref=e2089]:
+          - generic [ref=e2090]:
+            - link "KITES KITES Scientific Institute" [ref=e2091] [cursor=pointer]:
+              - /url: /
+              - img "KITES" [ref=e2092]
+              - generic [ref=e2093]:
+                - generic [ref=e2094]: KITES
+                - generic [ref=e2095]: Scientific Institute
+            - paragraph [ref=e2096]: A regional center of excellence for engineering simulation, professional training, and applied research — supporting academic, government, and industrial organizations across the GCC.
+            - generic [ref=e2097]:
+              - generic [ref=e2098]: Connect with us
+              - generic [ref=e2099]:
+                - link "LinkedIn" [ref=e2100] [cursor=pointer]:
+                  - /url: "#"
+                  - img [ref=e2101]
+                - link "Twitter / X" [ref=e2105] [cursor=pointer]:
+                  - /url: "#"
+                  - img [ref=e2106]
+                - link "YouTube" [ref=e2108] [cursor=pointer]:
+                  - /url: "#"
+                  - img [ref=e2109]
+          - generic [ref=e2112]:
+            - heading "Company" [level=4] [ref=e2113]
+            - list [ref=e2114]:
+              - listitem [ref=e2115]:
+                - link "Expertise" [ref=e2116] [cursor=pointer]:
+                  - /url: /expertise
+              - listitem [ref=e2117]:
+                - link "Technology Partners" [ref=e2118] [cursor=pointer]:
+                  - /url: /partners
+              - listitem [ref=e2119]:
+                - link "Services" [ref=e2120] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e2121]:
+                - link "Insights" [ref=e2122] [cursor=pointer]:
+                  - /url: /insights
+              - listitem [ref=e2123]:
+                - link "Events" [ref=e2124] [cursor=pointer]:
+                  - /url: /events
+              - listitem [ref=e2125]:
+                - link "Contact" [ref=e2126] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e2127]:
+            - heading "Head Office" [level=4] [ref=e2128]
+            - list [ref=e2129]:
+              - listitem [ref=e2130]:
+                - img [ref=e2132]
+                - generic [ref=e2135]:
+                  - generic [ref=e2136]: Kuwait
+                  - generic [ref=e2137]: Hawally, Kuwait
+              - listitem [ref=e2138] [cursor=pointer]:
+                - img [ref=e2140]
+                - link "info@kites.com.kw" [ref=e2143]:
+                  - /url: mailto:info@kites.com.kw
+              - listitem [ref=e2144] [cursor=pointer]:
+                - img [ref=e2146]
+                - link "+965 22092260" [ref=e2148]:
+                  - /url: tel:+96522092260
+        - paragraph [ref=e2150]: © Kuwait Institute for Training & Engineering Simulations (KITES)

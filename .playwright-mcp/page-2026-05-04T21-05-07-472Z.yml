@@ -1,0 +1,1716 @@
+- generic:
+  - generic:
+    - list
+    - region "Notifications alt+T"
+    - generic:
+      - generic:
+        - img
+    - generic:
+      - banner:
+        - generic:
+          - generic:
+            - link:
+              - /url: /
+              - img
+              - generic:
+                - generic: Kuwait Institute for Training
+                - generic: and Engineering Simulations
+            - button:
+              - img
+      - main:
+        - generic:
+          - generic:
+            - link:
+              - /url: "#main-content"
+              - text: Skip to main content
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                      - generic: 20% OFF
+                    - paragraph: Early Bird Discount - Limited Seats Available!
+                  - generic:
+                    - generic:
+                      - img
+                      - generic: "Offer ends in:"
+                    - generic:
+                      - generic:
+                        - generic: "57"
+                        - generic: Days
+                      - generic:
+                        - generic: "23"
+                        - generic: Hrs
+                      - generic:
+                        - generic: "54"
+                        - generic: Min
+                      - generic:
+                        - generic: "51"
+                        - generic: Sec
+                  - generic:
+                    - generic: Only 12 seats left!
+                  - button:
+                    - img
+            - generic:
+              - generic:
+                - generic:
+                  - heading [level=1]: Professional Engineering Training
+                  - paragraph: Elevate your skills with industry-leading courses in simulation and design.
+                  - generic:
+                    - generic:
+                      - link:
+                        - /url: https://wa.me/96522092260
+                        - img
+                        - generic: Start Free Consultation
+                        - img
+                    - link:
+                      - /url: "#programs"
+                      - generic: View Programs
+                      - img
+                  - generic:
+                    - generic:
+                      - img
+                      - generic:
+                        - generic: 363+
+                        - text: Engineers Enrolled
+                    - generic:
+                      - img
+                      - generic:
+                        - generic: 3/5
+                        - text: Average Rating
+                    - generic:
+                      - img
+                      - generic:
+                        - generic: 71%
+                        - text: Career Growth
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - text: Top Selling
+                    - heading [level=2]: Trending Courses
+                  - link:
+                    - /url: "#curriculum"
+                    - text: View all programs
+                    - img
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - generic: Best Seller
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: 3 seats left
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: 6 Weeks
+                          - generic: Advanced
+                        - heading [level=3]: SolidWorks – Level 1
+                        - generic:
+                          - img
+                          - generic: 13 enrolled in last 24 hrs
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: "4.9"
+                            - generic: (128)
+                          - generic:
+                            - img
+                            - text: Enroll Now
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - generic: Certification
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: Filling fast
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: 4 Weeks
+                          - generic: Intermediate
+                        - heading [level=3]: SolidWorks Professional Certification
+                        - generic:
+                          - img
+                          - generic: 10 enrolled in last 24 hrs
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: "4.8"
+                            - generic: (342)
+                          - generic:
+                            - img
+                            - text: Enroll Now
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - generic:
+                          - img
+                          - text: Trending
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: Most popular
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: 8 Weeks
+                          - generic: Expert
+                        - heading [level=3]: "CFD Mastery: Fluid Dynamics"
+                        - generic:
+                          - img
+                          - generic: 18 enrolled in last 24 hrs
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: "4.9"
+                            - generic: (89)
+                          - generic:
+                            - img
+                            - text: Enroll Now
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - generic: New
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: 7 seats left
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: 5 Days
+                          - generic: Beginner
+                        - heading [level=3]: MATLAB Fundamental
+                        - generic:
+                          - img
+                          - generic: 18 enrolled in last 24 hrs
+                        - generic:
+                          - generic:
+                            - img
+                            - generic: "4.7"
+                            - generic: (215)
+                          - generic:
+                            - img
+                            - text: Enroll Now
+            - generic:
+              - generic:
+                - generic:
+                  - heading [level=2]: Trusted by Professionals Across the GCC
+                  - paragraph: Industry-recognized certifications and partnerships that guarantee quality training
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                    - heading [level=3]: ISO 9001 Certified
+                    - paragraph: Quality Management
+                  - generic:
+                    - generic:
+                      - img
+                    - heading [level=3]: Industry Partners
+                    - paragraph: SolidWorks & ANSYS
+                  - generic:
+                    - generic:
+                      - img
+                    - heading [level=3]: 500+ Graduates
+                    - paragraph: 95% Placement Rate
+                  - generic:
+                    - generic:
+                      - img
+                    - heading [level=3]: Money-Back Guarantee
+                    - paragraph: 100% Satisfaction
+                  - generic:
+                    - generic:
+                      - img
+                    - heading [level=3]: Secure Payment
+                    - paragraph: SSL Encrypted
+                - generic:
+                  - paragraph: Proud Training Partners
+                  - generic:
+                    - generic: SolidWorks
+                    - generic: ANSYS
+                    - generic: MATLAB
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - text: Unlock Savings
+                    - heading [level=2]: Exclusive Offers & Discounts
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - generic: 20% OFF
+                      - heading [level=3]: Corporate Bundle
+                      - paragraph: Ideal for companies upskilling their engineering teams. Valid for groups of 5+.
+                    - link:
+                      - /url: https://wa.me/96522092260
+                      - text: Claim Offer
+                      - img
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - generic: Flat 50% OFF
+                      - heading [level=3]: Student Special
+                      - paragraph: Valid for university students with a valid ID card. Start your career strong.
+                    - link:
+                      - /url: https://wa.me/96522092260
+                      - text: Claim Offer
+                      - img
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - generic: 10% OFF
+                      - heading [level=3]: Early Bird
+                      - paragraph: Book any course 30 days in advance and secure your seat with a discount.
+                    - link:
+                      - /url: https://wa.me/96522092260
+                      - text: Claim Offer
+                      - img
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - generic: 15% OFF
+                      - heading [level=3]: KITES Alumni
+                      - paragraph: Return for another course and get a loyalty discount. Keep learning.
+                    - link:
+                      - /url: https://wa.me/96522092260
+                      - text: Claim Offer
+                      - img
+            - generic:
+              - generic:
+                - generic:
+                  - text: Why Choose KITES
+                  - heading [level=2]: Engineering Excellence Redefined
+                  - paragraph: We don't just teach software; we build careers. Our training methodology is designed for rapid skill acquisition and professional impact.
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - heading [level=3]: simulation-Driven Learning
+                        - paragraph: Forget theory-heavy lectures. Our courses are 80% hands-on simulation labs using industry-standard tools like ANSYS, Abaqus, and SolidWorks.
+                  - generic:
+                    - generic:
+                      - img
+                    - generic:
+                      - generic:
+                        - img
+                      - heading [level=3]: Certified Instructors
+                      - paragraph: Learn from certified experts with 10+ years of field experience in oil & gas and construction.
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                      - heading [level=3]: Global Recognition
+                      - paragraph: Our certifications are recognized by major engineering firms across the GCC region.
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                      - heading [level=3]: Career Placement Support
+                      - paragraph: Top performers get direct referrals to our partner network of engineering firms in Kuwait and Saudi Arabia.
+                    - generic:
+                      - generic: 92%
+                      - generic: Placement Rate
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Why Choose KITES?
+                  - heading [level=2]: Professional Training vs Self-Learning
+                  - paragraph: See what sets our comprehensive professional training apart from trying to learn on your own
+                - generic:
+                  - generic:
+                    - generic: Features
+                    - generic: Self-Learning
+                    - generic: KITES Training
+                  - generic:
+                    - generic: Expert Instructor Guidance
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: ISO 9001 Certified Training
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: Hands-on Industry Projects
+                    - generic:
+                      - generic: Limited
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: Job Placement Assistance
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: Recognized Certification
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: Lifetime Access to Materials
+                    - generic:
+                      - generic: Maybe
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: 1-on-1 Mentorship
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: Industry Network Access
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: Real-world Case Studies
+                    - generic:
+                      - generic: Limited
+                    - generic:
+                      - generic:
+                        - img
+                  - generic:
+                    - generic: Money-Back Guarantee
+                    - generic:
+                      - generic:
+                        - img
+                    - generic:
+                      - generic:
+                        - img
+                - generic:
+                  - paragraph: Invest in professional training for guaranteed results
+                  - link:
+                    - /url: /services/training
+                    - generic: Browse Our Courses
+                    - img
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - generic: Special Offer
+                      - heading [level=3]: Bundle & Save Big
+                      - paragraph: Enroll in 2 or more courses and get exclusive discounts plus bonus materials
+                      - generic:
+                        - generic: 30%
+                        - generic: "OFF"
+                      - generic:
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: Enroll in 2+ courses simultaneously
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: Free downloadable resource library
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: Priority placement assistance
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: Exclusive networking events access
+                      - link:
+                        - /url: https://wa.me/96522092260
+                        - generic: View Course Bundles
+                        - img
+                      - paragraph: Limited time offer • Terms & conditions apply
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - generic: Special Offer
+                      - heading [level=3]: Early Bird Special
+                      - paragraph: Register before the deadline and secure your spot with exclusive early bird benefits
+                      - generic:
+                        - generic: 20%
+                        - generic: "OFF"
+                      - generic:
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: First 50 enrollments only
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: Free 1-on-1 consultation session
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: Lifetime access to course updates
+                        - generic:
+                          - generic:
+                            - img
+                          - generic: Certificate fast-track processing
+                      - link:
+                        - /url: https://wa.me/96522092260
+                        - generic: Claim Early Bird Discount
+                        - img
+                      - paragraph: Limited time offer • Terms & conditions apply
+            - generic:
+              - generic:
+                - generic:
+                  - text: Career Roadmap
+                  - heading [level=2]: Your Journey to Expertise
+                  - paragraph:
+                    - text: Choose your path and join
+                    - generic: 0+
+                    - text: engineers advancing their careers.
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                          - text: 4-6 weeks
+                        - heading [level=3]: 1. Foundation
+                        - paragraph: Master the basics of engineering simulation and CAD design to ace your capstone projects.
+                        - generic:
+                          - img
+                          - generic: 0 completed
+                        - link:
+                          - /url: https://wa.me/96522092260?text=I'm interested in the Foundation program
+                          - img
+                          - text: Start Foundation Path
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                          - text: 8-12 weeks
+                        - generic:
+                          - img
+                          - text: Most Popular
+                        - heading [level=3]: 2. Certification
+                        - paragraph: Earn professional credentials (CFD, FEA) to demonstrate competency to top employers.
+                        - generic:
+                          - img
+                          - generic: 0 completed
+                        - link:
+                          - /url: https://wa.me/96522092260?text=I'm interested in the Certification program
+                          - img
+                          - text: Get Certified Now
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                          - text: 12+ weeks
+                        - heading [level=3]: 3. Mastery
+                        - paragraph: Lead teams and innovation. Advanced corporate training to upskill entire departments.
+                        - generic:
+                          - img
+                          - generic: 0 completed
+                        - link:
+                          - /url: https://wa.me/96522092260?text=I'm interested in the Mastery program
+                          - img
+                          - text: Achieve Mastery
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading [level=2]: Professional Training Catalog
+                    - paragraph: Industry-certified courses to elevate your engineering expertise
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - textbox:
+                          - /placeholder: Search courses...
+                      - generic:
+                        - button: All (17)
+                        - button: CAD Design (2)
+                        - button: Electrical (4)
+                        - button: Fluid Dynamics (1)
+                        - button: MEP Systems (2)
+                        - button: Programming (2)
+                        - button: Simulation (2)
+                        - button: Sustainability (4)
+                      - generic:
+                        - generic: "View:"
+                        - button:
+                          - img
+                          - text: Timeline
+                        - button:
+                          - img
+                          - text: Grid
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Sustainability
+                              - generic: Professional
+                              - generic:
+                                - img
+                                - text: Certified
+                            - heading [level=3]: Assessment and Design of Environmental Management Systems
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.9"
+                              - generic:
+                                - img
+                                - generic: 850 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: The course provides insight on designing an EMS and assessing current EMS for various industries. Individuals will learn the skills of how to design and implement an environmental ...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Assessment%20and%20Design%20of%20Environmental%20Management%20Systems%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Assessment%20and%20Design%20of%20Environmental%20Management%20Systems%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Electrical
+                              - generic: Intermediate
+                            - heading [level=3]: Electric Wiring and Lighting for Residentials and Commercial Buildings
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.7"
+                              - generic:
+                                - img
+                                - generic: 620 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: Introduction of specialized functions for specialized data analysis with various examples. Gain knowledge of electric wiring and lighting for residential and commercial buildings. ...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Electric%20Wiring%20and%20Lighting%20for%20Residentials%20and%20Commercial%20Buildings%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Electric%20Wiring%20and%20Lighting%20for%20Residentials%20and%20Commercial%20Buildings%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Sustainability
+                              - generic: Professional
+                            - heading [level=3]: Environmental Law
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.6"
+                              - generic:
+                                - img
+                                - generic: 450 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: Introduction to global environmental problems and international environmental law. An overview of environmental regulations in Kuwait, impact of resources to the environment and ch...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Environmental%20Law%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Environmental%20Law%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Simulation
+                              - generic: Advanced
+                              - generic:
+                                - img
+                                - text: Certified
+                            - heading [level=3]: Finite Element Analysis Applications in Structural Engineering
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.8"
+                              - generic:
+                                - img
+                                - generic: 1,200 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course introduces the attendee to the concept of numerical methods, specifically the finite element method, as a detailed analysis method for structures. Utilizing state of th...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Finite%20Element%20Analysis%20Applications%20in%20Structural%20Engineering%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Finite%20Element%20Analysis%20Applications%20in%20Structural%20Engineering%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                          - generic: 🔥 Hot
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: CAD Design
+                              - generic: Intermediate
+                              - generic:
+                                - img
+                                - text: Certified
+                            - heading [level=3]: Introduction to SimSolid | ALTAIR
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.7"
+                              - generic:
+                                - img
+                                - generic: 780 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: Introduction to CAD/CAM design simulation and benefits. Introduction to SimSolid’s unique performance technology through elimination of geometry simplification and meshing. Simulat...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20SimSolid%20%7C%20ALTAIR%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20SimSolid%20%7C%20ALTAIR%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Sustainability
+                              - generic: Professional
+                              - generic:
+                                - img
+                                - text: Certified
+                            - heading [level=3]: How to Perform an Environmental Impact Assessment (EIA)
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.8"
+                              - generic:
+                                - img
+                                - generic: 920 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course has been designed to accommodate individuals working in the fields of environment. Learn how to perform a thorough environmental impact assessment for any project with ...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22How%20to%20Perform%20an%20Environmental%20Impact%20Assessment%20(EIA)%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22How%20to%20Perform%20an%20Environmental%20Impact%20Assessment%20(EIA)%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: MEP Systems
+                              - generic: Beginner
+                            - heading [level=3]: Introduction to Basic HVAC Systems Fundamentals
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 1,450 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course introduces the fundamentals of heating, ventilation and air conditioning systems....
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Basic%20HVAC%20Systems%20Fundamentals%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Basic%20HVAC%20Systems%20Fundamentals%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                          - generic: 🔥 Hot
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Fluid Dynamics
+                              - generic: Advanced
+                              - generic:
+                                - img
+                                - text: Certified
+                            - heading [level=3]: Computational Fluid Dynamics Modeling
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.9"
+                              - generic:
+                                - img
+                                - generic: 1,100 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: Introduction to CFD and its engineering applications....
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Computational%20Fluid%20Dynamics%20Modeling%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Computational%20Fluid%20Dynamics%20Modeling%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                          - generic: 🔥 Hot
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: MEP Systems
+                              - generic: Advanced
+                              - generic:
+                                - img
+                                - text: Certified
+                            - heading [level=3]: Introduction to Detailed Modeling in HVAC
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.7"
+                              - generic:
+                                - img
+                                - generic: 680 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: High-level simulation of HVAC systems, focusing on energy modeling, indoor air quality (IAQ), and thermal comfort....
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Detailed%20Modeling%20in%20HVAC%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Introduction%20to%20Detailed%20Modeling%20in%20HVAC%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Sustainability
+                              - generic: Professional
+                              - generic:
+                                - img
+                                - text: Certified
+                            - heading [level=3]: Life Cycle Assessment for Environmental Systems and Devices
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.8"
+                              - generic:
+                                - img
+                                - generic: 540 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: Training on assessing environmental impacts associated with all stages of a product's life from cradle to grave....
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Life%20Cycle%20Assessment%20for%20Environmental%20Systems%20and%20Devices%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Life%20Cycle%20Assessment%20for%20Environmental%20Systems%20and%20Devices%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Programming
+                              - generic: Beginner
+                            - heading [level=3]: MATLAB Fundamental
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 500 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course introduces the fundamentals of MATLAB for engineering and scientific applications. Participants will learn basic programming concepts, data analysis techniques and visu...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22MATLAB%20Fundamental%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22MATLAB%20Fundamental%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Simulation
+                              - generic: Intermediate
+                            - heading [level=3]: Geotechnical System Simulation & Modeling
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 500 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course introduces geotechnical system simulation and modeling techniques used in civil and geotechnical engineering. Participants will learn how to model soil behavior, founda...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Geotechnical%20System%20Simulation%20%26%20Modeling%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Geotechnical%20System%20Simulation%20%26%20Modeling%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Programming
+                              - generic: Beginner
+                            - heading [level=3]: Minitab Fundamental
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 500 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course introduces the fundamentals of Minitab for statistical analysis and quality improvement. Participants will learn how to use Minitab for data analysis, hypothesis testin...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Minitab%20Fundamental%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Minitab%20Fundamental%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Electrical
+                              - generic: Intermediate
+                            - heading [level=3]: Operation Protection and Maintenance of Electric Machines
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 500 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course provides knowledge on the operation, protection and maintenance of electric machines. Participants will learn about different types of electric machines, protection sys...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Operation%20Protection%20and%20Maintenance%20of%20Electric%20Machines%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Operation%20Protection%20and%20Maintenance%20of%20Electric%20Machines%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Electrical
+                              - generic: Intermediate
+                            - heading [level=3]: Selection and Installation of Electric Cables
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 500 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course provides knowledge on selection criteria and installation practices of electric cables. Participants will learn about cable types, sizing, installation methods and safe...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Selection%20and%20Installation%20of%20Electric%20Cables%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Selection%20and%20Installation%20of%20Electric%20Cables%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: CAD Design
+                              - generic: Beginner
+                            - heading [level=3]: SolidWorks – Level 1
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 500 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course introduces the fundamentals of SolidWorks for 3D modeling and design. Participants will learn how to create parts, assemblies and drawings using SolidWorks software....
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22SolidWorks%20%E2%80%93%20Level%201%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22SolidWorks%20%E2%80%93%20Level%201%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Electrical
+                              - generic: Intermediate
+                            - heading [level=3]: Variable Frequency Drives and DC Motors
+                            - generic:
+                              - generic:
+                                - img
+                                - img
+                                - img
+                                - img
+                                - img
+                                - generic: "4.5"
+                              - generic:
+                                - img
+                                - generic: 500 enrolled
+                            - generic:
+                              - img
+                              - generic: "Days: 5 | Hrs: 20 | 4 HRS/DAY"
+                            - paragraph: This course provides knowledge on variable frequency drives (VFDs) and DC motors. Participants will learn about speed control methods, operation principles and applications of VFDs...
+                            - generic:
+                              - heading [level=4]:
+                                - img
+                                - text: What You'll Learn
+                              - list:
+                                - listitem:
+                                  - img
+                                  - generic: Day 1
+                                - listitem:
+                                  - img
+                                  - generic: Day 2
+                                - listitem:
+                                  - img
+                                  - generic: Day 3
+                            - generic:
+                              - link:
+                                - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Variable%20Frequency%20Drives%20and%20DC%20Motors%22%20course.
+                                - button:
+                                  - img
+                                  - text: Enroll Now
+                      - generic:
+                        - link:
+                          - /url: https://wa.me/96522092260?text=Hi%2C%20I'm%20interested%20in%20enrolling%20in%20the%20%22Variable%20Frequency%20Drives%20and%20DC%20Motors%22%20course.
+                          - img
+                          - generic:
+                            - generic:
+                              - img
+                              - paragraph: Enquire on WhatsApp
+                          - generic:
+                            - img
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - heading [level=2]: Business Impact
+                      - paragraph: Our approach ensures measurable results that align with your strategic goals, delivering value beyond just technical execution.
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: Internal Capability
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: Certified Workforce
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: Software ROI
+                      - generic:
+                        - generic:
+                          - img
+                          - generic: Team Productivity
+            - generic:
+              - generic:
+                - generic:
+                  - heading [level=2]: What Our Graduates Say
+                - generic:
+                  - generic:
+                    - img
+                    - generic:
+                      - img
+                      - img
+                      - img
+                      - img
+                      - img
+                    - paragraph: "\"The FEA training was game-changing. I applied the simulation techniques immediately to my current project. Highly recommended.\""
+                    - generic:
+                      - generic: AK
+                      - generic:
+                        - generic: Abdullah K.
+                        - generic: Mechanical Engineer, Kuwait Petroleum Corp
+                  - generic:
+                    - img
+                    - generic:
+                      - img
+                      - img
+                      - img
+                      - img
+                      - img
+                    - paragraph: "\"KITES helped me master SolidWorks before graduation. The certification gave me a huge advantage in job interviews.\""
+                    - generic:
+                      - generic: SM
+                      - generic:
+                        - generic: Sarah M.
+                        - generic: Architecture Student, Kuwait University
+                  - generic:
+                    - img
+                    - generic:
+                      - img
+                      - img
+                      - img
+                      - img
+                      - img
+                    - paragraph: "\"Professional, structured, and practical. The instructors are clearly industry experts, not just academics.\""
+                    - generic:
+                      - generic: FA
+                      - generic:
+                        - generic: Fahad Al-Azmi
+                        - generic: Project Manager, Ministry of Public Works
+            - generic:
+              - generic:
+                - generic:
+                  - img
+                  - text: Limited Spots for Next Intake
+                - heading [level=2]: Ready to Start Learning?
+                - paragraph: Join 500+ engineers who have advanced their careers with KITES training.
+                - generic:
+                  - link:
+                    - /url: https://wa.me/96522092260
+                    - img
+                    - text: Chat on WhatsApp
+                    - img
+                  - link:
+                    - /url: /contact?service=training
+                    - text: Schedule a Call
+                    - img
+                - generic:
+                  - generic:
+                    - img
+                    - generic: Money-back guarantee
+                  - generic:
+                    - img
+                    - generic: Free trial lesson
+                  - generic:
+                    - img
+                    - generic: Industry-certified trainers
+      - link:
+        - /url: https://wa.me/96522092260
+        - img
+      - contentinfo:
+        - generic:
+          - generic:
+            - generic:
+              - link:
+                - /url: /
+                - img
+                - generic:
+                  - generic: KITES
+                  - generic: Scientific Institute
+              - paragraph: A regional center of excellence for engineering simulation, professional training, and applied research — supporting academic, government, and industrial organizations across the GCC.
+              - generic:
+                - generic: Connect with us
+                - generic:
+                  - link:
+                    - /url: "#"
+                    - img
+                  - link:
+                    - /url: "#"
+                    - img
+                  - link:
+                    - /url: "#"
+                    - img
+            - generic:
+              - heading [level=4]: Company
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /expertise
+                    - text: Expertise
+                - listitem:
+                  - link:
+                    - /url: /partners
+                    - text: Technology Partners
+                - listitem:
+                  - link:
+                    - /url: /services
+                    - text: Services
+                - listitem:
+                  - link:
+                    - /url: /insights
+                    - text: Insights
+                - listitem:
+                  - link:
+                    - /url: /events
+                    - text: Events
+                - listitem:
+                  - link:
+                    - /url: /contact
+                    - text: Contact
+            - generic:
+              - heading [level=4]: Head Office
+              - list:
+                - listitem:
+                  - generic:
+                    - img
+                  - generic:
+                    - generic: Kuwait
+                    - generic: Hawally, Kuwait
+                - listitem:
+                  - generic:
+                    - img
+                  - link:
+                    - /url: mailto:info@kites.com.kw
+                    - text: info@kites.com.kw
+                - listitem:
+                  - generic:
+                    - img
+                  - link:
+                    - /url: tel:+96522092260
+                    - text: +965 22092260
+          - generic:
+            - paragraph: © Kuwait Institute for Training & Engineering Simulations (KITES)
+  - dialog [ref=e2]:
+    - button [active] [ref=e3] [cursor=pointer]:
+      - img [ref=e4]
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - img [ref=e12]
+        - generic [ref=e14]: Exclusive Offer
+      - heading "Unlock Your Mastery" [level=2] [ref=e15]
+      - paragraph [ref=e16]: Limited time opportunities for ambitious engineers
+    - generic [ref=e17]:
+      - link "Corporate Power Bundle Enroll 5+ engineers and save 20% instantly. Perfect for teams." [ref=e18] [cursor=pointer]:
+        - /url: https://wa.me/96522092260
+        - img [ref=e21]
+        - generic [ref=e24]:
+          - heading "Corporate Power Bundle" [level=3] [ref=e25]
+          - paragraph [ref=e26]: Enroll 5+ engineers and save 20% instantly. Perfect for teams.
+        - img [ref=e28]
+      - link "Early Bird Advantage Book 30 days ahead for 10% OFF. Secure your seat now." [ref=e30] [cursor=pointer]:
+        - /url: https://wa.me/96522092260
+        - img [ref=e33]
+        - generic [ref=e36]:
+          - heading "Early Bird Advantage" [level=3] [ref=e37]
+          - paragraph [ref=e38]: Book 30 days ahead for 10% OFF. Secure your seat now.
+        - img [ref=e40]
+    - generic [ref=e42]:
+      - link "Claim My Discount" [ref=e43] [cursor=pointer]:
+        - /url: https://wa.me/96522092260
+        - text: Claim My Discount
+        - img [ref=e44]
+      - button "No thanks, I prefer paying full price" [ref=e46] [cursor=pointer]
+    - button "Close" [ref=e47] [cursor=pointer]:
+      - img [ref=e48]
+      - generic [ref=e51]: Close

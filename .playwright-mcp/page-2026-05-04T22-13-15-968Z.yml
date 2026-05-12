@@ -1,0 +1,103 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - region "Notifications (F8)":
+      - list
+    - region "Notifications alt+T"
+    - generic [ref=e2313]:
+      - link "KITES Kuwait Institute for Training & Engineering Simulations" [ref=e2315] [cursor=pointer]:
+        - /url: /
+        - img [ref=e2317]
+        - generic [ref=e2320]: KITES
+        - generic [ref=e2321]: Kuwait Institute for Training & Engineering Simulations
+      - generic [ref=e2322]:
+        - heading "Create your account" [level=1] [ref=e2323]
+        - paragraph [ref=e2324]: Join 500+ engineers advancing their careers
+        - generic [ref=e2325]:
+          - generic [ref=e2326]:
+            - text: Full name
+            - textbox "Ahmed Al-Rashidi" [ref=e2327]
+          - generic [ref=e2328]:
+            - text: Email address
+            - textbox "you@example.com" [ref=e2329]
+          - generic [ref=e2330]:
+            - text: Password
+            - generic [ref=e2331]:
+              - textbox "At least 8 characters" [ref=e2332]
+              - button [ref=e2333] [cursor=pointer]:
+                - img [ref=e2334]
+          - button "Create account" [ref=e2337] [cursor=pointer]
+          - paragraph [ref=e2338]: By creating an account you agree to our terms of service.
+        - paragraph [ref=e2339]:
+          - text: Already have an account?
+          - link "Sign in" [ref=e2340] [cursor=pointer]:
+            - /url: /login
+  - generic:
+    - generic:
+      - button "open chat" [ref=e2278]:
+        - generic [ref=e2279]:
+          - img
+          - img "open chat"
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - img "system agent avatar"
+              - generic:
+                - generic: KITES AI agent
+                - generic:
+                  - button "KITES AI agent":
+                    - generic:
+                      - img
+                  - button "KITES AI agent":
+                    - generic:
+                      - img
+                  - button "KITES AI agent":
+                    - generic:
+                      - img
+            - generic:
+              - generic:
+                - generic:
+                  - img "system agent avatar"
+                - generic "KITES AI agent"
+                - generic "How can I help you today?"
+            - generic:
+              - generic:
+                - button "Start new chat"
+              - generic:
+                - generic:
+                  - button "scroll":
+                    - generic:
+                      - img "scroll"
+                - generic:
+                  - button "waveform" [ref=e2281] [cursor=pointer]:
+                    - img "waveform" [ref=e2282]
+                  - generic:
+                    - generic:
+                      - textbox "Message..."
+                - generic:
+                  - generic:
+                    - link "Powered by Voiceflow":
+                      - /url: https://www.voiceflow.com/?utm_source=customer_agent&utm_medium=referral&utm_campaign=powered_by_attribution&utm_content=agent_link&utm_term=voiceflow_branding
+            - generic:
+              - button "Start new chat"
+              - button "Cancel"
+            - generic:
+              - button "Turn off sound":
+                - generic:
+                  - generic:
+                    - img
+                - generic: Turn off sound
+              - button "Restart conversation":
+                - generic:
+                  - generic:
+                    - img
+                - generic: Restart conversation
+          - generic:
+            - paragraph: Privacy notice
+            - paragraph: Before we can proceed with your conversation, we kindly ask you to review and accept our privacy policy, outlining how we handle and protect your personal information throughout our services.
+            - button "Submit"
+            - button "Privacy policy":
+              - generic:
+                - generic:
+                  - img
+                - generic: Privacy policy

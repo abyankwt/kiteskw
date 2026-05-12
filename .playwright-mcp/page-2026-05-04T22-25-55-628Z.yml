@@ -1,0 +1,199 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - region "Notifications (F8)":
+      - list
+    - region "Notifications alt+T"
+    - generic [ref=e35]:
+      - complementary [ref=e36]:
+        - generic [ref=e38]:
+          - generic [ref=e40]: K
+          - generic [ref=e41]:
+            - paragraph [ref=e42]: KITES
+            - paragraph [ref=e43]: Admin Panel
+        - navigation [ref=e44]:
+          - paragraph [ref=e45]: Main
+          - link "Dashboard" [ref=e46] [cursor=pointer]:
+            - /url: /admin
+            - img [ref=e47]
+            - text: Dashboard
+            - img [ref=e52]
+          - link "Courses" [ref=e54] [cursor=pointer]:
+            - /url: /admin/courses
+            - img [ref=e55]
+            - text: Courses
+          - link "Enrollments" [ref=e57] [cursor=pointer]:
+            - /url: /admin/enrollments
+            - img [ref=e58]
+            - text: Enrollments
+          - link "Payments" [ref=e61] [cursor=pointer]:
+            - /url: /admin/payments
+            - img [ref=e62]
+            - text: Payments
+          - link "Analytics" [ref=e64] [cursor=pointer]:
+            - /url: /admin/analytics
+            - img [ref=e65]
+            - text: Analytics
+          - link "CMS Editor" [ref=e67] [cursor=pointer]:
+            - /url: /admin/cms
+            - img [ref=e68]
+            - text: CMS Editor
+          - link "Media" [ref=e71] [cursor=pointer]:
+            - /url: /admin/media
+            - img [ref=e72]
+            - text: Media
+          - link "Users" [ref=e76] [cursor=pointer]:
+            - /url: /admin/users
+            - img [ref=e77]
+            - text: Users
+          - link "Roles" [ref=e82] [cursor=pointer]:
+            - /url: /admin/roles
+            - img [ref=e83]
+            - text: Roles
+        - generic [ref=e85]:
+          - generic [ref=e86]:
+            - generic [ref=e88]: S
+            - generic [ref=e89]:
+              - paragraph [ref=e90]: Super Admin
+              - paragraph [ref=e91]: Super Admin
+          - button "Sign out" [ref=e92] [cursor=pointer]:
+            - img [ref=e93]
+            - text: Sign out
+      - main [ref=e96]:
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - heading "Dashboard" [level=1] [ref=e99]
+            - paragraph [ref=e100]: Tuesday, May 5, 2026
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - paragraph [ref=e104]: Total Enrollments
+                - img [ref=e106]
+              - paragraph [ref=e109]: ...
+              - paragraph [ref=e110]:
+                - img [ref=e111]
+                - text: 0 today
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - paragraph [ref=e116]: Monthly Revenue
+                - img [ref=e118]
+              - paragraph [ref=e120]: ...
+              - paragraph [ref=e121]:
+                - img [ref=e122]
+                - text: KWD 0.000 total
+            - generic [ref=e125]:
+              - generic [ref=e126]:
+                - paragraph [ref=e127]: Published Courses
+                - img [ref=e129]
+              - paragraph [ref=e131]: ...
+            - generic [ref=e132]:
+              - generic [ref=e133]:
+                - paragraph [ref=e134]: Conversion Rate
+                - img [ref=e136]
+              - paragraph [ref=e139]: ...
+              - paragraph [ref=e140]:
+                - img [ref=e141]
+                - text: 0 total users
+          - generic [ref=e144]:
+            - generic [ref=e145]:
+              - heading "Enrollments (Last 30 Days)" [level=2] [ref=e146]
+              - img [ref=e149]
+            - generic [ref=e153]:
+              - heading "Top Courses by Enrollment" [level=2] [ref=e154]
+              - img [ref=e157]
+          - generic [ref=e160]:
+            - generic [ref=e161]:
+              - heading "Revenue by Category" [level=2] [ref=e162]
+              - generic [ref=e163]: No revenue data yet
+            - generic [ref=e164]:
+              - heading "Quick Stats" [level=2] [ref=e165]
+              - generic [ref=e166]:
+                - generic [ref=e167]:
+                  - generic [ref=e168]:
+                    - img [ref=e169]
+                    - generic [ref=e172]: Enrollments this month
+                  - generic [ref=e173]: ...
+                - generic [ref=e174]:
+                  - generic [ref=e175]:
+                    - img [ref=e176]
+                    - generic [ref=e179]: Enrollments today
+                  - generic [ref=e180]: ...
+                - generic [ref=e181]:
+                  - generic [ref=e182]:
+                    - img [ref=e183]
+                    - generic [ref=e188]: Total active users
+                  - generic [ref=e189]: ...
+                - generic [ref=e190]:
+                  - generic [ref=e191]:
+                    - img [ref=e192]
+                    - generic [ref=e195]: Page views today
+                  - generic [ref=e196]: ...
+  - generic:
+    - generic:
+      - button "open chat" [ref=e29]:
+        - generic [ref=e30]:
+          - img
+          - img "open chat"
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - img "system agent avatar"
+              - generic:
+                - generic: KITES AI agent
+                - generic:
+                  - button "KITES AI agent":
+                    - generic:
+                      - img
+                  - button "KITES AI agent":
+                    - generic:
+                      - img
+                  - button "KITES AI agent":
+                    - generic:
+                      - img
+            - generic:
+              - generic:
+                - generic:
+                  - img "system agent avatar"
+                - generic "KITES AI agent"
+                - generic "How can I help you today?"
+            - generic:
+              - generic:
+                - button "Start new chat"
+              - generic:
+                - generic:
+                  - button "scroll":
+                    - generic:
+                      - img "scroll"
+                - generic:
+                  - button "waveform" [ref=e32] [cursor=pointer]:
+                    - img "waveform" [ref=e33]
+                  - generic:
+                    - generic:
+                      - textbox "Message..."
+                - generic:
+                  - generic:
+                    - link "Powered by Voiceflow":
+                      - /url: https://www.voiceflow.com/?utm_source=customer_agent&utm_medium=referral&utm_campaign=powered_by_attribution&utm_content=agent_link&utm_term=voiceflow_branding
+            - generic:
+              - button "Start new chat"
+              - button "Cancel"
+            - generic:
+              - button "Turn off sound":
+                - generic:
+                  - generic:
+                    - img
+                - generic: Turn off sound
+              - button "Restart conversation":
+                - generic:
+                  - generic:
+                    - img
+                - generic: Restart conversation
+          - generic:
+            - paragraph: Privacy notice
+            - paragraph: Before we can proceed with your conversation, we kindly ask you to review and accept our privacy policy, outlining how we handle and protect your personal information throughout our services.
+            - button "Submit"
+            - button "Privacy policy":
+              - generic:
+                - generic:
+                  - img
+                - generic: Privacy policy

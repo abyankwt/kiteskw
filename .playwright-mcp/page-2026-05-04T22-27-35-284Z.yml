@@ -1,0 +1,508 @@
+- generic:
+  - generic:
+    - list
+    - region "Notifications alt+T"
+    - generic:
+      - complementary:
+        - generic:
+          - generic:
+            - generic:
+              - generic: K
+            - generic:
+              - paragraph: KITES
+              - paragraph: Admin Panel
+        - navigation:
+          - paragraph: Main
+          - link:
+            - /url: /admin
+            - img
+            - text: Dashboard
+          - link:
+            - /url: /admin/courses
+            - img
+            - text: Courses
+            - img
+          - link:
+            - /url: /admin/enrollments
+            - img
+            - text: Enrollments
+          - link:
+            - /url: /admin/payments
+            - img
+            - text: Payments
+          - link:
+            - /url: /admin/analytics
+            - img
+            - text: Analytics
+          - link:
+            - /url: /admin/cms
+            - img
+            - text: CMS Editor
+          - link:
+            - /url: /admin/media
+            - img
+            - text: Media
+          - link:
+            - /url: /admin/users
+            - img
+            - text: Users
+          - link:
+            - /url: /admin/roles
+            - img
+            - text: Roles
+        - generic:
+          - generic:
+            - generic:
+              - generic: S
+            - generic:
+              - paragraph: Super Admin
+              - paragraph: Super Admin
+          - button:
+            - img
+            - text: Sign out
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - heading [level=1]: Courses
+              - paragraph: 27 courses total
+            - button:
+              - img
+              - text: New Course
+          - generic:
+            - generic:
+              - img
+              - textbox:
+                - /placeholder: Search courses...
+            - combobox:
+              - generic: All categories
+              - img
+            - combobox:
+              - generic: All status
+              - img
+          - generic:
+            - generic:
+              - table:
+                - rowgroup:
+                  - row:
+                    - columnheader
+                    - columnheader: Title
+                    - columnheader: Category
+                    - columnheader: Level
+                    - columnheader: Price
+                    - columnheader: Status
+                    - columnheader: Enrollments
+                    - columnheader: Actions
+                - rowgroup:
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Assessment and Design of Environmental Management Systems
+                    - cell: Sustainability
+                    - cell: Advanced
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "120"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Electric Wiring and Lighting for Residentials and Commercial Buildings
+                    - cell: Electrical
+                    - cell: Intermediate
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "95"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Environmental Law
+                    - cell: Sustainability
+                    - cell: Intermediate
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "80"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Introduction to SimSolid | ALTAIR
+                    - cell: Simulation
+                    - cell: Beginner
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "150"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: How to Perform an Environmental Impact Assessment (EIA)
+                    - cell: Sustainability
+                    - cell: Intermediate
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "110"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Introduction to Basic HVAC Systems Fundamentals
+                    - cell: MEP Systems
+                    - cell: Beginner
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "175"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Computational Fluid Dynamics Modeling
+                    - cell: Fluid Dynamics
+                    - cell: Advanced
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "130"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Introduction to Detailed Modeling in HVAC
+                    - cell: MEP Systems
+                    - cell: Intermediate
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "90"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Life Cycle Assessment for Environmental Systems and Devices
+                    - cell: Sustainability
+                    - cell: Advanced
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "75"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Green Building Rating Systems
+                    - cell: Sustainability
+                    - cell: Intermediate
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "85"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Minitab Statistical Analysis
+                    - cell: Programming
+                    - cell: Intermediate
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "160"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Programming with VBA and Macros
+                    - cell: Programming
+                    - cell: Beginner
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "140"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Electric Machine Winding Design
+                    - cell: Electrical
+                    - cell: Advanced
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "65"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Geotechnical Investigation Methods
+                    - cell: Civil Engineering
+                    - cell: Intermediate
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "100"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                  - row:
+                    - cell
+                    - cell:
+                      - paragraph: Lighting Design Fundamentals
+                    - cell: Electrical
+                    - cell: Beginner
+                    - cell: Free
+                    - cell:
+                      - generic: Published
+                    - cell: "115"
+                    - cell:
+                      - generic:
+                        - button:
+                          - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+          - generic:
+            - paragraph: Page 1 of 2 (27 total)
+            - generic:
+              - button [disabled]: Previous
+              - button: Next
+  - generic:
+    - button [ref=e353]:
+      - generic [ref=e348]:
+        - img
+        - img
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - img
+            - generic:
+              - generic: KITES AI agent
+              - generic:
+                - button:
+                  - generic:
+                    - img
+                - button:
+                  - generic:
+                    - img
+                - button:
+                  - generic:
+                    - img
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - generic: KITES AI agent
+              - generic: How can I help you today?
+          - generic:
+            - button: Start new chat
+            - generic:
+              - button:
+                - generic:
+                  - img
+              - generic:
+                - button [ref=e354] [cursor=pointer]:
+                  - img [ref=e355]
+                - generic:
+                  - generic:
+                    - textbox:
+                      - /placeholder: Message...
+              - generic:
+                - generic:
+                  - link:
+                    - /url: https://www.voiceflow.com/?utm_source=customer_agent&utm_medium=referral&utm_campaign=powered_by_attribution&utm_content=agent_link&utm_term=voiceflow_branding
+                    - text: Powered by Voiceflow
+          - button: Start new chat
+          - button: Cancel
+          - generic:
+            - button:
+              - generic:
+                - generic:
+                  - img
+              - generic: Turn off sound
+            - button:
+              - generic:
+                - generic:
+                  - img
+              - generic: Restart conversation
+        - generic:
+          - paragraph: Privacy notice
+          - paragraph: Before we can proceed with your conversation, we kindly ask you to review and accept our privacy policy, outlining how we handle and protect your personal information throughout our services.
+          - button: Submit
+          - button:
+            - generic:
+              - generic:
+                - img
+              - generic: Privacy policy
+  - dialog "New Course" [ref=e357]:
+    - heading "New Course" [level=2] [ref=e359]
+    - generic [ref=e360]:
+      - generic [ref=e361]:
+        - text: Thumbnail
+        - generic [ref=e362]:
+          - img [ref=e364]
+          - generic [ref=e368] [cursor=pointer]: Choose Image
+      - generic [ref=e369]:
+        - text: Title *
+        - textbox "Course title" [active] [ref=e370]
+      - generic [ref=e371]:
+        - text: Short Description
+        - textbox "One-line summary" [ref=e372]
+      - generic [ref=e373]:
+        - text: Full Description
+        - textbox "Detailed course description" [ref=e374]
+      - generic [ref=e375]:
+        - generic [ref=e376]:
+          - text: Category *
+          - combobox [ref=e377] [cursor=pointer]:
+            - generic: Select category
+            - img [ref=e378]
+          - combobox [ref=e380]
+        - generic [ref=e381]:
+          - text: Level
+          - combobox [ref=e382] [cursor=pointer]:
+            - generic: Intermediate
+            - img [ref=e383]
+          - combobox [ref=e385]
+      - generic [ref=e386]:
+        - generic [ref=e387]:
+          - text: Price (KWD)
+          - spinbutton [ref=e388]: "0"
+        - generic [ref=e389]:
+          - text: Discount (%)
+          - spinbutton [ref=e390]: "0"
+      - generic [ref=e391]:
+        - generic [ref=e392]:
+          - text: Duration
+          - textbox "e.g. 6 Weeks, 3 Days" [ref=e393]
+        - generic [ref=e394]:
+          - text: Instructor
+          - textbox "Instructor name" [ref=e395]
+      - generic [ref=e396]:
+        - text: Tags
+        - textbox "CAD, SolidWorks, Design (comma-separated)" [ref=e397]
+      - generic [ref=e398]:
+        - generic [ref=e399]:
+          - text: Status
+          - combobox [ref=e400] [cursor=pointer]:
+            - generic: Draft
+            - img [ref=e401]
+          - combobox [ref=e403]
+        - generic [ref=e404]:
+          - text: Accent Color
+          - generic [ref=e405]:
+            - textbox [ref=e406] [cursor=pointer]: "#6b7280"
+            - textbox "#6b7280" [ref=e407]
+      - generic [ref=e408]:
+        - switch "Includes certification" [ref=e409] [cursor=pointer]
+        - checkbox
+        - generic [ref=e410] [cursor=pointer]: Includes certification
+      - generic [ref=e411]:
+        - button "Cancel" [ref=e412] [cursor=pointer]
+        - button "Create Course" [ref=e413] [cursor=pointer]
+    - button "Close" [ref=e414] [cursor=pointer]:
+      - img [ref=e415]
+      - generic [ref=e418]: Close
