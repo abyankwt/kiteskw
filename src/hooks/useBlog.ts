@@ -41,7 +41,7 @@ export function useBlogPost(slug: string) {
 export function useAdminPosts(params: { page?: number; limit?: number; category?: string } = {}) {
   return useQuery({
     queryKey: ['admin', 'blog', params],
-    queryFn: () => apiClient.get('/admin/blog', { params }).then((r) => r.data as BlogListResponse),
+    queryFn: () => apiClient.get('/admin/blog/posts', { params }).then((r) => r.data as BlogListResponse),
     staleTime: 30_000,
   });
 }
@@ -50,7 +50,7 @@ export function useCreatePost() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (dto: Partial<BlogPost>) =>
-      apiClient.post('/admin/blog', dto).then((r) => r.data),
+      apiClient.post('/admin/blog/posts', dto).then((r) => r.data),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin', 'blog'] }),
   });
 }
@@ -59,7 +59,7 @@ export function useUpdatePost() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...dto }: Partial<BlogPost> & { id: string }) =>
-      apiClient.patch(`/admin/blog/${id}`, dto).then((r) => r.data),
+      apiClient.patch(`/admin/blog/posts/${id}`, dto).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin', 'blog'] });
       qc.invalidateQueries({ queryKey: ['blog'] });
@@ -71,7 +71,7 @@ export function usePublishPost() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, publish }: { id: string; publish: boolean }) =>
-      apiClient.post(`/admin/blog/${id}/${publish ? 'publish' : 'unpublish'}`).then((r) => r.data),
+      apiClient.post(`/admin/blog/posts/${id}/${publish ? 'publish' : 'unpublish'}`).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin', 'blog'] });
       qc.invalidateQueries({ queryKey: ['blog'] });
@@ -82,7 +82,7 @@ export function usePublishPost() {
 export function useDeletePost() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => apiClient.delete(`/admin/blog/${id}`).then((r) => r.data),
+    mutationFn: (id: string) => apiClient.delete(`/admin/blog/posts/${id}`).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin', 'blog'] });
       qc.invalidateQueries({ queryKey: ['blog'] });

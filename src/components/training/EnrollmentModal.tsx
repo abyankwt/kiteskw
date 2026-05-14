@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { X, Loader2, CreditCard, GraduationCap } from 'lucide-react';
+import { X, Loader2, CreditCard, GraduationCap, Tag, CheckCircle2, ChevronDown } from 'lucide-react';
 import apiClient from '@/lib/apiClient';
+import { useValidateCoupon } from '@/hooks/useCoupons';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
@@ -19,15 +20,49 @@ interface Props {
     onClose: () => void;
 }
 
+function parsePrice(price: string): number {
+    if (price === 'Free') return 0;
+    return parseFloat(price.replace(/[^0-9.]/g, '')) || 0;
+}
+
 export function EnrollmentModal({ course, onClose }: Props) {
     const [error, setError] = useState('');
+    const [couponOpen, setCouponOpen] = useState(false);
+    const [couponInput, setCouponInput] = useState('');
+    const [couponResult, setCouponResult] = useState<{
+        valid: boolean;
+        message: string;
+        code: string;
+        discountAmount?: number;
+        finalAmount?: number;
+    } | null>(null);
+
+    const validateCoupon = useValidateCoupon();
     const isFree = course?.price === 'Free';
+    const baseAmount = course ? parsePrice(course.price) : 0;
+    const finalAmount = couponResult?.valid ? (couponResult.finalAmount ?? baseAmount) : baseAmount;
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
         resolver: zodResolver(schema),
     });
 
     if (!course) return null;
+
+    const handleApplyCoupon = async () => {
+        if (!couponInput.trim()) return;
+        setCouponResult(null);
+        const result = await validateCoupon.mutateAsync({
+            code: couponInput.trim(),
+            courseId: String(course.id),
+            amount: baseAmount,
+        });
+        setCouponResult({ ...result, code: couponInput.trim().toUpperCase() });
+    };
+
+    const handleRemoveCoupon = () => {
+        setCouponResult(null);
+        setCouponInput('');
+    };
 
     const onSubmit = async (values: FormValues) => {
         setError('');
@@ -37,6 +72,7 @@ export function EnrollmentModal({ course, onClose }: Props) {
                 fullName: values.fullName,
                 email: values.email,
                 phone: values.phone,
+                ...(couponResult?.valid && { couponCode: couponResult.code }),
             });
 
             if (data.free) {
@@ -80,9 +116,21 @@ export function EnrollmentModal({ course, onClose }: Props) {
                         <h2 className="text-lg font-bold text-white leading-tight">{course.title}</h2>
                     </div>
                     <div className="ml-11">
-                        <span className={`text-sm font-semibold ${isFree ? 'text-emerald-400' : 'text-blue-400'}`}>
-                            {course.price}
-                        </span>
+                        {couponResult?.valid ? (
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-slate-400 line-through">{course.price}</span>
+                                <span className="text-sm font-semibold text-emerald-400">
+                                    KWD {finalAmount.toFixed(3)}
+                                </span>
+                                <span className="text-xs bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-medium">
+                                    -{couponResult.discountAmount ? `KWD ${couponResult.discountAmount.toFixed(3)}` : ''}
+                                </span>
+                            </div>
+                        ) : (
+                            <span className={`text-sm font-semibold ${isFree ? 'text-emerald-400' : 'text-blue-400'}`}>
+                                {course.price}
+                            </span>
+                        )}
                         <p className="text-slate-400 text-xs mt-0.5">
                             {isFree ? 'Free enrollment — no payment required' : 'Secure payment via Hesabe'}
                         </p>
@@ -133,6 +181,71 @@ export function EnrollmentModal({ course, onClose }: Props) {
                         {errors.phone && <p className="text-xs text-red-400">{errors.phone.message}</p>}
                     </div>
 
+                    {/* Coupon section — only for paid courses */}
+                    {!isFree && (
+                        <div className="border border-white/10 rounded-lg overflow-hidden">
+                            {couponResult?.valid ? (
+                                <div className="flex items-center justify-between px-4 py-3 bg-emerald-500/10">
+                                    <div className="flex items-center gap-2">
+                                        <CheckCircle2 size={14} className="text-emerald-400" />
+                                        <span className="text-sm text-emerald-400 font-medium font-mono">{couponResult.code}</span>
+                                        <span className="text-xs text-emerald-300">applied</span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleRemoveCoupon}
+                                        className="text-xs text-slate-400 hover:text-white transition-colors"
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
+                            ) : (
+                                <>
+                                    <button
+                                        type="button"
+                                        onClick={() => setCouponOpen(o => !o)}
+                                        className="w-full flex items-center justify-between px-4 py-3 text-sm text-slate-400 hover:text-slate-200 transition-colors"
+                                    >
+                                        <span className="flex items-center gap-2">
+                                            <Tag size={13} />
+                                            Have a coupon code?
+                                        </span>
+                                        <ChevronDown size={14} className={`transition-transform ${couponOpen ? 'rotate-180' : ''}`} />
+                                    </button>
+
+                                    {couponOpen && (
+                                        <div className="px-4 pb-3 space-y-2">
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    value={couponInput}
+                                                    onChange={e => {
+                                                        setCouponInput(e.target.value.toUpperCase());
+                                                        if (couponResult) setCouponResult(null);
+                                                    }}
+                                                    placeholder="ENTER CODE"
+                                                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                                                    onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleApplyCoupon())}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={handleApplyCoupon}
+                                                    disabled={validateCoupon.isPending || !couponInput.trim()}
+                                                    className="px-3 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm rounded-lg transition-colors whitespace-nowrap"
+                                                >
+                                                    {validateCoupon.isPending ? '...' : 'Apply'}
+                                                </button>
+                                            </div>
+                                            {couponResult && !couponResult.valid && (
+                                                <p className="text-xs text-red-400">{couponResult.message}</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         disabled={isSubmitting}
@@ -142,6 +255,8 @@ export function EnrollmentModal({ course, onClose }: Props) {
                             <><Loader2 size={16} className="animate-spin" /> Processing...</>
                         ) : isFree ? (
                             <><GraduationCap size={16} /> Enroll Now — Free</>
+                        ) : couponResult?.valid ? (
+                            <><CreditCard size={16} /> Pay KWD {finalAmount.toFixed(3)}</>
                         ) : (
                             <><CreditCard size={16} /> Proceed to Payment</>
                         )}

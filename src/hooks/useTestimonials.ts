@@ -12,13 +12,16 @@ export interface Testimonial {
   courseId: string | null;
   isPublished: boolean;
   sortOrder: number;
+  displayLocation: 'all' | 'homepage' | 'training';
   createdAt: string;
 }
 
-export function usePublishedTestimonials() {
+export function usePublishedTestimonials(location?: 'homepage' | 'training') {
   return useQuery({
-    queryKey: ['testimonials', 'published'],
-    queryFn: () => apiClient.get('/testimonials').then((r) => r.data as Testimonial[]),
+    queryKey: ['testimonials', 'published', location],
+    queryFn: () =>
+      apiClient.get('/testimonials', { params: location ? { location } : undefined })
+        .then((r) => r.data as Testimonial[]),
     staleTime: 60_000,
   });
 }
@@ -26,7 +29,7 @@ export function usePublishedTestimonials() {
 export function useAdminTestimonials() {
   return useQuery({
     queryKey: ['admin', 'testimonials'],
-    queryFn: () => apiClient.get('/admin/testimonials').then((r) => r.data as Testimonial[]),
+    queryFn: () => apiClient.get('/admin/blog/testimonials').then((r) => r.data as Testimonial[]),
     staleTime: 30_000,
   });
 }
@@ -35,7 +38,7 @@ export function useCreateTestimonial() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (dto: Omit<Testimonial, 'id' | 'sortOrder' | 'createdAt'>) =>
-      apiClient.post('/admin/testimonials', dto).then((r) => r.data),
+      apiClient.post('/admin/blog/testimonials', dto).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin', 'testimonials'] });
       qc.invalidateQueries({ queryKey: ['testimonials'] });
@@ -47,7 +50,7 @@ export function useUpdateTestimonial() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...dto }: Partial<Testimonial> & { id: string }) =>
-      apiClient.patch(`/admin/testimonials/${id}`, dto).then((r) => r.data),
+      apiClient.patch(`/admin/blog/testimonials/${id}`, dto).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin', 'testimonials'] });
       qc.invalidateQueries({ queryKey: ['testimonials'] });
@@ -58,7 +61,7 @@ export function useUpdateTestimonial() {
 export function useDeleteTestimonial() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => apiClient.delete(`/admin/testimonials/${id}`).then((r) => r.data),
+    mutationFn: (id: string) => apiClient.delete(`/admin/blog/testimonials/${id}`).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin', 'testimonials'] });
       qc.invalidateQueries({ queryKey: ['testimonials'] });
@@ -70,7 +73,7 @@ export function useReorderTestimonials() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (orderedIds: string[]) =>
-      apiClient.post('/admin/testimonials/reorder', { orderedIds }).then((r) => r.data),
+      apiClient.post('/admin/blog/testimonials/reorder', { orderedIds }).then((r) => r.data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['admin', 'testimonials'] });
       qc.invalidateQueries({ queryKey: ['testimonials'] });

@@ -39,7 +39,7 @@ export function useAdminUsers(filters: { page?: number; role?: string; search?: 
   });
 }
 
-export function useAdminEnrollments(filters: { page?: number; courseId?: string; status?: string } = {}) {
+export function useAdminEnrollments(filters: { page?: number; courseId?: string; status?: string; from?: string; to?: string } = {}) {
   return useQuery({
     queryKey: ['admin', 'enrollments', filters],
     queryFn: () => apiClient.get('/admin/enrollments', { params: filters }).then((r) => r.data),

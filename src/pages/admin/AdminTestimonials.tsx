@@ -14,6 +14,7 @@ const EMPTY: Partial<Testimonial> = {
   avatarUrl: '',
   courseId: null,
   isPublished: true,
+  displayLocation: 'all',
 };
 
 function StarRating({ value, onChange }: { value: number; onChange: (v: number) => void }) {
@@ -114,6 +115,18 @@ function TestimonialModal({ initial, onClose }: { initial: Partial<Testimonial> 
                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
+            <div className="col-span-2">
+              <label className="block text-xs font-medium text-gray-600 mb-1">Show On</label>
+              <select
+                value={form.displayLocation ?? 'all'}
+                onChange={e => set('displayLocation', e.target.value)}
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >
+                <option value="all">Both pages (Homepage + Training)</option>
+                <option value="homepage">Homepage only</option>
+                <option value="training">Training page only</option>
+              </select>
+            </div>
             <div className="col-span-2 flex items-center gap-2">
               <input
                 type="checkbox"
@@ -181,6 +194,7 @@ export default function AdminTestimonials() {
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Company</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Rating</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Review</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Show On</th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Visible</th>
                 <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
               </tr>
@@ -198,7 +212,7 @@ export default function AdminTestimonials() {
                 ))
               ) : testimonials.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-12 text-center text-sm text-gray-400">
+                  <td colSpan={7} className="px-4 py-12 text-center text-sm text-gray-400">
                     <AlertCircle size={20} className="mx-auto mb-2 text-gray-300" />
                     No testimonials yet
                   </td>
@@ -219,6 +233,11 @@ export default function AdminTestimonials() {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-gray-600 max-w-[200px] truncate text-xs">{t.content}</td>
+                    <td className="px-4 py-3">
+                      <span className="text-xs text-gray-600">
+                        {t.displayLocation === 'homepage' ? 'Homepage' : t.displayLocation === 'training' ? 'Training' : 'Both'}
+                      </span>
+                    </td>
                     <td className="px-4 py-3">
                       {t.isPublished ? (
                         <span className="text-xs text-green-600 font-medium">Yes</span>

@@ -8,6 +8,7 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/scr
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { useFeaturedCourses } from "@/hooks/useCourses";
+import { usePublishedTestimonials } from "@/hooks/useTestimonials";
 import { EnrollmentModal } from "@/components/training/EnrollmentModal";
 import { TrainingOffersModal } from "@/components/training/TrainingOffersModal";
 import { TrainingOffersSection } from "@/components/training/TrainingOffersSection";
@@ -135,6 +136,7 @@ const Training = () => {
 
     // CMS overrides — fall back to hardcoded content if unavailable
     const { data: cms } = useCmsPage('training');
+    const { data: apiTestimonials = [] } = usePublishedTestimonials('training');
     const s = cms?.sections;
     const loc = language as 'en' | 'ar';
     const g = (sk: string, fk: string) => getBlockValue(s?.[sk], fk, loc) ?? undefined;
@@ -164,6 +166,19 @@ const Training = () => {
     };
 
     const reviews = (() => {
+        if (apiTestimonials.length > 0) {
+            return apiTestimonials.map(t => ({
+                id: t.id,
+                name: t.clientName,
+                role: t.clientRole ?? '',
+                company: t.clientCompany ?? '',
+                text: t.content,
+                avatar: t.avatarUrl
+                    ? null
+                    : t.clientName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(),
+                avatarUrl: t.avatarUrl ?? null,
+            }));
+        }
         const raw = gj('reviews', 'items');
         if (!raw) return REVIEWS;
         return raw.map((r: any, i: number) => ({
@@ -173,6 +188,7 @@ const Training = () => {
             company: r.company,
             text: r.text,
             avatar: r.avatar,
+            avatarUrl: null,
         }));
     })();
 
@@ -795,12 +811,14 @@ const Training = () => {
                                 </div>
                                 <p className="text-slate-600 text-sm leading-relaxed mb-6">"{review.text}"</p>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-bold">
-                                        {review.avatar}
+                                    <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-bold overflow-hidden">
+                                        {(review as any).avatarUrl
+                                            ? <img src={(review as any).avatarUrl} alt={review.name} className="w-full h-full object-cover" />
+                                            : review.avatar}
                                     </div>
                                     <div>
                                         <div className="text-sm font-bold text-slate-900">{review.name}</div>
-                                        <div className="text-xs text-slate-500">{review.role}, {review.company}</div>
+                                        <div className="text-xs text-slate-500">{[review.role, review.company].filter(Boolean).join(', ')}</div>
                                     </div>
                                 </div>
                             </StaggerItem>
