@@ -24,6 +24,16 @@ const admin_payments_routes_1 = __importDefault(require("./routes/admin.payments
 const cms_routes_1 = __importDefault(require("./routes/cms.routes"));
 const media_routes_1 = __importDefault(require("./routes/media.routes"));
 const admin_rbac_routes_1 = __importDefault(require("./routes/admin.rbac.routes"));
+// Feature routes
+const analytics_routes_1 = __importDefault(require("./routes/analytics.routes"));
+const coupons_routes_1 = __importDefault(require("./routes/coupons.routes"));
+const blog_routes_1 = __importDefault(require("./routes/blog.routes"));
+const testimonials_routes_1 = __importDefault(require("./routes/testimonials.routes"));
+const gallery_routes_1 = __importDefault(require("./routes/gallery.routes"));
+const admin_coupons_routes_1 = __importDefault(require("./routes/admin.coupons.routes"));
+const admin_blog_routes_1 = __importDefault(require("./routes/admin.blog.routes"));
+const admin_galleries_routes_1 = __importDefault(require("./routes/admin.galleries.routes"));
+const admin_payment_settings_routes_1 = __importDefault(require("./routes/admin.payment-settings.routes"));
 const app = (0, express_1.default)();
 // Security
 app.use((0, helmet_1.default)({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -71,6 +81,17 @@ app.use('/api/v1/admin/payments', admin_payments_routes_1.default);
 app.use('/api/v1/cms', cms_routes_1.default);
 app.use('/api/v1/media', media_routes_1.default);
 app.use('/api/v1/admin', admin_rbac_routes_1.default);
+// Feature routes — public
+app.use('/api/v1/analytics', analytics_routes_1.default);
+app.use('/api/v1/coupons', coupons_routes_1.default);
+app.use('/api/v1/blog', blog_routes_1.default);
+app.use('/api/v1/testimonials', testimonials_routes_1.default);
+app.use('/api/v1/gallery', gallery_routes_1.default);
+// Feature routes — admin
+app.use('/api/v1/admin/coupons', admin_coupons_routes_1.default);
+app.use('/api/v1/admin/blog', admin_blog_routes_1.default);
+app.use('/api/v1/admin/galleries', admin_galleries_routes_1.default);
+app.use('/api/v1/admin/payment-settings', admin_payment_settings_routes_1.default);
 // Serve React frontend static files (production)
 const distPath = path_1.default.join(__dirname, '..', '..', 'dist');
 app.use(express_1.default.static(distPath));

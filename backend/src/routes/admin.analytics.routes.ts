@@ -38,4 +38,13 @@ router.get('/revenue', async (_req, res, next) => {
   } catch (err) { next(err); }
 });
 
+router.get('/page-views', async (req, res, next) => {
+  try {
+    const from = req.query.from as string | undefined;
+    const to = req.query.to as string | undefined;
+    const data = await analyticsService.getPageViews(from, to);
+    res.json(data);
+  } catch (err) { next(err); }
+});
+
 export default router;

@@ -40,11 +40,11 @@ const router = (0, express_1.Router)();
 // Guest checkout — no login required
 router.post('/guest', async (req, res, next) => {
     try {
-        const { courseId, fullName, email, phone } = req.body;
+        const { courseId, fullName, email, phone, couponCode } = req.body;
         if (!courseId || !fullName || !email) {
             return res.status(400).json({ error: 'courseId, fullName, and email are required' });
         }
-        const result = await enrollmentsService.guestCheckout({ courseId, fullName, email, phone });
+        const result = await enrollmentsService.guestCheckout({ courseId, fullName, email, phone, couponCode });
         if (result.free) {
             return res.json({ free: true, message: result.message });
         }
@@ -56,10 +56,10 @@ router.post('/guest', async (req, res, next) => {
 });
 router.post('/checkout', auth_1.authenticateToken, async (req, res, next) => {
     try {
-        const { courseId } = req.body;
+        const { courseId, couponCode } = req.body;
         if (!courseId)
             return res.status(400).json({ error: 'courseId is required' });
-        const result = await enrollmentsService.initiateCheckout(req.user.id, courseId);
+        const result = await enrollmentsService.initiateCheckout(req.user.id, courseId, couponCode);
         if (result.free) {
             return res.json({ free: true, message: `Enrolled in ${result.courseTitle}` });
         }

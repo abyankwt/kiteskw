@@ -79,5 +79,16 @@ router.get('/revenue', async (_req, res, next) => {
         next(err);
     }
 });
+router.get('/page-views', async (req, res, next) => {
+    try {
+        const from = req.query.from;
+        const to = req.query.to;
+        const data = await analyticsService.getPageViews(from, to);
+        res.json(data);
+    }
+    catch (err) {
+        next(err);
+    }
+});
 exports.default = router;
 //# sourceMappingURL=admin.analytics.routes.js.map

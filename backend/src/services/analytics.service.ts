@@ -84,6 +84,35 @@ export async function getTopCourses(limit = 10) {
   }));
 }
 
+export async function getPageViews(from?: string, to?: string) {
+  const conditions: string[] = [`event_type = 'page_view'`];
+  const params: any[] = [];
+  let i = 1;
+
+  if (from) { conditions.push(`created_at >= $${i++}::date`); params.push(from); }
+  if (to) { conditions.push(`created_at <= $${i++}::date + INTERVAL '1 day'`); params.push(to); }
+  const where = 'WHERE ' + conditions.join(' AND ');
+
+  const [totalResult, sessionsResult, pagesResult] = await Promise.all([
+    pool.query(`SELECT COUNT(*) FROM analytics_events ${where}`, params),
+    pool.query(`SELECT COUNT(DISTINCT session_id) FROM analytics_events ${where}`, params),
+    pool.query(
+      `SELECT properties->>'page' as page, COUNT(*) as count
+       FROM analytics_events ${where} AND properties->>'page' IS NOT NULL
+       GROUP BY properties->>'page'
+       ORDER BY count DESC
+       LIMIT 20`,
+      params
+    ),
+  ]);
+
+  return {
+    totalViews: parseInt(totalResult.rows[0].count),
+    uniqueVisitors: parseInt(sessionsResult.rows[0].count),
+    topPages: pagesResult.rows.map(r => ({ page: r.page, count: parseInt(r.count) })),
+  };
+}
+
 export async function getRevenueByCategory() {
   const { rows } = await pool.query(
     `SELECT

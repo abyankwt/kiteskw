@@ -17,6 +17,9 @@ import PartnerDetail from "./pages/PartnerDetail";
 import Insights from "./pages/Insights";
 import Events from "./pages/Events";
 import Contact from "./pages/Contact";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import Gallery from "./pages/Gallery";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/common/ScrollToTop";
 import { Layout } from "@/components/layout/Layout";
@@ -29,11 +32,13 @@ import Register from "@/pages/auth/Register";
 import AdminLayout from "@/pages/admin/AdminLayout";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentFailure from "@/pages/PaymentFailure";
+import { usePageViewTracker } from "@/hooks/usePageViewTracker";
 
 const queryClient = new QueryClient();
 
 const AppLayout = ({ showIntro }: { showIntro: boolean }) => {
     const location = useLocation();
+    usePageViewTracker();
 
     return (
         <Layout hidden={showIntro}>
@@ -51,6 +56,9 @@ const AppLayout = ({ showIntro }: { showIntro: boolean }) => {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/payment/success" element={<PaymentSuccess />} />
                     <Route path="/payment/failure" element={<PaymentFailure />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/blog/:slug" element={<BlogPost />} />
+                    <Route path="/gallery" element={<Gallery />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>

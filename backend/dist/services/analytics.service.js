@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOverview = getOverview;
 exports.getEnrollmentsOverTime = getEnrollmentsOverTime;
 exports.getTopCourses = getTopCourses;
+exports.getPageViews = getPageViews;
 exports.getRevenueByCategory = getRevenueByCategory;
 const pool_1 = __importDefault(require("../db/pool"));
 async function getOverview() {
@@ -76,6 +77,34 @@ async function getTopCourses(limit = 10) {
         viewCount: parseInt(r.view_count),
         rating: parseFloat(r.rating),
     }));
+}
+async function getPageViews(from, to) {
+    const conditions = [`event_type = 'page_view'`];
+    const params = [];
+    let i = 1;
+    if (from) {
+        conditions.push(`created_at >= $${i++}::date`);
+        params.push(from);
+    }
+    if (to) {
+        conditions.push(`created_at <= $${i++}::date + INTERVAL '1 day'`);
+        params.push(to);
+    }
+    const where = 'WHERE ' + conditions.join(' AND ');
+    const [totalResult, sessionsResult, pagesResult] = await Promise.all([
+        pool_1.default.query(`SELECT COUNT(*) FROM analytics_events ${where}`, params),
+        pool_1.default.query(`SELECT COUNT(DISTINCT session_id) FROM analytics_events ${where}`, params),
+        pool_1.default.query(`SELECT properties->>'page' as page, COUNT(*) as count
+       FROM analytics_events ${where} AND properties->>'page' IS NOT NULL
+       GROUP BY properties->>'page'
+       ORDER BY count DESC
+       LIMIT 20`, params),
+    ]);
+    return {
+        totalViews: parseInt(totalResult.rows[0].count),
+        uniqueVisitors: parseInt(sessionsResult.rows[0].count),
+        topPages: pagesResult.rows.map(r => ({ page: r.page, count: parseInt(r.count) })),
+    };
 }
 async function getRevenueByCategory() {
     const { rows } = await pool_1.default.query(`SELECT

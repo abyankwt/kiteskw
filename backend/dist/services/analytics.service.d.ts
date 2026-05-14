@@ -24,6 +24,14 @@ export declare function getTopCourses(limit?: number): Promise<{
     viewCount: number;
     rating: number;
 }[]>;
+export declare function getPageViews(from?: string, to?: string): Promise<{
+    totalViews: number;
+    uniqueVisitors: number;
+    topPages: {
+        page: any;
+        count: number;
+    }[];
+}>;
 export declare function getRevenueByCategory(): Promise<{
     category: any;
     revenue: number;

@@ -17,6 +17,8 @@ interface CommonContent {
     partners: string;
     insights: string;
     events: string;
+    blog: string;
+    gallery: string;
     contact: string;
   };
   language: {
@@ -39,6 +41,8 @@ const navStructure = [
   { key: "training", href: "/training" },
   // { key: "insights", href: "/insights" }, // Temporarily hidden
   { key: "events", href: "/events" },
+  { key: "blog", href: "/blog" },
+  { key: "gallery", href: "/gallery" },
   { key: "contact", href: "/contact" },
 ];
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, Eye, EyeOff, ChevronDown, ChevronRight, Save, RotateCcw, CheckCircle, Code2 } from 'lucide-react';
+import { Globe, Eye, EyeOff, ChevronDown, ChevronRight, Save, RotateCcw, CheckCircle, Code2, ExternalLink } from 'lucide-react';
 import {
   useAdminCmsPages,
   useCmsPage,
@@ -126,6 +126,128 @@ function JsonBlockEditor({
   );
 }
 
+// ─── Color block editor ───────────────────────────────────────────────────────
+function ColorBlockEditor({ blockId, currentValue }: { blockId: string; currentValue: string | null }) {
+  const [value, setValue] = useState(currentValue ?? '#000000');
+  const [saved, setSaved] = useState(false);
+  const updateBlock = useUpdateBlock();
+  const canEdit = usePermission('cms:edit');
+
+  const handleSave = async () => {
+    await updateBlock.mutateAsync({ blockId, value_text: value });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="flex gap-2 items-center">
+      <input
+        type="color"
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        disabled={!canEdit}
+        className="w-10 h-9 rounded border border-gray-200 cursor-pointer p-0.5"
+      />
+      <input
+        type="text"
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        disabled={!canEdit}
+        className="w-28 px-3 py-2 text-sm border border-gray-200 rounded-lg font-mono focus:outline-none focus:ring-1 focus:ring-blue-500"
+      />
+      {canEdit && (
+        <button
+          onClick={handleSave}
+          disabled={updateBlock.isPending}
+          className="flex items-center gap-1 px-3 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+        >
+          {saved ? <CheckCircle size={14} /> : <Save size={14} />}
+          {saved ? 'Saved' : 'Save'}
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ─── Image block editor ───────────────────────────────────────────────────────
+function ImageBlockEditor({ blockId, currentValue }: { blockId: string; currentValue: string | null }) {
+  const [value, setValue] = useState(currentValue ?? '');
+  const [saved, setSaved] = useState(false);
+  const updateBlock = useUpdateBlock();
+  const canEdit = usePermission('cms:edit');
+
+  const handleSave = async () => {
+    await updateBlock.mutateAsync({ blockId, value_text: value });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="space-y-2">
+      {value && (
+        <img src={value} alt="" className="h-24 rounded-lg border border-gray-200 object-cover" />
+      )}
+      <div className="flex gap-2 items-start">
+        <input
+          type="url"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          disabled={!canEdit}
+          placeholder="https://..."
+          className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+        {canEdit && (
+          <button
+            onClick={handleSave}
+            disabled={updateBlock.isPending}
+            className="flex items-center gap-1 px-3 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 whitespace-nowrap"
+          >
+            {saved ? <CheckCircle size={14} /> : <Save size={14} />}
+            {saved ? 'Saved' : 'Save'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Select block editor ──────────────────────────────────────────────────────
+function SelectBlockEditor({ blockId, currentValue, options }: { blockId: string; currentValue: string | null; options: string[] }) {
+  const [value, setValue] = useState(currentValue ?? (options[0] ?? ''));
+  const [saved, setSaved] = useState(false);
+  const updateBlock = useUpdateBlock();
+  const canEdit = usePermission('cms:edit');
+
+  const handleSave = async () => {
+    await updateBlock.mutateAsync({ blockId, value_text: value });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="flex gap-2 items-center">
+      <select
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        disabled={!canEdit}
+        className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+      >
+        {options.map(o => <option key={o} value={o}>{o}</option>)}
+      </select>
+      {canEdit && (
+        <button
+          onClick={handleSave}
+          disabled={updateBlock.isPending}
+          className="flex items-center gap-1 px-3 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 whitespace-nowrap"
+        >
+          {saved ? <CheckCircle size={14} /> : <Save size={14} />}
+          {saved ? 'Saved' : 'Save'}
+        </button>
+      )}
+    </div>
+  );
+}
+
 // ─── Section card ─────────────────────────────────────────────────────────────
 function SectionCard({ sectionKey, section }: { sectionKey: string; section: CmsSection }) {
   const [expanded, setExpanded] = useState(false);
@@ -163,18 +285,41 @@ function SectionCard({ sectionKey, section }: { sectionKey: string; section: Cms
       {expanded && (
         <div className="p-4 space-y-5">
           {Object.entries(section.blocks).map(([fieldKey, block]) => {
-            const isJson =
-              block._type?.includes('array') ||
-              block._type?.includes('json') ||
-              (block.en !== null && typeof block.en === 'object');
+            const blockType = block._type ?? 'text';
+            const isJson = blockType.includes('array') || blockType.includes('json') || (block.en !== null && typeof block.en === 'object');
+            const isColor = blockType === 'color';
+            const isImage = blockType === 'image';
+            const isSelect = blockType === 'select';
+            const selectOptions: string[] = isSelect && Array.isArray((block.en as any)?.options)
+              ? (block.en as any).options
+              : [];
 
             return (
               <div key={fieldKey} className="space-y-2">
                 <p className="text-xs font-mono font-semibold text-gray-600 bg-gray-100 inline-px-2 py-0.5 rounded px-2">
                   {fieldKey}
+                  {isColor && <span className="ml-1 text-gray-400">(color)</span>}
+                  {isImage && <span className="ml-1 text-gray-400">(image)</span>}
+                  {isSelect && <span className="ml-1 text-gray-400">(select)</span>}
                 </p>
 
-                {isJson ? (
+                {isColor ? (
+                  <ColorBlockEditor
+                    blockId={block._ids?.en ?? ''}
+                    currentValue={block.en as string | null}
+                  />
+                ) : isImage ? (
+                  <ImageBlockEditor
+                    blockId={block._ids?.en ?? ''}
+                    currentValue={block.en as string | null}
+                  />
+                ) : isSelect ? (
+                  <SelectBlockEditor
+                    blockId={block._ids?.en ?? ''}
+                    currentValue={block.en as string | null}
+                    options={selectOptions}
+                  />
+                ) : isJson ? (
                   <JsonBlockEditor
                     blockId={block._ids?.en ?? ''}
                     currentValue={(block.en as object | null) ?? null}
@@ -229,19 +374,28 @@ function PageEditor({ slug }: { slug: string }) {
           <h3 className="font-semibold text-gray-900">{page.title}</h3>
           <p className="text-xs text-gray-400 mt-0.5">/{slug}</p>
         </div>
-        {canPublish && (
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => publishPage.mutate({ slug, publish: !page.is_published })}
-            disabled={publishPage.isPending}
-            className={`text-sm px-4 py-2 rounded-lg font-medium ${
-              page.is_published
-                ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
+            onClick={() => window.open(`/${slug}`, '_blank')}
+            className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
           >
-            {page.is_published ? 'Unpublish' : 'Publish'}
+            <ExternalLink size={13} />
+            Preview
           </button>
-        )}
+          {canPublish && (
+            <button
+              onClick={() => publishPage.mutate({ slug, publish: !page.is_published })}
+              disabled={publishPage.isPending}
+              className={`text-sm px-4 py-2 rounded-lg font-medium ${
+                page.is_published
+                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+              {page.is_published ? 'Unpublish' : 'Publish'}
+            </button>
+          )}
+        </div>
       </div>
 
       {!hasSections ? (

@@ -12,6 +12,11 @@ import {
   GraduationCap,
   CreditCard,
   Star,
+  Tag,
+  Newspaper,
+  MessageSquare,
+  Images,
+  Settings,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -35,6 +40,11 @@ const navItems: NavItem[] = [
   { label: 'Media',       href: '/admin/media',      icon: Image,            permission: 'media:upload' },
   { label: 'Users',       href: '/admin/users',      icon: Users,            permission: 'users:read' },
   { label: 'Roles',       href: '/admin/roles',      icon: Shield,           permission: 'roles:manage' },
+  { label: 'Coupons',    href: '/admin/coupons',    icon: Tag,              permission: 'coupons:read' },
+  { label: 'Blog',       href: '/admin/blog',       icon: Newspaper,        permission: 'blog:read' },
+  { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare, permission: 'blog:read' },
+  { label: 'Galleries',  href: '/admin/galleries',  icon: Images,           permission: 'gallery:read' },
+  { label: 'Payment Settings', href: '/admin/payment-settings', icon: Settings, permission: 'payment:settings' },
 ];
 
 const roleLabels: Record<string, string> = {

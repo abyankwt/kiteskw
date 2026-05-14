@@ -1,31 +1,37 @@
 import pool from '../db/pool';
 import * as hesabeService from './hesabe.service';
+import * as couponService from './coupon.service';
 import bcrypt from 'bcryptjs';
 
-export async function guestCheckout({ courseId, fullName, email, phone }: {
+export async function guestCheckout({ courseId, fullName, email, phone, couponCode }: {
   courseId: string;
   fullName: string;
   email: string;
   phone?: string;
+  couponCode?: string;
 }) {
   // Find or create a STUDENT account for this email
   const existing = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase().trim()]);
   let user;
   if (existing.rows.length > 0) {
     user = existing.rows[0];
+    // Update phone if provided and not already stored
+    if (phone && !user.phone) {
+      await pool.query('UPDATE users SET phone=$1 WHERE id=$2', [phone, user.id]);
+    }
   } else {
     const hash = await bcrypt.hash(Math.random().toString(36) + Date.now(), 10);
     const { rows } = await pool.query(
-      `INSERT INTO users (email, password_hash, full_name, role) VALUES ($1, $2, $3, 'STUDENT') RETURNING *`,
-      [email.toLowerCase().trim(), hash, fullName]
+      `INSERT INTO users (email, password_hash, full_name, role, phone) VALUES ($1, $2, $3, 'STUDENT', $4) RETURNING *`,
+      [email.toLowerCase().trim(), hash, fullName, phone ?? null]
     );
     user = rows[0];
   }
 
-  return initiateCheckout(user.id, courseId);
+  return initiateCheckout(user.id, courseId, couponCode);
 }
 
-export async function initiateCheckout(userId: string, courseId: string) {
+export async function initiateCheckout(userId: string, courseId: string, couponCode?: string) {
   // Check course exists and is published
   const courseResult = await pool.query(
     `SELECT * FROM courses WHERE id = $1 AND status = 'published'`,
@@ -45,7 +51,18 @@ export async function initiateCheckout(userId: string, courseId: string) {
     throw { status: 409, message: 'Already enrolled in this course' };
   }
 
-  const effectivePrice = parseFloat(course.price) * (1 - course.discount_percent / 100);
+  let effectivePrice = parseFloat(course.price) * (1 - course.discount_percent / 100);
+  let couponId: string | null = null;
+  let couponDiscount = 0;
+
+  if (couponCode) {
+    const couponResult = await couponService.validateCoupon(couponCode, courseId, effectivePrice);
+    if (couponResult.valid && couponResult.couponId) {
+      couponId = couponResult.couponId;
+      couponDiscount = couponResult.discountAmount ?? 0;
+      effectivePrice = couponResult.finalAmount ?? effectivePrice;
+    }
+  }
 
   // Create pending enrollment
   const enrollmentResult = await pool.query(
@@ -59,12 +76,17 @@ export async function initiateCheckout(userId: string, courseId: string) {
 
   // Create pending payment
   const paymentResult = await pool.query(
-    `INSERT INTO payments (enrollment_id, user_id, course_id, amount, currency, status)
-     VALUES ($1, $2, $3, $4, 'KWD', 'pending')
+    `INSERT INTO payments (enrollment_id, user_id, course_id, amount, currency, status, coupon_id, coupon_discount)
+     VALUES ($1, $2, $3, $4, 'KWD', 'pending', $5, $6)
      RETURNING *`,
-    [enrollment.id, userId, courseId, effectivePrice]
+    [enrollment.id, userId, courseId, effectivePrice, couponId, couponDiscount]
   );
   const payment = paymentResult.rows[0];
+
+  // Track coupon usage after payment record is created
+  if (couponId) {
+    await couponService.applyCoupon(couponId);
+  }
 
   // If course is free, activate immediately
   if (effectivePrice === 0) {
@@ -196,7 +218,7 @@ export async function getAllEnrollments(filters: { page?: number; limit?: number
 
   params.push(limit, offset);
   const { rows } = await pool.query(
-    `SELECT e.*, u.email, u.full_name, c.title as course_title
+    `SELECT e.*, u.email, u.full_name, u.phone, c.title as course_title
      FROM enrollments e
      JOIN users u ON u.id = e.user_id
      JOIN courses c ON c.id = e.course_id

@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
-import { useEnrollmentsOverTime, useTopCourses, useRevenueByCategory } from '@/hooks/useAnalytics';
+import { useEnrollmentsOverTime, useTopCourses, useRevenueByCategory, usePageViews } from '@/hooks/useAnalytics';
 
 const COLORS = ['#3b82f6','#10b981','#8b5cf6','#f59e0b','#ef4444','#06b6d4','#78716c','#f97316'];
 
@@ -29,6 +29,7 @@ export default function AdminAnalytics() {
   const { data: enrollmentData } = useEnrollmentsOverTime(from, to, groupBy);
   const { data: topCourses } = useTopCourses(10);
   const { data: revenueData } = useRevenueByCategory();
+  const { data: pageViews } = usePageViews(from, to);
 
   const chartEnrollments = (enrollmentData || []).map((d: any) => ({
     date: format(new Date(d.date), groupBy === 'month' ? 'MMM yyyy' : 'MMM d'),
@@ -102,6 +103,39 @@ export default function AdminAnalytics() {
             <Line yAxisId="right" type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={2} dot={false} name="Revenue (KWD)" />
           </LineChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* Page Views */}
+      <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <h2 className="text-sm font-semibold text-gray-700 mb-4">Page Views</h2>
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="bg-gray-50 rounded-xl p-4">
+            <p className="text-xs text-gray-500 mb-1">Total Views</p>
+            <p className="text-2xl font-bold text-gray-900">{(pageViews?.totalViews ?? 0).toLocaleString()}</p>
+          </div>
+          <div className="bg-gray-50 rounded-xl p-4">
+            <p className="text-xs text-gray-500 mb-1">Unique Visitors</p>
+            <p className="text-2xl font-bold text-gray-900">{(pageViews?.uniqueVisitors ?? 0).toLocaleString()}</p>
+          </div>
+        </div>
+        {(pageViews?.topPages ?? []).length > 0 && (
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-gray-50">
+                <TableHead className="text-xs">Page</TableHead>
+                <TableHead className="text-xs text-right">Views</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {(pageViews?.topPages ?? []).map((p: any) => (
+                <TableRow key={p.page}>
+                  <TableCell className="text-xs font-mono text-gray-700">{p.page}</TableCell>
+                  <TableCell className="text-xs text-right font-medium">{p.count.toLocaleString()}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </div>
 
       {/* Top Courses + Revenue pie */}

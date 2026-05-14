@@ -1,9 +1,10 @@
 import * as hesabeService from './hesabe.service';
-export declare function guestCheckout({ courseId, fullName, email, phone }: {
+export declare function guestCheckout({ courseId, fullName, email, phone, couponCode }: {
     courseId: string;
     fullName: string;
     email: string;
     phone?: string;
+    couponCode?: string;
 }): Promise<{
     free: boolean;
     courseTitle: any;
@@ -15,7 +16,7 @@ export declare function guestCheckout({ courseId, fullName, email, phone }: {
     orderId: any;
     courseTitle?: undefined;
 }>;
-export declare function initiateCheckout(userId: string, courseId: string): Promise<{
+export declare function initiateCheckout(userId: string, courseId: string, couponCode?: string): Promise<{
     free: boolean;
     courseTitle: any;
     paymentUrl?: undefined;

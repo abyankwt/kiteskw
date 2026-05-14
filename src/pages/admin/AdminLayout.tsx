@@ -11,6 +11,12 @@ import AdminMedia from './AdminMedia';
 import AdminRoles from './AdminRoles';
 import AdminPayments from './AdminPayments';
 import AdminFeaturedCourses from './AdminFeaturedCourses';
+import AdminEnrollments from './AdminEnrollments';
+import AdminCoupons from './AdminCoupons';
+import AdminBlog from './AdminBlog';
+import AdminTestimonials from './AdminTestimonials';
+import AdminGalleries from './AdminGalleries';
+import AdminPaymentSettings from './AdminPaymentSettings';
 
 // Ordered list of fallback routes when dashboard is not permitted
 const FALLBACK_ROUTES: { permission: string; path: string }[] = [
@@ -115,6 +121,60 @@ export default function AdminLayout() {
             element={
               <PrivateRoute permission="roles:manage">
                 <AdminRoles />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="enrollments"
+            element={
+              <PrivateRoute permission="enrollments:read">
+                <AdminEnrollments />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="coupons"
+            element={
+              <PrivateRoute permission="coupons:read">
+                <AdminCoupons />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="blog"
+            element={
+              <PrivateRoute permission="blog:read">
+                <AdminBlog />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="testimonials"
+            element={
+              <PrivateRoute permission="blog:read">
+                <AdminTestimonials />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="galleries"
+            element={
+              <PrivateRoute permission="gallery:read">
+                <AdminGalleries />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="payment-settings"
+            element={
+              <PrivateRoute permission="payment:settings">
+                <AdminPaymentSettings />
               </PrivateRoute>
             }
           />

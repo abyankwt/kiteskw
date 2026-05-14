@@ -23,6 +23,17 @@ import cmsRoutes from './routes/cms.routes';
 import mediaRoutes from './routes/media.routes';
 import adminRbacRoutes from './routes/admin.rbac.routes';
 
+// Feature routes
+import analyticsRoutes from './routes/analytics.routes';
+import couponsRoutes from './routes/coupons.routes';
+import blogRoutes from './routes/blog.routes';
+import testimonialsRoutes from './routes/testimonials.routes';
+import galleryRoutes from './routes/gallery.routes';
+import adminCouponsRoutes from './routes/admin.coupons.routes';
+import adminBlogRoutes from './routes/admin.blog.routes';
+import adminGalleriesRoutes from './routes/admin.galleries.routes';
+import adminPaymentSettingsRoutes from './routes/admin.payment-settings.routes';
+
 const app = express();
 
 // Security
@@ -77,6 +88,19 @@ app.use('/api/v1/admin/payments', adminPaymentRoutes);
 app.use('/api/v1/cms', cmsRoutes);
 app.use('/api/v1/media', mediaRoutes);
 app.use('/api/v1/admin', adminRbacRoutes);
+
+// Feature routes — public
+app.use('/api/v1/analytics', analyticsRoutes);
+app.use('/api/v1/coupons', couponsRoutes);
+app.use('/api/v1/blog', blogRoutes);
+app.use('/api/v1/testimonials', testimonialsRoutes);
+app.use('/api/v1/gallery', galleryRoutes);
+
+// Feature routes — admin
+app.use('/api/v1/admin/coupons', adminCouponsRoutes);
+app.use('/api/v1/admin/blog', adminBlogRoutes);
+app.use('/api/v1/admin/galleries', adminGalleriesRoutes);
+app.use('/api/v1/admin/payment-settings', adminPaymentSettingsRoutes);
 
 // Serve React frontend static files (production)
 const distPath = path.join(__dirname, '..', '..', 'dist');

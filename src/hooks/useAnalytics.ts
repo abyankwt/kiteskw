@@ -45,3 +45,11 @@ export function useAdminEnrollments(filters: { page?: number; courseId?: string;
     queryFn: () => apiClient.get('/admin/enrollments', { params: filters }).then((r) => r.data),
   });
 }
+
+export function usePageViews(from?: string, to?: string) {
+  return useQuery({
+    queryKey: ['admin', 'analytics', 'page-views', from, to],
+    queryFn: () =>
+      apiClient.get('/admin/analytics/page-views', { params: { from, to } }).then((r) => r.data),
+  });
+}
