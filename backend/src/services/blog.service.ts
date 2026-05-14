@@ -7,6 +7,7 @@ export interface BlogPostDto {
   thumbnailUrl?: string;
   category?: string;
   tags?: string[];
+  isPublished?: boolean;
 }
 
 function slugify(title: string): string {
@@ -83,11 +84,12 @@ export async function getPostById(id: string) {
 
 export async function createPost(dto: BlogPostDto, authorId: string) {
   const slug = await uniqueSlug(dto.title);
+  const isPublished = dto.isPublished === true;
   const { rows } = await pool.query(
-    `INSERT INTO blog_posts (title, slug, content, excerpt, thumbnail_url, category, tags, author_id)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
+    `INSERT INTO blog_posts (title, slug, content, excerpt, thumbnail_url, category, tags, author_id, is_published, published_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9, $10) RETURNING *`,
     [dto.title, slug, dto.content ?? null, dto.excerpt ?? null, dto.thumbnailUrl ?? null,
-     dto.category ?? 'news', dto.tags ?? [], authorId]
+     dto.category ?? 'news', dto.tags ?? [], authorId, isPublished, isPublished ? new Date() : null]
   );
   return formatPost(rows[0]);
 }
@@ -103,6 +105,10 @@ export async function updatePost(id: string, dto: Partial<BlogPostDto>) {
   if (dto.thumbnailUrl !== undefined) { fields.push(`thumbnail_url=$${i++}`); values.push(dto.thumbnailUrl); }
   if (dto.category !== undefined) { fields.push(`category=$${i++}`); values.push(dto.category); }
   if (dto.tags !== undefined) { fields.push(`tags=$${i++}`); values.push(dto.tags); }
+  if (dto.isPublished !== undefined) {
+    fields.push(`is_published=$${i++}`); values.push(dto.isPublished);
+    if (dto.isPublished) { fields.push(`published_at=NOW()`); }
+  }
   if (fields.length === 0) throw { status: 400, message: 'No fields to update' };
   fields.push(`updated_at=NOW()`);
 

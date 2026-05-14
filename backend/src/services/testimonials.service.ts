@@ -10,10 +10,16 @@ export interface TestimonialDto {
   courseId?: string | null;
   isPublished?: boolean;
   sortOrder?: number;
+  displayLocation?: 'all' | 'homepage' | 'training';
 }
 
-export async function listTestimonials(publishedOnly = true) {
-  const where = publishedOnly ? 'WHERE is_published = TRUE' : '';
+export async function listTestimonials(publishedOnly = true, location?: string) {
+  const conditions: string[] = [];
+  if (publishedOnly) conditions.push('is_published = TRUE');
+  if (location && location !== 'all') {
+    conditions.push(`(display_location = 'all' OR display_location = '${location === 'homepage' ? 'homepage' : 'training'}')`);
+  }
+  const where = conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : '';
   const { rows } = await pool.query(
     `SELECT t.*, c.title as course_title
      FROM testimonials t
@@ -27,11 +33,11 @@ export async function listTestimonials(publishedOnly = true) {
 export async function createTestimonial(dto: TestimonialDto) {
   const { rows } = await pool.query(
     `INSERT INTO testimonials
-       (client_name, client_role, client_company, content, rating, avatar_url, course_id, is_published, sort_order)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
+       (client_name, client_role, client_company, content, rating, avatar_url, course_id, is_published, sort_order, display_location)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
     [dto.clientName, dto.clientRole ?? null, dto.clientCompany ?? null, dto.content,
      dto.rating ?? 5, dto.avatarUrl ?? null, dto.courseId ?? null,
-     dto.isPublished ?? true, dto.sortOrder ?? 0]
+     dto.isPublished ?? true, dto.sortOrder ?? 0, dto.displayLocation ?? 'all']
   );
   return formatTestimonial(rows[0]);
 }
@@ -50,6 +56,7 @@ export async function updateTestimonial(id: string, dto: Partial<TestimonialDto>
   if (dto.courseId !== undefined) { fields.push(`course_id=$${i++}`); values.push(dto.courseId); }
   if (dto.isPublished !== undefined) { fields.push(`is_published=$${i++}`); values.push(dto.isPublished); }
   if (dto.sortOrder !== undefined) { fields.push(`sort_order=$${i++}`); values.push(dto.sortOrder); }
+  if (dto.displayLocation !== undefined) { fields.push(`display_location=$${i++}`); values.push(dto.displayLocation); }
   if (fields.length === 0) throw { status: 400, message: 'No fields to update' };
 
   values.push(id);
@@ -95,6 +102,7 @@ function formatTestimonial(row: any) {
     courseTitle: row.course_title ?? null,
     isPublished: row.is_published,
     sortOrder: row.sort_order,
+    displayLocation: row.display_location ?? 'all',
     createdAt: row.created_at,
   };
 }

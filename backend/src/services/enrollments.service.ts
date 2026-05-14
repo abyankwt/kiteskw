@@ -194,7 +194,7 @@ export async function getUserEnrollments(userId: string) {
   return rows;
 }
 
-export async function getAllEnrollments(filters: { page?: number; limit?: number; courseId?: string; status?: string }) {
+export async function getAllEnrollments(filters: { page?: number; limit?: number; courseId?: string; status?: string; from?: string; to?: string }) {
   const page = Math.max(1, filters.page || 1);
   const limit = Math.min(100, filters.limit || 20);
   const offset = (page - 1) * limit;
@@ -208,6 +208,12 @@ export async function getAllEnrollments(filters: { page?: number; limit?: number
   }
   if (filters.status) {
     i++; conditions.push(`e.status = $${i}`); params.push(filters.status);
+  }
+  if (filters.from) {
+    i++; conditions.push(`e.enrolled_at >= $${i}::date`); params.push(filters.from);
+  }
+  if (filters.to) {
+    i++; conditions.push(`e.enrolled_at < ($${i}::date + INTERVAL '1 day')`); params.push(filters.to);
   }
 
   const where = conditions.join(' AND ');

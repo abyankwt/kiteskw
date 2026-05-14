@@ -15,16 +15,21 @@ function mask(val: string | undefined): string {
 
 router.get('/', requirePermission('payment:settings'), async (_req, res) => {
   const isProduction = !hesabeConfig.paymentUrl.includes('sandbox');
+  const apiBaseUrl = process.env.API_BASE_URL || '';
   res.json({
     merchantCode: mask(hesabeConfig.merchantCode),
     merchantCodeSet: !!hesabeConfig.merchantCode,
     secretKeySet: !!hesabeConfig.secretKey,
     secretKeyLength: hesabeConfig.secretKey?.length ?? 0,
+    secretKeyValid: hesabeConfig.secretKey?.length === 32,
     accessCodeSet: !!hesabeConfig.accessCode,
     ivSet: !!hesabeConfig.iv,
     ivLength: hesabeConfig.iv?.length ?? 0,
+    ivValid: hesabeConfig.iv?.length === 16,
     paymentUrl: hesabeConfig.paymentUrl,
     mode: isProduction ? 'production' : 'sandbox',
+    apiBaseUrl: apiBaseUrl || '(not set)',
+    responseUrl: apiBaseUrl ? `${apiBaseUrl}/api/v1/payments/callback` : '(API_BASE_URL not set)',
   });
 });
 

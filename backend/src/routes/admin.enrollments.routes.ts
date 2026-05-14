@@ -13,6 +13,8 @@ router.get('/', async (req, res, next) => {
       limit: parseInt(req.query.limit as string) || 20,
       courseId: req.query.courseId as string,
       status: req.query.status as string,
+      from: req.query.from as string,
+      to: req.query.to as string,
     });
     res.json(result);
   } catch (err) { next(err); }
